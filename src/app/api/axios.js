@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = 'https://nexcare-api.com';
+const BASE_URL = 'https://nexcare-api.onrender.com';
 
 export default axios.create({
     baseURL: BASE_URL
