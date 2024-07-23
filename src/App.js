@@ -29,9 +29,11 @@ import NotificationsBar from './features/appointment/NotificationsBar'
 import RegSuccessMessage from './features/auth/RegSuccessMessage';
 import Profile from './features/auth/Profile';
 import ProfileSuccess from './features/auth/ProfileSuccess'
-
+import useTitle from './hooks/useTitle';
 
 function App() {
+
+  useTitle('Nexcare')
 
   return (
     <Routes>
