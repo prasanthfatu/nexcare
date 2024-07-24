@@ -218,10 +218,10 @@ const Profile = () => {
         </div>
 
         <div className='user-info-social'>
-          <div className='user-info-social-logo'><a href='#'><img src={github} alt='github' /></a></div>
-          <div className='user-info-social-logo'><a href='#'><img src={twitter} alt='twitter' /></a></div>
-          <div className='user-info-social-logo'><a href='#'><img src={facebook} alt='facebook' /></a></div>
-          <div className='user-info-social-logo'><a href='#'><img src={instagram} alt='instagram' /></a></div>
+          <div className='user-info-social-logo'><img src={github} alt='github' /></div>
+          <div className='user-info-social-logo'><img src={twitter} alt='twitter' /></div>
+          <div className='user-info-social-logo'><img src={facebook} alt='facebook' /></div>
+          <div className='user-info-social-logo'><img src={instagram} alt='instagram' /></div>
         </div>
 
       </div>
