@@ -1,16 +1,21 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import moment from "moment";
 import useAuth from "../../hooks/useAuth";
 
 const SingleAppointment = () => {
 
+    const errRef = useRef(null)
+    const [errMsg, setErrMsg] = useState('')
+    const [loading, setLoading] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(false)
+
     const { setAppId } = useAuth()
     const navigate = useNavigate()
     const { notId, appId } = useParams();
     
-    const [appointment, setAppointment] = useState("");
+    const [appointment, setAppointment] = useState('');
 
     const axiosPrivate = useAxiosPrivate();
 
@@ -28,11 +33,21 @@ const SingleAppointment = () => {
 
     const handleNotification = useCallback(async () => {
         try {
+            setLoading(true)
             const response = await axiosPrivate.get(`/appointments/${appId}`);
             setAppointment(response.data)
             setAppId(appId)
+            setLoading(false)
         } catch (err) {
             console.error(err);
+            if (!err.response) {
+                setErrMsg('Server Unreachable');
+            } else {
+                setErrMsg(err.data?.message || 'Error Fetching data from server.');
+            }
+            setLoading(false)
+        } finally {
+            setLoading(false)
         }
     }, [axiosPrivate, appId, setAppId])
 
@@ -41,33 +56,80 @@ const SingleAppointment = () => {
         readNotification()
     }, [handleNotification, readNotification]);
 
+    useEffect(() => {
+        if (errMsg) {
+            errRef.current?.focus();
+        }
+    }, [errMsg]);
+
     const handleAccept = async () => {
         try {
+            setIsDisabled(true)
+            setLoading(true)
             await axiosPrivate.put(`/appointments`,
                 JSON.stringify({ status: "accept", id: appId }));
             navigate('/account/appointments')
         } catch (err) {
             console.error(err);
+            if (!err.response) {
+                setErrMsg('Server Unreachable');
+            } else {
+                setErrMsg(err.data?.message || 'Error Fetching data from server.');
+            }
+            setLoading(false)
+            setIsDisabled(false)
+        } finally {
+            setLoading(false)
+            setIsDisabled(false)
         }
 
     };
 
     const handleDeny = async (id) => {
         try {
+            setIsDisabled(true)
+            setLoading(true)
             await axiosPrivate.put(`/appointments`,
                 JSON.stringify({ status: "deny", id: appId }));
             navigate('/account/appointments')
         } catch (err) {
             console.error(err);
+            if (!err.response) {
+                setErrMsg('Server Unreachable');
+            } else {
+                setErrMsg(err.data?.message || 'Error Fetching data from server.');
+            }
+            setLoading(false)
+            setIsDisabled(false)
+        } finally {
+            setLoading(false)
+            setIsDisabled(false)
         }
 
     };
 
-    if(appointment.length === 0) {
-        return <p>Appointment Not Found</p>
+    const errClass = errMsg ? "errmsg" : "offscreen"
+
+    if(loading){
+        return(
+            <>
+                {/* <p>Loading...</p> */}
+                <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+            </>
+        )
     }
 
-    return (
+    if (errMsg) {
+        return (
+            <section>
+                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+            </section>
+        )
+    }
+
+    
+    // return appointment ? <NotificationView appointment = {appointment}/> : <p>Data Not Found</p>
+    return(
         <>
             <section className="single-appointment">
                 <div className="content-visible">
@@ -91,8 +153,8 @@ const SingleAppointment = () => {
             <div className="singlepage-permission">
                 {appointment.status === "pending" && (
                     <div className="appointment-status">
-                        <button onClick={handleAccept}>Accept</button>
-                        <button onClick={handleDeny}>Deny</button>
+                        <button onClick={handleAccept} disabled={isDisabled}>Accept</button>
+                        <button onClick={handleDeny} disabled={isDisabled}>Deny</button>
                     </div>
                 )}
             </div>

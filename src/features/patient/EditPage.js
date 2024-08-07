@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faFloppyDisk, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons'
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
@@ -15,11 +15,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const EditPage = ({ patient, patientId }) => {
 
-  const errRef = useRef()
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
 
   const [confirmDelete, setConfirmDelete] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [patientName, setPatientName] = useState(patient?.patientName)
   const [age, setAge] = useState(patient?.age)
@@ -34,6 +34,7 @@ const EditPage = ({ patient, patientId }) => {
 
   const savePatient = async () => {
     try {
+      setLoading(true)
       await axiosPrivate.put(`/tests`,
         JSON.stringify({ patientId, patientName, age, gender, address, email, phone, maritalStatus, fullname, relationship, emerPhone })
       )
@@ -90,13 +91,16 @@ const EditPage = ({ patient, patientId }) => {
           fontSize: "0.8rem"
         }})
       }
-      errRef.current.focus()
       window.scrollTo({ top: 0, behavior: 'smooth' })
+    } finally {
+      setLoading(false)
     }
   }
 
   const deletePatient = async () => {
+    setConfirmDelete(false)
     try {
+      setLoading(true)
       await axiosPrivate.delete(`/tests/${patientId}`)
       toast.success('Patient deleted successfully!', {
         position: "top-center",
@@ -128,11 +132,14 @@ const EditPage = ({ patient, patientId }) => {
       }})
     }
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  } finally {
+    setLoading(false)
   }
   }
 
   return (
     <section className='patient-editpage'>
+      <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
       <div className="patient-editpage-center">
 

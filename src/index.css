@@ -33,7 +33,8 @@ html {
 /* || UTILITY CLASSES */
 .errmsg {
   display: inline-block;
-  color: var(--ERROR);
+  background-color: var(--ERROR);
+  color: var(--BORDER-COLOR);
   padding: 0.25em;
   margin-bottom: 0.5em;
 }
@@ -171,6 +172,15 @@ form {
 }
 
 /* || PAGES */
+.protected-page-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: gray;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 .welcome {
   display: flex;
   flex-direction: row;
@@ -636,6 +646,36 @@ form {
   background-position: center;
   background-attachment: fixed;
   padding: 1rem;
+}
+.data-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #218bff;
+  animation: data 2s forwards cubic-bezier(0,0,0,0);
+  z-index: 1000;
+}
+.data-loading.active {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.data-loading.inactive {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-20px);
+}
+@keyframes data {
+  0% {
+    width: 0%;
+  }
+  100%{
+    width: 100%;
+  }
 }
 .loginheader {
   position: sticky;
@@ -1614,7 +1654,9 @@ background: hsl(0, 0%, 85%);
   margin-right: 1rem;
 }
 .close-icon {
-  margin-left: 14em;
+  position: absolute;
+  top: 0.8rem;
+  right: 1.2rem;
 }
 .close-icon:hover {
   cursor: pointer;
@@ -1650,6 +1692,7 @@ background: hsl(0, 0%, 85%);
   justify-content: center;
   align-items: center;
   border-radius: 1rem;
+  position: relative;
 }
 .signout {
   border-radius: 3rem;
@@ -1953,14 +1996,13 @@ background: hsl(0, 0%, 85%);
 }
 .test-form-btn, .app-btn{
   cursor: pointer;
-  border: 0.5px solid #ccc;
   border-radius: 1rem;
   padding: 0.25rem 1rem;
-  background-color: aliceblue;
+  background-color: #4aa0fc;
+  color: #fff;
 }
 .test-form-btn:hover {
-  border: 0.5px solid gray;
-  background-color: var(--BGCOLOR);
+  background-color: #218bff;
 }
 .app-btn {
   margin: 0 auto;
@@ -1968,8 +2010,7 @@ background: hsl(0, 0%, 85%);
   height: auto;
 }
 .app-btn:hover {
-  border: 0.5px solid gray;
-  background-color: var(--BGCOLOR);
+  background-color: #218bff;
 }
 .add-newpatient {
   max-width: 100%;
@@ -1979,7 +2020,7 @@ background: hsl(0, 0%, 85%);
 
 
 /* || All-Appointments Page*/
-.appointment-head {
+.appointment-head, .track-para {
   text-align: center;
   color: #0672b1;
   padding: 1rem;
@@ -2171,6 +2212,13 @@ background: hsl(0, 0%, 85%);
   font-weight: 500;
   margin: auto 0;
   background-color: transparent;
+}
+.patients-list-para {
+  text-align: center;
+  color: var(--ERROR);
+  font-size: small;
+  font-weight: bold;
+  padding: 1rem;
 }
 .user-table, .patient-table{
   width: 100%;
@@ -2439,10 +2487,12 @@ background: hsl(0, 0%, 85%);
   border: 0.25px solid #ccc;
 }
 .confirm-delete-btn button:first-child:hover {
-  background-color: rgba(92, 179, 92, 0.5);
+  background-color: green;
+  color: #fff;
 }
 .confirm-delete-btn button:last-child:hover {
-  background-color: rgba(175, 71, 64, 0.5);
+  background-color: var(--ERROR);
+  color: #fff;
 }
 .patient-save-btn:hover {
   cursor: pointer;
@@ -2893,5 +2943,3 @@ background: hsl(0, 0%, 85%);
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
-
-

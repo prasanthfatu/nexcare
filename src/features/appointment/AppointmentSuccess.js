@@ -1,20 +1,26 @@
 import useAuth from "../../hooks/useAuth"
 import { jwtDecode } from "jwt-decode"
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import EditTrack from "./EditTrack"
 import TrackHead from "./TrackHead"
+import useNotifyCount from "../../hooks/useNotifyCount"
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AppointmentSuccess = () => {
 
+  const {profileNotify} = useNotifyCount()
+ 
+  const errRef = useRef(null)
+
   const { auth } = useAuth()
   const axiosPrivate = useAxiosPrivate()
 
   const [status, setStatus] = useState([])
   const [loading, setLoading] = useState(false)
+  const [errMsg, setErrMsg] = useState('')
 
   const decode = auth?.accessToken ?
     jwtDecode(auth.accessToken)
@@ -29,6 +35,13 @@ const AppointmentSuccess = () => {
       setStatus(response.data)
     } catch (err) {
       console.error(err);
+      if (!err.response) {
+        setErrMsg('Server Unreachable');
+      } else if(err.response.status === 400){
+        setErrMsg(err.response.data.message);
+      } else {
+        setErrMsg(err.data?.message || 'Error getting appointment details.');
+      }
     } finally {
       setLoading(false)
     }
@@ -38,14 +51,35 @@ const AppointmentSuccess = () => {
     fetchStatus()
   }, [fetchStatus])
 
+  useEffect(() => {
+    if (errMsg) {
+        errRef.current?.focus();
+    }
+  }, [errMsg]);
+
   const filteredStatus = status.length > 0 &&
     status.filter(patient => {
       const { patientName } = patient
       return username === patientName
     })
 
+  const errClass = errMsg ? "errmsg" : "offscreen"
+
   if (loading) {
-    return <p>Loading...</p>
+    return(
+      <>
+          <p>Loading...</p>
+          <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+      </>
+    )
+  }
+
+  if (errMsg) {
+    return (
+        <section>
+          <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+        </section>
+    )
   }
 
   const deleteAppointment = async(appId) => {
@@ -63,10 +97,12 @@ const AppointmentSuccess = () => {
           fetchStatus()
         }
       })
+      profileNotify()
     } catch (err) {
       console.error(err);
         if (!err.response) {
             toast.error('Server Unreachable.', {
+              position: "top-center",
               style: {
                 width: 'auto',
                 height: 'auto',
@@ -77,6 +113,7 @@ const AppointmentSuccess = () => {
             });
         } else {
             toast.error('Error Deleting Appointment', {
+              position: "top-center",
               style: {
                 width: 'auto',
                 height: 'auto',
@@ -87,7 +124,7 @@ const AppointmentSuccess = () => {
             });
     }
   }
-  }
+  } 
 
   const content = (
     <>
@@ -107,7 +144,7 @@ const AppointmentSuccess = () => {
 
   return (
     <div className="track-container">
-      {filteredStatus.length > 0 ? content : <p>You have not applied any appointment!</p>}
+      {filteredStatus.length > 0 ? content : <p className="track-para">You have not applied any appointment!</p>}
       <ToastContainer />
     </div>
   ) 

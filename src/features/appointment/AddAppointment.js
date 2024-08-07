@@ -32,6 +32,8 @@ const AddAppointment = () => {
   const [healthcare, setHealthcare] = useState([])
 
   const [test, setTest] = useState('')
+  const [isDisabled, setIsDisabled] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const [doctor, setDoctor] = useState('')
   const [date, setDate] = useState(new Date())
@@ -58,6 +60,8 @@ const AddAppointment = () => {
 
   const handleSubmit = async () => {
     try {
+      setIsDisabled(true)
+      setLoading(true)
       const response = await axiosPrivate.post('/appointments',
         JSON.stringify({ patientName, test, doctor, date, sTime, eTime }),
         {
@@ -114,13 +118,16 @@ const AddAppointment = () => {
         }})
       }
       window.scroll({top:0, behavior: 'smooth'})
-
+      setIsDisabled(false)
+      setLoading(false)
     }
   };
 
 
   return (
     <>
+      <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+
       <section className="appointment">
 
         <h4>Book Your Appointment</h4>
@@ -187,7 +194,7 @@ const AddAppointment = () => {
             >
             </TimePicker>
 
-            <button className='app-btn' type="button" onClick={handleSubmit}>Submit</button>
+            <button className='app-btn' type="button" onClick={handleSubmit} disabled={isDisabled}>Submit</button>
           </form>
         </div>
         <ToastContainer

@@ -15,6 +15,9 @@ const Login = () => {
     const { setAuth, persist, setPersist } = useAuth()
     const userRef = useRef()
 
+    const [loading, setLoading] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(false);
+
     const [user, setUser] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
@@ -34,7 +37,8 @@ const Login = () => {
         e.preventDefault();
 
         try {
-
+            setIsDisabled(true)
+            setLoading(true)
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ user, pwd }),
                 {
@@ -47,7 +51,6 @@ const Login = () => {
             setUser('');
             setPwd('');
             navigate('/account')
-
         } catch (err) {
 
             console.error(err)
@@ -55,24 +58,50 @@ const Login = () => {
             if (!err?.response) {
                 toast.error('Server Unreachable', {
                     autoClose: 5000,
-                    position: "top-center"
+                    position: "top-center",
+                    theme: "light",
+                    style: {
+                        width: 'auto',
+                        height: 'auto',
+                        fontSize: "0.8rem"
+                    }
                 });
             } else if (err.response?.status === 400) {
                 toast.error('Missing Username or Password', {
                     autoClose: 5000,
-                    position: "top-center"
+                    position: "top-center",
+                    theme: "light",
+                    style: {
+                        width: 'auto',
+                        height: 'auto',
+                        fontSize: "0.8rem"
+                    }
                 });
             } else if (err.response?.status === 401) {
                 toast.error('Unauthorized', {
                     autoClose: 5000,
-                    position: "top-center"
+                    position: "top-center",
+                    theme: "light",
+                    style: {
+                        width: 'auto',
+                        height: 'auto',
+                        fontSize: "0.8rem"
+                    }
                 });
             } else {
                 toast.error('Login Failed', {
                     autoClose: 5000,
-                    position: "top-center"
+                    position: "top-center",
+                    theme: "light",
+                    style: {
+                        width: 'auto',
+                        height: 'auto',
+                        fontSize: "0.8rem"
+                    }
                 });
             }
+            setIsDisabled(false)
+            setLoading(false)
         }
     }
 
@@ -126,7 +155,7 @@ const Login = () => {
                             required
                         />
 
-                        <button className="form__submit-button">Sign In</button>
+                        <button className="form__submit-button" disabled={isDisabled}>Sign In</button>
 
                         <div>
                             <input
@@ -154,6 +183,7 @@ const Login = () => {
 
     return (
         <div className='login-img'>
+            <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
             {content}
             <p className='login-para'>Please enter your credentials to access your account and explore our platform.</p>
         </div>

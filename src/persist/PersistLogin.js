@@ -34,7 +34,7 @@ const PersistLogin = () => {
         {!persist ?
             <Outlet />
                 : isLoading ?
-                    <p>Loading...</p>
+                    <h2 className="protected-page-loading">Nexcare</h2>
                         : <Outlet />
         }
     </>

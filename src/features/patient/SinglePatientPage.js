@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useParams, Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare, faAddressBook, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
@@ -6,10 +6,13 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 
 const SinglePatientPage = () => {
 
+    const errRef = useRef(null)
+    const [errMsg, setErrMsg] = useState('')
+
     const { patientId } = useParams()
 
     const axiosPrivate = useAxiosPrivate()
-    const [patient, setPatient] = useState([])
+    const [patient, setPatient] = useState(null)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -20,6 +23,11 @@ const SinglePatientPage = () => {
                 setPatient(response.data)
             } catch (err) {
                 console.error(err);
+                if (!err.status) {
+                    setErrMsg('Server Unreachable');
+                }else {
+                    setErrMsg(err.data?.message || 'Error getting patient details.');
+                }
             } finally {
                 setLoading(false)
             }
@@ -27,19 +35,32 @@ const SinglePatientPage = () => {
         fetchSinglePatient()
     }, [axiosPrivate, patientId])
 
+    useEffect(() => {
+        if (errMsg) {
+            errRef.current?.focus();
+        }
+    }, [errMsg]);
+
+    const errClass = errMsg ? "errmsg" : "offscreen"
+
     if(loading) {
-        return <p>Loading...</p>
+        return(
+            <>
+                <p>Loading...</p>
+                <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+            </>
+        )
     }
 
-    if (!patient) {
+   if (errMsg || !patient) {
         return (
             <section>
-                <p>Patient not found!</p>
+                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
             </section>
         )
     }
 
-    return (
+    const content = (
         <section className="singlepage-patient">
 
             <div className="patient-details">
@@ -111,6 +132,9 @@ const SinglePatientPage = () => {
 
         </section>
     )
+
+    return content
+
 }
 
 export default SinglePatientPage

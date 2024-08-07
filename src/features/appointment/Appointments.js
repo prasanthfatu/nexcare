@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import useAuth from '../../hooks/useAuth'
 import { jwtDecode } from 'jwt-decode'
@@ -10,6 +10,9 @@ const Appointments = () => {
 
   const [appointments, setAppointments] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const errRef = useRef(null)
+  const [errMsg, setErrMsg] = useState('')
 
   const {auth} = useAuth()
   const decode = auth?.accessToken ? 
@@ -28,6 +31,13 @@ const Appointments = () => {
       setAppointments(response.data)
     } catch (err) {
       console.error(err);
+      if (!err.response) {
+        setErrMsg('Server Unreachable');
+      } else if(err.response.status === 400){
+        setErrMsg(err.response.data.message);
+      } else {
+        setErrMsg(err.data?.message || 'Error getting appointment details.');
+      }
     } finally {
       setLoading(false)
     }
@@ -36,6 +46,12 @@ const Appointments = () => {
   useEffect(() => {
     fetchAppointments()
   }, [fetchAppointments])
+
+  useEffect(() => {
+    if (errMsg) {
+        errRef.current?.focus();
+    }
+  }, [errMsg]);
  
 const handleAccept = async (id) => {
   try {
@@ -59,8 +75,23 @@ const handleDeny = async (id) => {
 
 };
 
+const errClass = errMsg ? "errmsg" : "offscreen"
+
 if(loading){
-  return <p>Loading...</p>
+  return(
+    <>
+        <p>Loading...</p>
+        <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+    </>
+  )
+}
+
+if (errMsg) {
+  return (
+      <section>
+          <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+      </section>
+  )
 }
 
 if(filteredAppointments.length === 0) {
@@ -68,6 +99,8 @@ if(filteredAppointments.length === 0) {
 }
 
 return (
+  <>
+  { filteredAppointments.length > 0 &&
   <div>
       <h2 className='appointment-head'>Appointments</h2>
       <ul className='all-appointments'>
@@ -94,7 +127,8 @@ return (
               })
           }
       </ul>
-  </div>
+  </div>}
+  </>
 );
 
 }

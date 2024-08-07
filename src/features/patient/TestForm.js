@@ -22,10 +22,14 @@ const TestForm = () => {
   const [relationship, setRelationship] = useState('')
   const [emerPhone, setEmerPhone] = useState('')
 
+  const [loading, setLoading] = useState(false)
+  const [isDisabled, setIsDisabled] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
+      setIsDisabled(true)
+      setLoading(true)
       await axiosPrivate.post('/medicaltest',
         JSON.stringify({ patientName, age, gender, address, email, phone, maritalStatus, fullname, relationship, emerPhone }),
         {
@@ -43,9 +47,10 @@ const TestForm = () => {
       setFullName('')
       setRelationship('')
       setEmerPhone('')
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       toast.success('Patient Information Added successfully!', {
         position: "top-center",
-        autoClose: 1000,
+        autoClose: 2000,
         style: {
           width: 'auto',
           height: 'auto',
@@ -87,12 +92,15 @@ const TestForm = () => {
         }})
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
-
+      setIsDisabled(false)
+      setLoading(false)
     }
   };
 
   return (
     <>
+      <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+
       <section className='test-form'>
 
         <div className="test-form-container">
@@ -157,15 +165,28 @@ const TestForm = () => {
               <label>Relationship:</label>
               <select value={relationship} onChange={(e) => setRelationship(e.target.value)}>
                 <option value=''>Select</option>
-                <option value='Spouse'>Spouse</option>
                 <option value='Parent'>Parent</option>
-                <option value='Sibiling'>Sibiling</option>
+                <option value='Spouse'>Spouse</option>
+                <option value='Sibling'>Sibling</option>
+                <option value='Guardian'>Guardian</option>
+                <option value="Grandparent">Grandparent</option>
+                <option value="Child">Child</option>
+                <option value="Aunt/Uncle">Aunt/Uncle</option>
+                <option value="Cousin">Cousin</option>
+                <option value="Friend">Friend</option>
+                <option value="Partner">Partner</option>
+                <option value="Step-Parent">Step-Parent</option>
+                <option value="Step-Sibling">Step-Sibling</option>
+                <option value="Foster Parent">Foster Parent</option>
+                <option value="Neighbor">Neighbor</option>
+                <option value="Colleague">Colleague</option>
+                <option value="Other">Other</option>
               </select>
 
               <label>Emergency Phone Number:</label>
               <input type='number' value={emerPhone} onChange={(e) => setEmerPhone(e.target.value)} />
 
-            <button className='test-form-btn' type="submit">Submit</button>
+            <button className='test-form-btn' type="submit" disabled={isDisabled}>Submit</button>
 
           </form>
 
@@ -181,7 +202,5 @@ const TestForm = () => {
 }
 
 export default TestForm
-
-
 
 

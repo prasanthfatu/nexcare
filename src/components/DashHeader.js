@@ -5,7 +5,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import { jwtDecode } from 'jwt-decode'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
-import useLogout from '../hooks/useLogout'
 import Notifications from '../features/appointment/Notifications'
 import useProfile from '../hooks/useProfile'
 import useNotifyCount from '../hooks/useNotifyCount'
@@ -36,8 +35,6 @@ const DashHeader = () => {
 
     const notificationId = useParams()
     const notId = notificationId.notId;
-
-    const logout = useLogout()
 
     const sidebarRef = useRef()
     const navbarRef = useRef()
@@ -129,10 +126,15 @@ const DashHeader = () => {
     })
 
     const signOut = async () => {
-        await logout()
-        navigate('/')
+            setOpenSidebar(false)
+            navigate('/account/signout')
     }
 
+    const signOutBar = async () => {
+        setNavbar(false)
+        navigate('/account/signout')
+    }
+    
     const handleMyProfile = () => {
         setOpenSidebar(false)
         navigate('/account/my-profile')
@@ -362,7 +364,7 @@ const DashHeader = () => {
                                 
                                 </div>
 
-                                <div className='bar-icons' onClick={signOut}>
+                                <div className='bar-icons' onClick={signOutBar}>
                                     <li>
                                         <FontAwesomeIcon icon={faRightFromBracket} />
                                     </li>
