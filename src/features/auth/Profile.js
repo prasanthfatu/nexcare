@@ -16,6 +16,9 @@ const Profile = () => {
   
   const { auth, profile, setProfile, bgCover } = useAuth()
 
+  const errRef = useRef(null)
+  const [errMsg, setErrMsg] = useState('')
+
   const decode = auth?.accessToken ? jwtDecode(auth.accessToken) : undefined
   const name = decode?.UserInfo?.username || ''
   const roles = decode?.UserInfo?.roles || ''
@@ -72,6 +75,13 @@ const Profile = () => {
       setProLoading(false)
     } catch (err) {
       console.error(err)
+      if (!err.response) {
+        setErrMsg('Server Unreachable');
+      } else if(err.response.status === 400){
+        setErrMsg(err.response.data.message);
+      } else {
+        setErrMsg(err.data?.message || 'Error getting appointment details.');
+      }
     } finally {
       setProLoading(false)
     }
@@ -96,6 +106,13 @@ const Profile = () => {
         setCoverImgLoading(false)
     } catch (err) {        
         console.error(err)
+        if (!err.response) {
+          setErrMsg('Server Unreachable');
+        } else if(err.response.status === 400){
+          setErrMsg(err.response.data.message);
+        } else {
+          setErrMsg(err.data?.message || 'Error getting appointment details.');
+        }
     } finally {
       setCoverImgLoading(false)
     }
@@ -151,9 +168,32 @@ const Profile = () => {
       selectedFileRef.current.value = null
       setProfile(null)
       getProfile()
-    } catch (error) {
-      console.error('Error removing profile:', error);
+    } catch (err) {
+      console.error('Error removing profile:', err);
+      if (!err.response) {
+        setErrMsg('Server Unreachable');
+      } else if(err.response.status === 400){
+        setErrMsg(err.response.data.message);
+      } else {
+        setErrMsg(err.data?.message || 'Error getting appointment details.');
+      }
     }
+  }
+
+  useEffect(() => {
+    if(errMsg){
+      errRef.current.focus()
+    }
+  }, [errMsg])
+
+  const errClass = errMsg ? "errmsg" : "offscreen"
+
+  if(errMsg){
+    return(
+      <section>
+        <p ref={errRef} className={errClass}>{errMsg}</p>
+      </section>
+    )
   }
 
   if(loading) {

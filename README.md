@@ -13,10 +13,12 @@
 11. [x] Appointments have a date, time, accept, deny
 12. [x] Appointments are either ACCEPT or DENY 
 13. [x] Users can be HealthcareProvider, User, or Admin
-14. [x] Appointments can only be deleted by HealthcareProvider
-15. [x] Anyone can book appointment
+14. [x] Appointments can only be deleted by the person who created them
+15. [x] Anyone can book appointment with their own profile
 16. [x] HealthcareProvider can only view and accept or deny appointments
 17. [x] HealthcareProvider, User, or Admin can add, view, edit, and delete all patients
 18. [x] Admin can access User Settings
 19. [x] Add Track to view appointment status
 20. [x] Add Notification feature to send information
+21. [x] Add responsive web design
+22. [x] suitable for any type of device
