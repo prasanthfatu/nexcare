@@ -202,9 +202,22 @@ const EditPage = ({ patient, patientId }) => {
           <label>Relationship:</label>
           <select value={relationship} onChange={(e) => setRelationship(e.target.value)}>
             <option value=''>Select</option>
-            <option value='Spouse'>Spouse</option>
             <option value='Parent'>Parent</option>
-            <option value='Sibiling'>Sibiling</option>
+            <option value='Spouse'>Spouse</option>
+            <option value='Sibling'>Sibling</option>
+            <option value='Guardian'>Guardian</option>
+            <option value="Grandparent">Grandparent</option>
+            <option value="Child">Child</option>
+            <option value="Aunt/Uncle">Aunt/Uncle</option>
+            <option value="Cousin">Cousin</option>
+            <option value="Friend">Friend</option>
+            <option value="Partner">Partner</option>
+            <option value="Step-Parent">Step-Parent</option>
+            <option value="Step-Sibling">Step-Sibling</option>
+            <option value="Foster Parent">Foster Parent</option>
+            <option value="Neighbor">Neighbor</option>
+            <option value="Colleague">Colleague</option>
+            <option value="Other">Other</option>
           </select>
 
           <label>Emergency Phone Number:</label>
