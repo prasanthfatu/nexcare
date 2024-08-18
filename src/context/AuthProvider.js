@@ -15,7 +15,7 @@ export const AuthProvider = ({children}) => {
     const [isSubmenuOpen, setIsSubmenuOpen] = useState(true)
 
     const [profile, setProfile] = useState('')
-    const [bgCover, setBgCover] = useState(null)
+    const [bgCover, setBgCover] = useState('')
 
     const [notificationLen, setNotificationLen] = useState([]);
 
