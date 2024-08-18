@@ -21,6 +21,8 @@ const DashHeader = () => {
     const URL = 'https://nexcare-api.onrender.com/img/'
 
     const {profileNotify} = useNotifyCount()
+    
+    const [imageSrc, setImageSrc] = useState(null);
 
     const { auth, profile, notificationLen, setBarIcon, barIcon } = useAuth()
 
@@ -56,6 +58,33 @@ const DashHeader = () => {
         getProfile()
     }, [getCoverPhoto, getProfile])
 
+    useEffect(() => {
+        const fetchImage = async () => {
+          try {
+            const imageUrl = `${imgURL}${profile.name}/${profile.image}`;
+    
+            if(!profile.name || !profile.image) return
+    
+            const response = await axiosPrivate.get(imageUrl, {
+              responseType: 'blob',
+              headers: {
+                'Authorization': `Bearer ${auth?.accessToken}`,
+              },
+            });
+        
+            // Convert the Blob to an object URL and set it as the image source
+            const imageObjectUrl = URL.createObjectURL(response.data);
+            setImageSrc(imageObjectUrl);            
+    
+          } catch (error) {
+            console.error('Error fetching the image:', error);
+          }
+        };
+    
+        fetchImage();
+    
+      }, [auth?.accessToken, profile.image, profile.name, axiosPrivate]);    
+    
     useEffect(() => {
         const handleBarIcon = (e) => {
             if(!barIconRef.current.contains(e.target)){
@@ -256,7 +285,7 @@ const DashHeader = () => {
                         <div onClick={() => setOpenSidebar(!openSidebar)} className='nav-profile'>
                             { profile ? (
                                 <div>
-                                    <img src={`${URL}${profile.name}/${profile.image}`} alt='profile' className='profile-picture-head' />
+                                    <img src={imageSrc} alt='profile' className='profile-picture-head' />
                                 </div>
                             ) : <div className = 'profile-pic-icon'><FontAwesomeIcon icon={faUser} /></div> }
                             <p className='navbar-user'>Profile</p>
@@ -278,7 +307,7 @@ const DashHeader = () => {
                                 <div className='profile-edit-section' onClick={handleMyProfile}>
                                     {
                                         profile ? (
-                                            <img src={`${URL}${profile.name}/${profile.image}`} alt='profile-pic' className='profile-edit-img' />
+                                            <img src={imageSrc} alt='profile-pic' className='profile-edit-img' />
                                         ) : (
                                             <div className='alt-text'></div>
                                         )
@@ -328,7 +357,7 @@ const DashHeader = () => {
                                     <li className='barimg-container'>
                                         {
                                             profile ? (
-                                                <img src={`${URL}${profile.name}/${profile.image}`} alt='profile-pic' className='navprofile-img' onClick={handleProfileBar}/>
+                                                <img src={imageSrc} alt='profile-pic' className='navprofile-img' onClick={handleProfileBar}/>
                                             ) : (
                                                 <FontAwesomeIcon icon={faUser} onClick={handleProfileBar} />
                                             )
