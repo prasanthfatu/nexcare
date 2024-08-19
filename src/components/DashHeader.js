@@ -63,7 +63,7 @@ const DashHeader = () => {
           try {
             const imageUrl = `${imgURL}${profile.name}/${profile.image}`;
     
-            if(!profile.name || !profile.image) return
+            if(!profile || !profile.name || !profile.image) return
     
             const response = await axiosPrivate.get(imageUrl, {
               responseType: 'blob',
