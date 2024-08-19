@@ -61,10 +61,11 @@ const DashHeader = () => {
     useEffect(() => {
         const fetchImage = async () => {
           try {
+              
+            if(!profile || !profile.name || !profile.image) return;
+              
             const imageUrl = `${imgURL}${profile.name}/${profile.image}`;
-    
-            if(!profile || !profile.name || !profile.image) return
-    
+              
             const response = await axiosPrivate.get(imageUrl, {
               responseType: 'blob',
               headers: {
