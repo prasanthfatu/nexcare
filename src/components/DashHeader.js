@@ -83,7 +83,7 @@ const DashHeader = () => {
     
         fetchImage();
     
-      }, [auth?.accessToken, profile.image, profile.name, axiosPrivate]);    
+      }, [auth?.accessToken, profile, axiosPrivate]);    
     
     useEffect(() => {
         const handleBarIcon = (e) => {
