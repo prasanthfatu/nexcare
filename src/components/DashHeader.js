@@ -22,7 +22,7 @@ const DashHeader = () => {
 
     const {profileNotify} = useNotifyCount()
     
-    const [imageSrc, setImageSrc] = useState(null);
+    const [imageSrc, setImageSrc] = useState('');
 
     const { auth, profile, notificationLen, setBarIcon, barIcon } = useAuth()
 
