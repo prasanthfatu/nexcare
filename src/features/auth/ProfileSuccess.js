@@ -68,6 +68,8 @@ const ProfileSuccess = () => {
                 <h5>NexCare Innovate.</h5>
                 <p>{notification.recipient} your profile has uploaded!</p>
                 <br/>
+                <p className='user-message'>Please note: Your profile picture / cover photo will be lost after some time due to the limitations of the hosting platform.</p>
+                <br/>
             </div>
         </section>
     )
