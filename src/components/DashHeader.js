@@ -71,6 +71,7 @@ const DashHeader = () => {
               headers: {
                 'Authorization': `Bearer ${auth?.accessToken}`,
               },
+              withCredentials: true,
             });
         
             // Convert the Blob to an object URL and set it as the image source
