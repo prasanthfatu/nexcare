@@ -18,7 +18,7 @@ import usersetting from '../img/user-settings.png'
 
 const DashHeader = () => {
 
-    const imgURL = 'https://nexcare-api.onrender.com/public/img/'
+    const imgURL = 'https://nexcare-api.onrender.com/img/'
 
     const {profileNotify} = useNotifyCount()
     
