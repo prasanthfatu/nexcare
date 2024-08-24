@@ -5,6 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faRightToBracket, faUserPlus, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 import Page from './Page'
+import axios from '../app/api/axios'
+import useAuth from '../hooks/useAuth'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Public = () => {
 
@@ -13,6 +18,9 @@ const Public = () => {
     const docRef = useRef()
 
     const [openbar, setOpenbar] = useState(false)
+    const [loading, setLoading] = useState(false)
+
+    const { setAuth, user } = useAuth()
 
     useEffect(() => {
         let handle = (e) => {
@@ -27,13 +35,86 @@ const Public = () => {
         }
     })
 
+     const handleGuest = async() => {
+        setOpenbar(false)
+    
+            try {
+                setLoading(true)
+                const response = await axios.post('/guestauth',
+                    JSON.stringify({ user: "Guest User" }),
+                    {
+                        headers: { 'Content-Type': 'application/json' },
+                        withCredentials: true
+                    }
+                );
+                const accessToken = response?.data?.accessToken;
+                setAuth({ user, accessToken });
+                navigate('/account')
+            } catch (err) {
+    
+                console.error(err)
+    
+                if (!err?.response) {
+                    toast.error('Server Unreachable', {
+                        autoClose: 5000,
+                        position: "top-center",
+                        theme: "light",
+                        style: {
+                            width: 'auto',
+                            height: 'auto',
+                            fontSize: "0.8rem"
+                        }
+                    });
+                } else if (err.response?.status === 400) {
+                    toast.error('Missing Username or Password', {
+                        autoClose: 5000,
+                        position: "top-center",
+                        theme: "light",
+                        style: {
+                            width: 'auto',
+                            height: 'auto',
+                            fontSize: "0.8rem"
+                        }
+                    });
+                } else if (err.response?.status === 401) {
+                    toast.error('Unauthorized', {
+                        autoClose: 5000,
+                        position: "top-center",
+                        theme: "light",
+                        style: {
+                            width: 'auto',
+                            height: 'auto',
+                            fontSize: "0.8rem"
+                        }
+                    });
+                } else {
+                    toast.error('Login Failed', {
+                        autoClose: 5000,
+                        position: "top-center",
+                        theme: "light",
+                        style: {
+                            width: 'auto',
+                            height: 'auto',
+                            fontSize: "0.8rem"
+                        }
+                    });
+                }
+                setLoading(false)
+            }
+    }
+
     const content = (
 
         <section className="public">
+            <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
             <header className='loginheader'>
 
                 <div className="nav-menu">
+    
+                    <div className='nav-login' onClick={handleGuest}>
+                        <p className='loginpad guest'>Guest User</p>
+                    </div>
 
                     <div className='nav-login'>
                         <Link to="/login" className='loginpad'><FontAwesomeIcon icon={faRightToBracket} /></Link>
@@ -60,6 +141,7 @@ const Public = () => {
 
                     <div className={`dropdown-menu ${openbar ? 'active' : 'inactive'}`}>
                         <ul>
+                            <div className='bar-list' onClick={handleGuest}><li className='baricon'><FontAwesomeIcon icon={faUser} /></li><p className='signup'>Guest User</p></div>
                             <div className='bar-list' onClick={() => navigate('/login')}><li className='baricon'><FontAwesomeIcon icon={faRightToBracket} /></li><p className='signup'>Sign in</p></div>
                             <div className='bar-list' onClick={() => navigate('/register')}><li className='baricon'><FontAwesomeIcon icon={faUserPlus} /></li><p>Sign up</p></div>
                             <div className='bar-list' onClick={() => navigate('/about')}><li className='baricon'><FontAwesomeIcon icon={faCircleInfo} /></li><p className='signup'>About</p></div>
@@ -127,6 +209,8 @@ const Public = () => {
             <footer className='public-foot'>
                 <p className='foot'>© NexCare Innovate Medical Center 2024. All rights reserved.</p>
             </footer>
+    
+            <ToastContainer />
 
         </section>
 
