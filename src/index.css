@@ -127,6 +127,14 @@ form {
 .loginpad, .registerpad, .info{
   margin-right: 2rem;
 }
+.guest {
+  background-color: var(--COLOR);
+  padding: 0.25rem 0.5rem;
+  font-size: small;
+  color: #fff;
+  font-weight: 500;
+  border-radius: 0.75rem;
+}
 .info{
   margin-right: 1rem;
 }
@@ -138,7 +146,7 @@ form {
   display: none;
   font-size: 15px;
   position: absolute;
-  bottom: -34px;
+  bottom: -37px;
   left: 25%;
   transform: translateX(-50%);
   color: gray;
