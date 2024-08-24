@@ -1,7 +1,8 @@
 const ROLES = {
     Admin: 'Admin',
     HealthcareProvider: 'HealthcareProvider',
-    Patient: 'User'
+    Patient: 'User',
+    Guest: 'Guest'
 }
 
 export default ROLES
