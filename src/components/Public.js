@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import doc from "../img/doc.jpg"
 import test from '../img/test.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faRightToBracket, faUserPlus, faCircleInfo } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faRightToBracket, faUserPlus, faCircleInfo, faUser } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 import Page from './Page'
 import axios from '../app/api/axios'
