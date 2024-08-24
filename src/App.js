@@ -31,6 +31,7 @@ import Profile from './features/auth/Profile';
 import ProfileSuccess from './features/auth/ProfileSuccess'
 import useTitle from './hooks/useTitle';
 import Signout from './features/auth/Signout'
+import GuestPage from './features/appointment/GuestPage';
 
 function App() {
 
@@ -61,6 +62,7 @@ function App() {
                   <Route path='medicaltest' element={<TestForm />}/>
                   <Route path='new-appointment' element={<AddAppointment />} />
                   <Route path='appointmentsuccess' element={<AppointmentSuccess />} />
+                  <Route path='guestregistered/:notId' element={<GuestPage />} />
                   <Route path='notifications-bar' element={<NotificationsBar />} />
                   <Route path='singleappointment/:notId/:appId' element={<SingleAppointment />} />
                   <Route path='regsuccessmessage/:notId' element={<RegSuccessMessage />} />
