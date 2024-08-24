@@ -80,7 +80,7 @@ const Profile = () => {
       } else if(err.response.status === 400){
         setErrMsg(err.response.data.message);
       } else {
-        setErrMsg(err.data?.message || 'Error getting appointment details.');
+        setErrMsg(err.data?.message || 'Error uploading profile picture.');
       }
     } finally {
       setProLoading(false)
@@ -111,7 +111,7 @@ const Profile = () => {
         } else if(err.response.status === 400){
           setErrMsg(err.response.data.message);
         } else {
-          setErrMsg(err.data?.message || 'Error getting appointment details.');
+          setErrMsg(err.data?.message || 'Error uploading cover photo.');
         }
     } finally {
       setCoverImgLoading(false)
@@ -175,7 +175,7 @@ const Profile = () => {
       } else if(err.response.status === 400){
         setErrMsg(err.response.data.message);
       } else {
-        setErrMsg(err.data?.message || 'Error getting appointment details.');
+        setErrMsg(err.data?.message || 'Error removing profile.');
       }
     }
   }
