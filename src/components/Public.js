@@ -19,6 +19,7 @@ const Public = () => {
 
     const [openbar, setOpenbar] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(false)
 
     const { setAuth, user } = useAuth()
 
@@ -39,6 +40,7 @@ const Public = () => {
         setOpenbar(false)
     
             try {
+                setIsDisabled(true)
                 setLoading(true)
                 const response = await axios.post('/guestauth',
                     JSON.stringify({ user: "Guest User" }),
@@ -99,6 +101,7 @@ const Public = () => {
                         }
                     });
                 }
+                setIsDisabled(false)
                 setLoading(false)
             }
     }
@@ -112,8 +115,8 @@ const Public = () => {
 
                 <div className="nav-menu">
     
-                    <div className='nav-login' onClick={handleGuest}>
-                        <p className='loginpad guest'>Guest User</p>
+                    <div className='nav-login'>
+                        <button className='loginpad guest' disabled={isDisabled} onClick={handleGuest}>Guest User</button>
                     </div>
 
                     <div className='nav-login'>
