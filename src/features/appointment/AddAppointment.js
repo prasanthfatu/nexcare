@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { jwtDecode } from "jwt-decode";
@@ -17,6 +17,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddAppointment = () => {  
+
+  const errRef = useRef(null)
+  const [errMsg, setErrMsg] = useState('')
 
   const { setTrack, auth } = useAuth()
 
@@ -47,10 +50,23 @@ const AddAppointment = () => {
         setHealthcare(response.data)
       } catch (err) {
         console.error(err);
+        if (!err.response) {
+          setErrMsg('Server Unreachable');
+        } else if(err.response.status === 400){
+          setErrMsg(err.response.data.message);
+        } else {
+          setErrMsg(err.data?.message || 'Error fetching data from server.');
+        }
       }
     }
     getHealthcare()
   }, [axiosPrivate])
+
+  useEffect(() => {
+    if (errMsg) {
+        errRef.current?.focus();
+    }
+  }, [errMsg]);
 
   const options = healthcare.map(doctor => (
       <option key={doctor._id} value={doctor.username}>
@@ -123,8 +139,17 @@ const AddAppointment = () => {
     }
   };
 
+  const errClass = errMsg ? "errmsg" : "offscreen"
 
-  return (
+    if (errMsg) {
+        return (
+            <section>
+                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+            </section>
+        )
+    }
+
+  const content = (
     <>
       <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
@@ -204,6 +229,9 @@ const AddAppointment = () => {
       </section>
     </>
   )
+
+  return options.length > 0 ? content : <p>Loading...</p>
+
 }
 
 export default AddAppointment;
