@@ -88,6 +88,7 @@ const AddAppointment = () => {
       setTrack(response.data)
       setTest('')
       setDoctor('')
+      setDate('')
       setStartTime('')
       setEndTime('')
       toast.success('appointment added successfully!', {
