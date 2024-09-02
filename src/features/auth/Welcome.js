@@ -10,14 +10,14 @@ import healthtest from '../../img/health-test.png'
 import healthsupport from '../../img/health-support.png'
 import healthdigital from '../../img/health-digital.png'
 
-const Welcome = () => 
-    
+const Welcome = () => {
+
     const content = (
         
         <section className="welcome">
 
             <div className='welcome-space'>
-    
+                
                 <div className='welcome-img'>
                     <p>NEXCARE <sup>Innovate</sup></p><br />
                     <h6 className='welcome-para'>Our friendly and professional staff are ready to<br /> assist you, ensuring your experience is as smooth<br /> and stress-free as possible.</h6>
