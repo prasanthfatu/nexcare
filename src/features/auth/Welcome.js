@@ -12,16 +12,12 @@ import healthdigital from '../../img/health-digital.png'
 
 const Welcome = () => 
     
-    const today = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(new Date())
-    
     const content = (
         
         <section className="welcome">
 
             <div className='welcome-space'>
-        
-                <h6>{today}</h6>
-
+    
                 <div className='welcome-img'>
                     <p>NEXCARE <sup>Innovate</sup></p><br />
                     <h6 className='welcome-para'>Our friendly and professional staff are ready to<br /> assist you, ensuring your experience is as smooth<br /> and stress-free as possible.</h6>
