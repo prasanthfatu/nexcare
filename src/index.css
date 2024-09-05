@@ -2689,20 +2689,11 @@ background: hsl(0, 0%, 85%);
     justify-content: center;
     align-items: center;
   }
-  .nav-name-baricon {
-    display: none;
-  }
-  .nav-name-icon {
-    display: none;
-  }
   .board-container {
     display: none;
   }
   .nav-name {
     width: auto;
-  }
-  .board-responsive-container {
-    display: block;
   }
   .board-responsive {
     width: 100%;
@@ -2837,9 +2828,6 @@ background: hsl(0, 0%, 85%);
   .dot-linetwo-img p {
     font-size: x-small;
   }
-  .footer-info {
-    display: none;
-  }
   .dash-footer {
     border-top: none;
   }
@@ -2867,6 +2855,21 @@ background: hsl(0, 0%, 85%);
 @media screen and (max-width: 768px){
   .app-list {
     grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 1023px){
+  .nav-name-icon {
+    display: none;
+  }
+  .nav-name-baricon {
+    display: none;
+  }
+  .footer-info {
+    display: none;
+  }
+  .board-responsive-container {
+    display: block;
   }
 }
 
