@@ -2871,9 +2871,6 @@ background: hsl(0, 0%, 85%);
 }
 
 @media screen and (max-width: 1023px){
-  .nav-name-icon {
-    display: none;
-  }
   .footer-info {
     display: none;
   }
