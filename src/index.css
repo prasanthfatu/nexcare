@@ -367,6 +367,7 @@ form {
   align-items: center;
 }
 .footer-info {
+  width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -2873,6 +2874,7 @@ background: hsl(0, 0%, 85%);
     display: none;
   }
   .board-responsive-container {
+    width: 100%;
     display: block;
   }
 }
