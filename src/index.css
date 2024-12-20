@@ -2861,6 +2861,10 @@ background: hsl(0, 0%, 85%);
   .app-list {
     grid-template-columns: 1fr;
   }
+  .board-responsive-container {
+    width: 100%;
+    display: block;
+  }
 }
 
 @media screen and (max-width: 1023px){
@@ -2872,10 +2876,6 @@ background: hsl(0, 0%, 85%);
   }
   .footer-info {
     display: none;
-  }
-  .board-responsive-container {
-    width: 100%;
-    display: block;
   }
 }
 
