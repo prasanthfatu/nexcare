@@ -2865,13 +2865,13 @@ background: hsl(0, 0%, 85%);
     width: 100%;
     display: block;
   }
+  .nav-name-baricon {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1023px){
   .nav-name-icon {
-    display: none;
-  }
-  .nav-name-baricon {
     display: none;
   }
   .footer-info {
