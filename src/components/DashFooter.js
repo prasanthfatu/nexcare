@@ -73,9 +73,7 @@ const DashFooter = () => {
                 </div>
 
             </div>    
-
-            // <p className="footer-info">© NexCare Innovate Medical Center 2024.</p>
-
+        
         </footer>
 
     )
