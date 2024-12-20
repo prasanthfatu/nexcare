@@ -209,9 +209,9 @@ const Public = () => {
 
             </main>
 
-            <footer className='public-foot'>
-                <p className='foot'>© NexCare Innovate Medical Center 2024. All rights reserved.</p>
-            </footer>
+            // <footer className='public-foot'>
+            //     <p className='foot'>© NexCare Innovate Medical Center 2024. All rights reserved.</p>
+            // </footer>
     
             <ToastContainer />
 
