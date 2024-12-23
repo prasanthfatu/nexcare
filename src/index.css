@@ -2868,6 +2868,9 @@ background: hsl(0, 0%, 85%);
   .nav-name-baricon {
     display: none;
   }
+  .dash-container{
+    margin-bottom: 2em;
+  }
 }
 
 @media screen and (max-width: 1023px){
