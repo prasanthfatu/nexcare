@@ -16,7 +16,8 @@ const Public = () => {
     const navigate = useNavigate()
 
     const docRef = useRef()
-
+    const pageRef = useRef()
+    
     const [openbar, setOpenbar] = useState(false)
     const [loading, setLoading] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
@@ -105,7 +106,9 @@ const Public = () => {
                 setLoading(false)
             }
     }
-
+    const handlePageRef = () => {
+        pageRef.current?.scrollIntoView({behavior: 'smooth'})
+    }
     const content = (
 
         <section className="public">
@@ -186,7 +189,7 @@ const Public = () => {
                         <br />
                         These tests encompass a broad spectrum, ranging from routine blood tests to sophisticated imaging procedures such as MRIs and CT scans. With advancements in technology and research, medical tests play an integral role in providing accurate diagnoses, guiding treatment decisions, and promoting overall wellness and quality of life for patients.<br />
                         <br />
-                        <span className='link-para'><a href='#third-box'>Learn more</a></span>
+                        <span className='link-para' onClick={handlePageRef}>Learn more</span>
 
                     </p>
 
@@ -203,7 +206,7 @@ const Public = () => {
 
                 <button className='learn-btn' onClick={() => navigate('/visit-our-medicalcenter')}>Visit our Medical test center</button>
 
-                <div id="third-box">
+                <div ref={pageRef}>
                     <Page />
                 </div>
 
