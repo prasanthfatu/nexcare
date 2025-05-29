@@ -12,6 +12,7 @@ import healthdigital from '../../img/health-digital.png'
 import { useState, useEffect, useRef } from 'react'
 
 const Welcome = () => {
+
     const [isVisible, setIsVisible] = useState(false)
 
     const scrollRef = useRef()
@@ -39,7 +40,7 @@ const Welcome = () => {
             behavior: 'smooth'
         })
     }
-    
+
     const content = (
         
         <section className="welcome">
@@ -177,15 +178,15 @@ const Welcome = () => {
                     </div>
                     
                 </div>
-        
+
                 {isVisible && (
-                    <span
-                        ref={scrollRef}
-                        onClick={handlescrollToTop}
-                    >
-                    ↑
-                    </span>
-                )}
+                <span
+                    ref={scrollRef}
+                    onClick={handlescrollToTop}
+                >
+                ↑
+                </span>
+            )}
 
             </div>
 
