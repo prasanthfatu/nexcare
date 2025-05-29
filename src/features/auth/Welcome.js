@@ -9,9 +9,37 @@ import support from '../../img/support.png'
 import healthtest from '../../img/health-test.png'
 import healthsupport from '../../img/health-support.png'
 import healthdigital from '../../img/health-digital.png'
+import { useState, useEffect, useRef } from 'react'
 
 const Welcome = () => {
+    const [isVisible, setIsVisible] = useState(false)
 
+    const scrollRef = useRef()
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const show = window.scrollY > 500
+            setIsVisible(show)
+            if(scrollRef.current){
+                if(isVisible){
+                    scrollRef.current.classList.add('scrolltop')
+                }else{
+                    scrollRef.current.classList.remove('scrolltop')
+                }
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    const handlescrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })
+    }
+    
     const content = (
         
         <section className="welcome">
@@ -149,6 +177,15 @@ const Welcome = () => {
                     </div>
                     
                 </div>
+        
+                {isVisible && (
+                    <span
+                        ref={scrollRef}
+                        onClick={handlescrollToTop}
+                    >
+                    ↑
+                    </span>
+                )}
 
             </div>
 
