@@ -32,7 +32,7 @@ const Welcome = () => {
 
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
-    }, [])
+    }, [isVisible])
 
     const handlescrollToTop = () => {
         window.scrollTo({
