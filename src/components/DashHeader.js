@@ -50,8 +50,21 @@ const DashHeader = () => {
     const [openNotificationBar, setOpenNotificationBar] = useState(false)
     const [openSidebar, setOpenSidebar] = useState(false)
     const [navbar, setNavbar] = useState(false)
+    const [hide, setHide] = useState(false)
 
     const {getProfile} = useProfile(name, auth)
+    
+    useEffect(() => {
+        const handleScroll = () => {
+            if(window.scrollY > 200){
+                setHide(true)
+            }else{
+                setHide(false)
+            }
+        }
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
     
     useEffect(() => {
         getCoverPhoto()
@@ -174,10 +187,19 @@ const DashHeader = () => {
     const handleProfileBar = () => {
         navigate('/account/my-profile')
     }
+    const styles = {
+        hidden: {
+            transform: hide ? 'translateY(-100%)' : 'translateY(0)',
+            transition: 'transform 0.5s ease'
+        }
+    }
 
     const content = (
 
-        <header className='nav'>
+        <header 
+            className='nav'
+            style={styles.hidden}
+        >
 
             <div className='nav-name'>
 
