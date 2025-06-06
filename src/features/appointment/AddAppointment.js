@@ -19,7 +19,9 @@ import 'react-toastify/dist/ReactToastify.css';
 const AddAppointment = () => {  
 
   const errRef = useRef(null)
+  const rippleRef = useRef()
   const [errMsg, setErrMsg] = useState('')
+  const [processing, setProcessing] = useState(false)
 
   const { setTrack, auth } = useAuth()
 
@@ -74,10 +76,32 @@ const AddAppointment = () => {
       </option>
   ))
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+
+    const button = rippleRef.current
+
+    const ripple = document.createElement('span')
+    const diameter = Math.max(button.clientWidth, button.clientHeight)
+    const radius = diameter /2
+    ripple.style.width = ripple.style.height = `${diameter}px`
+    ripple.style.position = `absolute`
+    ripple.style.left = `${e.nativeEvent.offsetX - radius}px`
+    ripple.style.top = `${e.nativeEvent.offsetY - radius}px`
+    ripple.style.background = `rgba(255, 255, 255, 0.2)`
+    ripple.style.borderRadius = '50%'
+    ripple.style.opacity = 1
+    ripple.style.transform = 'scale(0)'
+    ripple.style.animation = `ripple-effect 600ms ease`
+
+    const existRipple = button.querySelector('span')
+    if(existRipple) existRipple.remove()
+     
+    button.appendChild(ripple)  
+
     try {
       setIsDisabled(true)
       setLoading(true)
+      setProcessing(true)
       const response = await axiosPrivate.post('/appointments',
         JSON.stringify({ patientName, test, doctor, date, sTime, eTime }),
         {
@@ -137,6 +161,7 @@ const AddAppointment = () => {
       window.scroll({top:0, behavior: 'smooth'})
       setIsDisabled(false)
       setLoading(false)
+      setProcessing(false)
     }
   };
 
@@ -152,6 +177,17 @@ const AddAppointment = () => {
 
   const content = (
     <>
+      <style>
+          {
+            `@keyframes ripple-effect {
+              to {
+                transform: scale(2);
+                opacity: 1
+              }
+            }`
+          }
+      </style>
+
       <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
       <section className="appointment">
@@ -220,7 +256,11 @@ const AddAppointment = () => {
             >
             </TimePicker>
 
-            <button className='app-btn' type="button" onClick={handleSubmit} disabled={isDisabled}>Submit</button>
+             <button ref={rippleRef} className='app-btn' type="button" onClick={handleSubmit} disabled={isDisabled} style={{position: 'relative', backgroundColor: processing ? '#4aa0fc' : '#218bff', cursor: processing ? 'not-allowed' : 'pointer', overflow:'hidden'}}>
+              {processing && <span style={{width: '20px', height: '20px', border: '1px solid white', borderTop: '1px solid transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite'}} />}
+              {processing ? 'Processing...' : 'Submit'}
+            </button>
+
           </form>
         </div>
         <ToastContainer
