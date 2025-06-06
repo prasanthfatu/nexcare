@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import addnewpatient from '../../img/+patient.png';
@@ -7,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const TestForm = () => {
+  const [processing, setProcessing] = useState(false)
+  const rippleRef = useRef()
 
   const navigate = useNavigate()
   const axiosPrivate = useAxiosPrivate()
@@ -27,9 +29,30 @@ const TestForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const button = rippleRef.current
+
+    const ripple = document.createElement('span')
+    const diameter = Math.max(button.clientWidth, button.clientHeight)
+    const radius = diameter / 2
+    ripple.style.width = ripple.style.height = `${diameter}px`
+    ripple.style.position = `absolute`
+    ripple.style.left = `${e.nativeEvent.offsetX - radius}px`
+    ripple.style.top = `${e.nativeEvent.offsetY - radius}px`
+    ripple.style.background = 'rgba(255, 255, 255, 0.2)'
+    ripple.style.borderRadius = `50%`
+    ripple.style.opacity = 1
+    ripple.style.transform = `scale(0)`
+    ripple.style.animation = `ripple-effect 600ms ease`
+
+    const existRipple = button.querySelector('span')
+    if(existRipple) existRipple.remove()
+    button.appendChild(ripple)
+
     try {
       setIsDisabled(true)
       setLoading(true)
+      setProcessing(true)
       await axiosPrivate.post('/medicaltest',
         JSON.stringify({ patientName, age, gender, address, email, phone, maritalStatus, fullname, relationship, emerPhone }),
         {
@@ -94,11 +117,28 @@ const TestForm = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setIsDisabled(false)
       setLoading(false)
+      setProcessing(false)
     }
   };
 
   return (
     <>
+      <style>
+        {`
+          @keyframes spin {
+            to {
+              transform: rotate(360deg)
+            }
+          }
+          @keyframes ripple-effect {
+           to{
+             transform: scale(2);
+             opacity: 1
+           }
+          }
+        `}
+      </style>
+
       <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
       <section className='test-form'>
@@ -186,7 +226,10 @@ const TestForm = () => {
               <label>Emergency Phone Number:</label>
               <input type='number' value={emerPhone} onChange={(e) => setEmerPhone(e.target.value)} />
 
-            <button className='test-form-btn' type="submit" disabled={isDisabled}>Submit</button>
+            <button ref={rippleRef} className='test-form-btn' type="submit" disabled={isDisabled} style={{position: 'relative', backgroundColor: processing ? '#4aa0fc' : '#218bff', cursor: processing ? 'not-allowed' : 'pointer', overflow: 'hidden'}}>
+              {processing && <span style={{width: '20px', height: '20px', border: '1px solid white', borderTop: '1px solid transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite'}} />}
+              {processing ? 'Processing...' : 'Submit'}
+            </button>
 
           </form>
 
