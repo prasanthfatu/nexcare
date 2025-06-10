@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { faArrowLeft, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import useAuth from '../../hooks/useAuth'
 import axios from '../../app/api/axios'
 
@@ -15,6 +15,7 @@ const Login = () => {
     const { setAuth, persist, setPersist } = useAuth()
     const userRef = useRef()
 
+    const [show, setShow] = useState(false)
     const [loading, setLoading] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false);
 
@@ -146,14 +147,18 @@ const Login = () => {
                         />
 
                         <label htmlFor="password">Password:</label>
-                        <input
-                            className="form__input"
-                            type="password"
-                            id="password"
-                            onChange={handlePwdInput}
-                            value={pwd}
-                            required
-                        />
+                        <div style={{position: 'relative'}}>
+                            <input
+                                className="form__input"
+                                type={show ? 'text' : 'password'}
+                                id="password"
+                                onChange={handlePwdInput}
+                                value={pwd}
+                                required
+                                style={{width: '100%'}}
+                            />
+                            <span onClick={() => setShow(!show)} style={{position: 'absolute', top: '8px', right: '10px', color: 'gray'}}>{show ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}</span>
+                        </div>
 
                         <button className="form__submit-button" disabled={isDisabled}>Sign In</button>
 
