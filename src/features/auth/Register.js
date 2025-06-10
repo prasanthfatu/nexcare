@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
+import { faArrowLeft, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { Link, useNavigate } from "react-router-dom";
 import axios from '../../app/api/axios'
 
@@ -19,6 +19,7 @@ const Register = () => {
 
     const errRef = useRef();
 
+    const [show, setShow] = useState(false)
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
 
@@ -150,19 +151,25 @@ const Register = () => {
 
                         <label className="form__label" htmlFor="password">
                             Password: <span className="nowrap">[8-12 chars incl. !@#$%]</span></label>
-                        <input
-                            id="password"
-                            className="form__input"
-                            name="password"
-                            type="password"
-                            value={pwd}
-                            onChange={(e) => setPwd(e.target.value)}
-                            required
-                            aria-invalid={validPwd ? "false" : "true"}
-                            aria-describedby="pwdnote"
-                            onFocus={() => setPwdFocus(true)}
-                            onBlur={() => setPwdFocus(false)}
-                        />
+                        <div style={{position: 'relative'}}>
+                            <input
+                                id="password"
+                                className="form__input"
+                                name="password"
+                                type={show ? 'text' : 'password'}
+                                value={pwd}
+                                onChange={(e) => setPwd(e.target.value)}
+                                required
+                                aria-invalid={validPwd ? "false" : "true"}
+                                aria-describedby="pwdnote"
+                                onFocus={() => setPwdFocus(true)}
+                                onBlur={() => setPwdFocus(false)}
+                                style={{width: '100%'}}
+                            />
+
+                            <span onClick={() => setShow(!show)} style={{position: 'absolute', top: '8px', right: '10px', color: 'gray'}}>{show ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}</span>
+                        </div>
+
                            <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                             8 to 12 characters.<br />
@@ -176,7 +183,7 @@ const Register = () => {
                             Confirm Password:
                         </label>
                         <input
-                            type="password"
+                            type={show ? 'text' : 'password'}
                             id="confirm_pwd"
                             className="form__input"
                             onChange={(e) => setMatchPwd(e.target.value)}
