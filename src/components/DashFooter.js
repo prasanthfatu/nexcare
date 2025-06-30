@@ -5,12 +5,15 @@ import appointment from '../img/appointment.png'
 import appointmentslist from '../img/appointments-list.png'
 import trackstatus from '../img/track-status.png'
 import usersetting from '../img/user-settings.png'
+import useAuth from '../hooks/useAuth'
 
 const DashFooter = () => {
 
+    const {dark} = useAuth()
+
     const content = (
 
-        <footer className="dash-footer">
+        <footer className="dash-footer" style={{backgroundColor: dark ? 'black' : 'aliceblue', borderTop: dark ? '0.01px solid #333333' : '0.01px solid #ccc', zIndex: 10}}>
 
             <div className='board-responsive-container'>
 
