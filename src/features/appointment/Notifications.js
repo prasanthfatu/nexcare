@@ -12,7 +12,7 @@ const Notifications = ({ setOpenNotificationBar, refreshNotiyLength }) => {
 
     const navigate = useNavigate()
 
-    const { auth, notificationLen } = useAuth()
+    const { auth, notificationLen, dark } = useAuth()
     const decode = auth?.accessToken ?
         jwtDecode(auth.accessToken)
         : undefined
@@ -46,7 +46,7 @@ const Notifications = ({ setOpenNotificationBar, refreshNotiyLength }) => {
     if (filterednotifications.length === 0) {
         return(
             <>
-                <h4 className="notify-heading">Notifications</h4>
+                <h4 className="notify-heading" style={{color: dark ? 'silver' : 'black'}}>Notifications</h4>
                 <h6 className='empty-notify'>Notification is empty.</h6>
             </>
         )
@@ -107,7 +107,7 @@ const Notifications = ({ setOpenNotificationBar, refreshNotiyLength }) => {
     return (
         < div className='notify-overflow'>
             <div className="notify-large-container">
-                <h4 className="notify-heading">Notifications</h4>
+                <h4 className="notify-heading" style={{color: dark ? 'silver' : 'black'}}>Notifications</h4>
                 <ul className="notify-message-container">
                     {filterednotifications.slice().sort((a, b) => {
                         if (a.createdAt > b.createdAt) return -1;
@@ -115,8 +115,10 @@ const Notifications = ({ setOpenNotificationBar, refreshNotiyLength }) => {
                         return 0
                     }).map(notification => (
                         <div className="notify-list" key={notification._id}>
-                            <li className={`notify-list-icon ${notification.read ? 'read' : 'unread'}`} key={notification._id} onClick={() => refreshAndNavigate(notification)}>
-                                <div><strong>{notification.type}:</strong> {notification.content}</div><br />
+                            <li 
+                                className={`notify-list-icon ${notification.read ? 'read' : 'unread'}`} key={notification._id} onClick={() => refreshAndNavigate(notification)}
+                            >
+                                <div style={{color: dark ? 'white' : 'black'}}><strong>{notification.type}:</strong> {notification.content}</div><br />
                                 <div className="notify-del-view">{timeAgoFromCreatedAt(notification.createdAt)}
                                 { clickedItem === notification._id && (
                             

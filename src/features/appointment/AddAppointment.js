@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { jwtDecode } from "jwt-decode";
@@ -23,7 +23,7 @@ const AddAppointment = () => {
   const [errMsg, setErrMsg] = useState('')
   const [processing, setProcessing] = useState(false)
 
-  const { setTrack, auth } = useAuth()
+  const { setTrack, auth, dark } = useAuth()
 
   const decode = auth?.accessToken ?
     jwtDecode(auth.accessToken)
@@ -45,24 +45,36 @@ const AddAppointment = () => {
   const [sTime, setStartTime] = useState('00:00')
   const [eTime, setEndTime] = useState('00:00')
 
-  useEffect(() => {
-    const getHealthcare = async () => {
-      try {
-        const response = await axiosPrivate.get('/healthcareprovider')
-        setHealthcare(response.data)
-      } catch (err) {
-        console.error(err);
-        if (!err.response) {
-          setErrMsg('Server Unreachable');
-        } else if(err.response.status === 400){
-          setErrMsg(err.response.data.message);
-        } else {
-          setErrMsg(err.data?.message || 'Error fetching data from server.');
+    const [isFocused, setIsFocused] = useState({
+      focusName: false,
+      focusTest: false,
+      focusDoctor: false,
+    });
+  
+
+    const getHealthcare = useCallback(async () => {
+      setLoading(true)
+      setErrMsg('')
+        try {
+          const response = await axiosPrivate.get('/healthcareprovider')
+          setHealthcare(response.data)
+        } catch (err) {
+          console.error(err);
+          if (!err.response) {
+            setErrMsg('Server Unreachable');
+          } else if(err.response.status === 400){
+            setErrMsg(err.response.data.message);
+          } else {
+            setErrMsg(err.data?.message || 'Error fetching data from server.');
+          }
+        } finally {
+          setLoading(false)
         }
-      }
-    }
+    }, [axiosPrivate])
+    
+  useEffect(() => {
     getHealthcare()
-  }, [axiosPrivate])
+  }, [getHealthcare])
 
   useEffect(() => {
     if (errMsg) {
@@ -165,15 +177,38 @@ const AddAppointment = () => {
     }
   };
 
+  const handleFocus = (field) => {
+    setIsFocused((prev) => ({
+      ...prev, [field]: true
+    }))
+  }
+
+  const handleBlur = (field) => {
+    setIsFocused((prev) => ({
+      ...prev, [field]: false
+    }))
+  }
+
   const errClass = errMsg ? "errmsg" : "offscreen"
 
     if (errMsg) {
         return (
-            <section>
-                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+            <section style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0.5rem 0'}}>
+                <p ref={errRef} className={errClass} aria-live="assertive" style={{cursor: 'default'}}>{errMsg}</p>
+                <p style={{color: dark ? 'gray' : 'black', margin: '0.25rem 0 1rem', cursor: 'default'}}>Could not retrieve information</p>
+                <button onClick={getHealthcare} style={{cursor: 'pointer', fontSize: '12px', padding: '0.25rem 0.5rem', backgroundColor: '#007bff', color: 'white', borderRadius: '5px', fontWeight: 'bold'}}>Retry</button>
             </section>
         )
     }
+
+    const styles = {
+    darklabel: {
+      color: 'gray', position: 'absolute', transform: 'translate(0, -50%)', backgroundColor: '#0D0D0D', zIndex: 1, transition: 'top 0.3s linear', padding: '2px 5px', marginLeft: '1.5px'
+    },
+    lightlabel: {
+      color: 'gray', position: 'absolute', transform: 'translate(0, -50%)', backgroundColor: '#fff', zIndex: 1, transition: 'top 0.3s linear', padding: '2px 5px', marginLeft: '1.5px'
+    },
+  }  
 
   const content = (
     <>
@@ -192,74 +227,123 @@ const AddAppointment = () => {
 
       <section className="appointment">
 
-        <h4>Book Your Appointment</h4>
+        <h4 style={{color: dark ? '#EAEAEA' : 'black'}}>Book Your Appointment</h4>
 
-        <div className="appointment-container">
+        <div className="appointment-container" style={{backgroundColor: dark ? '#0D0D0D' : '#fff', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', width: '100%'}}>
 
           <div className="medical-appointment">
               <img src={medicalAppointment} alt="Healthcare" />
-              <h5>Medical Information</h5>
+              <h5 style={{color: dark ? '#EAEAEA' : 'black'}}>Medical Information</h5>
           </div>
           
-          <form>
+          <form className="newappointment-form">
 
-            <label>PatientName:</label>
-            <input type="text" className="Patient-name-inactive" value={patientName} readOnly/>
+           <div>
 
-            <label>Test:</label>
-            <select value={test} onChange={(e) => setTest(e.target.value)}>
-              <option value=''>Select your test</option>
-              <option value='Complete Blood Count (CBC)'>Complete Blood Count (CBC)</option>
-              <option value='Blood Glucose Test'>Blood Glucose Test</option>
-              <option value='Lipid Panel'>Lipid Panel</option>
-              <option value='Liver Function Tests (LFTs)'>Liver Function Tests (LFTs)</option>
-              <option value='Thyroid Function Tests'>Thyroid Function Tests</option>
-              <option value='Urinalysis'>Urinalysis</option>
-              <option value='Electrocardiogram (ECG or EKG)'>Electrocardiogram (ECG or EKG)</option>
-              <option value='Mammogram'>Mammogram</option>
-              <option value='Pap Smear (Pap Test)'>Pap Smear (Pap Test)</option>
-              <option value='Colonoscopy'>Colonoscopy</option>
-            </select>
+              {/* Patient Name */}
+            <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-            <h5>Availability</h5>
+              <label 
+                style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusName || patientName !== '') ? '20px' : '48px', left: (isFocused.focusName || patientName !== '') ? '30px' : '30px', fontSize: (isFocused.focusName || patientName !== '') ? '13px' : '16px'}}
+              >PatientName</label>
 
-            <label>Healthcare Provider:</label>
-            <select value={doctor} onChange={(e) => setDoctor(e.target.value)}>
-              <option value=''>Select</option>
-              {options}
-            </select>
+              <input  
+                style={{backgroundColor: 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
+                onFocus={() => handleFocus('focusName')}
+                onBlur={() => handleBlur('focusName')}
+                type="text" 
+                className="Patient-name-inactive" 
+                value={patientName} 
+                readOnly
+              />
 
-            <label>Date:</label>
-            <DatePicker
-              className="datepicker"
-              value={date}
-              onChange={(date) => setDate(date)}
-              dateFormat="yyyy-MM-dd"
-            >
-            </DatePicker>
+            </div>
 
-            <h5 className="time-duration">Select Time from 8AM - 5PM</h5>
+              {/* Test */}
+              <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-            <label>Time from:</label>
-            <TimePicker
-              className='timepicker'
-              value={sTime}
-              onChange={(time) => setStartTime(time)}
-            >
-            </TimePicker>
+                <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusTest || test !== '') ? '20px' : '48px', left: (isFocused.focusTest || test !== '') ? '30px' : '30px', fontSize: (isFocused.focusTest || test !== '') ? '13px' : '16px'}}>Test</label>
 
-            <label>Time to:</label>
-            <TimePicker
-              className='timepicker timepick'
-              value={eTime}
-              onChange={(time) => setEndTime(time)}
-            >
-            </TimePicker>
+                <select 
+                  style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
+                  onFocus={() => handleFocus('focusTest')}
+                  onBlur={() => handleBlur('focusTest')} 
+                  value={test} 
+                  onChange={(e) => setTest(e.target.value)}
+                >
+                  <option value=''></option>
+                  <option value='Complete Blood Count (CBC)'>Complete Blood Count (CBC)</option>
+                  <option value='Blood Glucose Test'>Blood Glucose Test</option>
+                  <option value='Lipid Panel'>Lipid Panel</option>
+                  <option value='Liver Function Tests (LFTs)'>Liver Function Tests (LFTs)</option>
+                  <option value='Thyroid Function Tests'>Thyroid Function Tests</option>
+                  <option value='Urinalysis'>Urinalysis</option>
+                  <option value='Electrocardiogram (ECG or EKG)'>Electrocardiogram (ECG or EKG)</option>
+                  <option value='Mammogram'>Mammogram</option>
+                  <option value='Pap Smear (Pap Test)'>Pap Smear (Pap Test)</option>
+                  <option value='Colonoscopy'>Colonoscopy</option>
+                </select>
 
-             <button ref={rippleRef} className='app-btn' type="button" onClick={handleSubmit} disabled={isDisabled} style={{position: 'relative', backgroundColor: processing ? '#4aa0fc' : '#218bff', cursor: processing ? 'not-allowed' : 'pointer', overflow:'hidden'}}>
-              {processing && <span style={{width: '20px', height: '20px', border: '1px solid white', borderTop: '1px solid transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite'}} />}
-              {processing ? 'Processing...' : 'Submit'}
-            </button>
+              </div>  
+
+            {/* Healthcare Provider */}
+            <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
+
+              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusDoctor || doctor !== '') ? '20px' : '48px', left: (isFocused.focusDoctor || doctor !== '') ? '30px' : '30px', fontSize: (isFocused.focusDoctor || doctor !== '') ? '13px' : '16px'}}>Healthcare Provider</label>
+
+              <select 
+                style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
+                onFocus={() => handleFocus('focusDoctor')}
+                onBlur={() => handleBlur('focusDoctor')} 
+                value={doctor} 
+                onChange={(e) => setDoctor(e.target.value)}
+              >
+                <option value=''></option>
+                {options}
+              </select>
+
+            </div>  
+
+           </div>
+
+          <div>
+              <h5 style={{color: dark ? '#EAEAEA' : 'black', marginTop: '10px'}}>Availability</h5>
+
+              <label style={{color: 'gray', fontSize: '13px'}}>Date</label>
+              <br />
+
+                <DatePicker
+                  className="datepicker"
+                  value={date}
+                  onChange={(date) => setDate(date)}
+                  dateFormat="yyyy-MM-dd"
+                >
+                </DatePicker>
+
+              <h5 className="time-duration" style={{color: dark ? '#EAEAEA' : 'black'}}>Select Time from 8AM - 5PM</h5>
+
+              <label style={{color: 'gray', fontSize: '13px'}}>Time from</label>
+              <TimePicker
+                className='timepicker'
+                value={sTime}
+                onChange={(time) => setStartTime(time)}
+              >
+              </TimePicker>
+
+              <label style={{color: 'gray', fontSize: '13px'}}>Time to</label>
+              <TimePicker
+                className='timepicker timepick'
+                value={eTime}
+                onChange={(time) => setEndTime(time)}
+              >
+              </TimePicker>
+
+              <button ref={rippleRef} className='app-btn' type="button" onClick={handleSubmit} disabled={isDisabled} style={{position: 'relative', backgroundColor: processing ? '#4aa0fc' : '#218bff', cursor: processing ? 'not-allowed' : 'pointer', overflow:'hidden', marginBottom: '10px'}}>
+                {processing && <span style={{width: '20px', height: '20px', border: '1px solid white', borderTop: '1px solid transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite'}} />}
+                {processing ? 'Processing...' : 'Submit'}
+              </button>
+
+          </div>
 
           </form>
         </div>
@@ -271,7 +355,8 @@ const AddAppointment = () => {
     </>
   )
 
-  return options.length > 0 ? content : <p>Loading...</p>
+  return options.length > 0 ? content 
+                                  : (loading ? <p style={{color: dark ? '#EAEAEA' : 'black'}}>Please wait...</p> : <p style={{color: dark ? '#EAEAEA' : 'black'}}>Please wait...</p>)
 
 }
 

@@ -14,7 +14,7 @@ import facebook from '../../img/facebook.png'
 
 const Profile = () => {
   
-  const { auth, profile, setProfile, bgCover } = useAuth()
+  const { auth, profile, setProfile, bgCover, dark } = useAuth()
 
   const errRef = useRef(null)
   const [errMsg, setErrMsg] = useState('')
@@ -224,13 +224,13 @@ const Profile = () => {
           </div>
 
           <input type='file' name='cover' id='bg-image' className='cover-photo' onChange={handleCoverImage} />
-          <label htmlFor='bg-image' className='cover-photo-icon'><FontAwesomeIcon icon={faPen} /></label>
+          <label htmlFor='bg-image' className='cover-photo-icon' style={{color: dark ? 'silver' : 'black'}}><FontAwesomeIcon icon={faPen} /></label>
 
         </div>
         
         <div className='profile-container'>
 
-          <div className='profile-img-container'>
+          <div className='profile-img-container' style={{backgroundColor: dark ? 'black': '#ecf3feff'}}>
             {profile?.image ? (
               <div>
                 <img src={`${URL}${profile.name}/${profile.image}`} className='profile-picture' alt='Profile-profile' />
@@ -251,11 +251,11 @@ const Profile = () => {
             <div>
               <input type="file" name='avatar' id='image' className='input-file' onChange={handleFileChange} ref={selectedFileRef} />
               <label className='select-image' onClick={() => setOpenProfileBtn(!openProfileBtn)}>
-                <FontAwesomeIcon icon={faPen} className='edit-pen' />
+                <FontAwesomeIcon icon={faPen} className='edit-pen' style={{backgroundColor: dark ? 'black' : 'whitesmoke', color: dark ? 'silver' : 'black'}} />
               </label><br />
             </div>
             <div className='profile-action'>
-              <div className={`profile-btn ${openProfileBtn ? 'active' : 'inactive'}`}>
+              <div className={`profile-btn ${openProfileBtn ? 'active' : 'inactive'}`} style={{backgroundColor: dark ? 'black' : 'whitesmoke', color: dark ? 'white' : 'black'}}>
                 <div className='upload'><label htmlFor='image' className='upload' onClick={() => setOpenProfileBtn(false)}>Upload</label></div>
                 <div className='remove' onClick={() => removeProfile(profile._id, name) }>Remove</div>
               </div>
@@ -268,13 +268,13 @@ const Profile = () => {
 
       <div className='user-info'>
 
-        <div className='user-info-about'>About</div>
+        <div className='user-info-about' style={{color: dark ? 'white' : 'black' }}>About</div>
 
         <div className='user-info-para'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus maxime, aut repudiandae enim qui deleniti, nisi veritatis, a minus impedit nihil itaque reiciendis. Inventore quibusdam nobis doloremque laudantium totam non.
         Architecto, nostrum. Laboriosam aliquam ad reiciendis sapiente natus consequatur suscipit nulla dignissimos nihil inventore tempora, totam illum delectus voluptas? Aliquam asperiores assumenda quia placeat error id alias quaerat sed earum.
         </div>
 
-        <div className='user-info-social'>
+        <div className='user-info-social' style={{backgroundColor: dark ? 'gray' : 'transparent'}}>
           <div className='user-info-social-logo'><img src={github} alt='github' /></div>
           <div className='user-info-social-logo'><img src={twitter} alt='twitter' /></div>
           <div className='user-info-social-logo'><img src={facebook} alt='facebook' /></div>

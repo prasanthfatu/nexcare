@@ -3,11 +3,13 @@ import { useParams, Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare, faAddressBook, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
+import useAuth from "../../hooks/useAuth"
 
 const SinglePatientPage = () => {
 
     const errRef = useRef(null)
     const [errMsg, setErrMsg] = useState('')
+    const {dark} = useAuth()
 
     const { patientId } = useParams()
 
@@ -46,7 +48,7 @@ const SinglePatientPage = () => {
     if(loading) {
         return(
             <>
-                <p>Loading...</p>
+                <p style={{color: dark ? '#EAEAEA' : 'black'}}>Loading...</p>
                 <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
             </>
         )
@@ -63,7 +65,7 @@ const SinglePatientPage = () => {
     const content = (
         <section className="singlepage-patient">
 
-            <div className="patient-details">
+            <div className="patient-details" style={{backgroundColor: dark ? '#121212' : 'rgba(0, 0, 0, 0.9)'}}>
 
                 <h3>Patient Details</h3>
 
@@ -105,7 +107,7 @@ const SinglePatientPage = () => {
 
             </div>
 
-            <div className="emergency-details">
+            <div className="emergency-details" style={{backgroundColor: dark ? '#121212' : 'rgba(0, 0, 0, 0.9)'}}>
 
                 <h4>Emergency Contact</h4>
 
@@ -127,7 +129,7 @@ const SinglePatientPage = () => {
             </div>
 
             <div className="patient-update">
-                <div className="patient-update-icon"><Link to={`/account/patients/edit/${patient._id}`}><FontAwesomeIcon icon={faPenToSquare} /></Link></div>
+                <div className="patient-update-icon"><Link to={`/account/patients/edit/${patient._id}`}><FontAwesomeIcon icon={faPenToSquare} style={{color: dark ? '#EAEAEA' : 'black'}} /></Link></div>
             </div>
 
         </section>

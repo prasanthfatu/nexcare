@@ -10,10 +10,13 @@ import healthtest from '../../img/health-test.png'
 import healthsupport from '../../img/health-support.png'
 import healthdigital from '../../img/health-digital.png'
 import { useState, useEffect, useRef } from 'react'
+import useAuth from '../../hooks/useAuth'
 
 const Welcome = () => {
 
     const [isVisible, setIsVisible] = useState(false)
+
+    const {dark} = useAuth()
 
     const scrollRef = useRef()
 
@@ -47,8 +50,8 @@ const Welcome = () => {
 
             <div className='welcome-space'>
                 
-                <div className='welcome-img'>
-                    <p>NEXCARE <sup>Innovate</sup></p><br />
+                <div className='welcome-img' style={{backgroundColor: dark ? '#121212' : 'black'}}>
+                    <p style={{cursor: 'default'}}>NEXCARE <sup>Innovate</sup></p><br />
                     <h6 className='welcome-para'>Our friendly and professional staff are ready to<br /> assist you, ensuring your experience is as smooth<br /> and stress-free as possible.</h6>
                 </div>
 
@@ -67,8 +70,8 @@ const Welcome = () => {
 
                     <div className='medical-img'>
                  
-                        <h4>Instant Confirmation</h4>
-                        <p>
+                        <h4 style={{color: dark ? '#EAEAEA' : 'gray'}}>Instant Confirmation</h4>
+                        <p style={{color: dark ? '#BBBBBB' : 'gray', cursor: 'default'}}>
                             Nexcare Testing Center simplifies the scheduling process, allowing patients to select convenient time slots from their devices. This system reduces wait times and eliminates the need for phone calls or in-person visits to schedule tests.
                         </p>
                         <div className='img-container'>
@@ -88,7 +91,7 @@ const Welcome = () => {
                 <div className='dot-linetwo'>
                     <div className='dot-linetwo-img'>
                         <img src={patientedit} alt='healthcare' />
-                        <p>World class technology!</p>
+                        <p style={{cursor: 'default'}}>World class technology!</p>
                     </div>
                     <div className='dot-linetwo-container'>
                         <p>|</p>
@@ -103,7 +106,7 @@ const Welcome = () => {
                 </div>
 
                 <div className='test-info'>
-                    <p>The Medical Team</p>
+                    <p style={{color: dark ? 'silver' : 'black'}}>The Medical Team</p>
                 </div>
 
                 <div className='welcome-test-img'>
@@ -124,8 +127,8 @@ const Welcome = () => {
                 <div className='testcenter-info'>
                     <img className='health-digital' src={healthdigital} alt='healthcare' />
                     <img className='health-support' src={healthsupport} alt='healthcare' />
-                    <p>Patients receive instant confirmations and reminders, minimizing missed appointments.</p>
-                    <div className='testcenter-container'>
+                    <p style={{color: dark ? 'white' : 'black'}}>Patients receive instant confirmations and reminders, minimizing missed appointments.</p>
+                    <div className='testcenter-container' style={{color: dark ? 'white' : 'black'}}>
                         <div className='testcenter-para'>
                             <p>Overall</p>
                             <p>online</p>
@@ -139,7 +142,7 @@ const Welcome = () => {
                             <p>medical staff</p>
                         </div>
                     </div>
-                    <p>making healthcare more accessible and efficient at Nexcare Testing Center.</p>
+                    <p style={{color: dark ? 'white' : 'black'}}>making healthcare more accessible and efficient at Nexcare Testing Center.</p>
                 </div>
 
                 <div className='dot-line'>
@@ -154,18 +157,18 @@ const Welcome = () => {
                 </div>
 
                 <div className='test-info-more'>
-                    <p>Our service is designed to be convenient, accurate, and confidential, ensuring that your health information is secure and accessible only to you. NexCare is committed to providing exceptional customer service and support throughout the entire process. Whether you need a routine check-up or specific health screenings, we are here to help you every step of the way.</p>
+                    <p style={{color: dark ? 'silver' : '#363535', cursor: 'default'}}>Our service is designed to be convenient, accurate, and confidential, ensuring that your health information is secure and accessible only to you. NexCare is committed to providing exceptional customer service and support throughout the entire process. Whether you need a routine check-up or specific health screenings, we are here to help you every step of the way.</p>
                 </div>
 
                 <div className="welcome-content">
-                    <h1>Your health<br />
+                    <h1 style={{color: dark ? 'white' : 'black'}}>Your health<br />
                     <span>our priority.</span></h1>
                     <img src={healthcareblue} alt="Healthcare" />
                 </div>
 
                 <div className='foot-info'>
 
-                    <p>For support or inquiries</p>
+                    <p style={{cursor: 'default'}}>For support or inquiries</p>
                     <div className='foot-info-style'>
                         <div className='foot-info-container'>
                             <FontAwesomeIcon icon={faEnvelope} />

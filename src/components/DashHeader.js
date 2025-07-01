@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRightFromBracket, faUser, faBell, faXmark, faBars, faPen } from "@fortawesome/free-solid-svg-icons"
+import { faRightFromBracket, faUser, faBell, faXmark, faBars, faPen, faMoon, faSun } from "@fortawesome/free-solid-svg-icons"
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
 import { jwtDecode } from 'jwt-decode'
@@ -24,7 +24,7 @@ const DashHeader = () => {
     
     const [imageSrc, setImageSrc] = useState('');
 
-    const { auth, profile, notificationLen, setBarIcon, barIcon } = useAuth()
+    const { auth, profile, notificationLen, setBarIcon, barIcon, dark, setDark } = useAuth()
 
     const decode = auth?.accessToken
         ? jwtDecode(auth.accessToken)
@@ -187,93 +187,96 @@ const DashHeader = () => {
     const handleProfileBar = () => {
         navigate('/account/my-profile')
     }
-    const styles = {
-        hidden: {
-            transform: hide ? 'translateY(-100%)' : 'translateY(0)',
-            transition: 'transform 0.5s ease'
-        }
-    }
 
     const content = (
 
         <header 
             className='nav'
-            style={styles.hidden}
+            style={{backgroundColor: dark ? 'black' : 'aliceblue', transform: hide ? 'translateY(-100%)' : 'translateY(0)', transition: 'transform 0.5s ease', borderBottom: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}
         >
 
             <div className='nav-name'>
 
                 <div ref={barIconRef} className='nav-name-icon'>
 
-                    <p className='nav-name-baricon' onClick={() => setBarIcon(!barIcon)}><FontAwesomeIcon icon={faBars} /></p>
+                    <p className='nav-name-baricon' onClick={() => setBarIcon(!barIcon)}><FontAwesomeIcon icon={faBars} style={{color: dark ? '#EAEAEA' : 'black'}} /></p>
 
-                    <div className={`board-container ${ barIcon ? 'active' : 'inactive'}`}>
+                    <div className={`board-container ${ barIcon ? 'active' : 'inactive'}`} style = {{backgroundColor: dark ? 'black' : 'aliceblue', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', transform: barIcon ? 'translateX(0)' : 'translateX(-1000px)', transition: 'transform 0.5s ease'}}>
 
                         <div className='board-close'>
                             <p className='board-container-cls' onClick={() => setBarIcon(false)}><FontAwesomeIcon icon={faXmark} /></p>
                         </div>
 
-                        <h4 className='welcome-name'>{name ? `Welcome ${name} !` : 'Welcome!'}</h4>
+                        <h4 className='welcome-name' style={{color: dark ? '#777777' : 'gray'}}>{name ? `Welcome ${name} !` : 'Welcome!'}</h4>
                 
                         <div className='board-list'>
 
-                            <Link to="/account/medicaltest">
-                                <div className='board-img' onClick={() => setBarIcon(false)} >
+                            <Link to="/account/medicaltest" style={{width: '100%'}}>
+                                <div className={`board-img ${dark ? 'dark' : 'light'}`} onClick={() => setBarIcon(false)} >
                                         <img className='img-add' src={addpatient} alt="Healthcare" />
-                                        <p className='board-para'>Add New Patient</p>
+                                        <p className='board-para' style={{color: dark ? '#BBBBBB' : 'black', fontWeight: '500'}}>Add New Patient</p>
                                 </div>
                             </Link>
 
-                            <Link to="/account/patients">
-                                <div className='board-img' onClick={() => setBarIcon(false)} >
+                            <Link to="/account/patients" style={{width: '100%'}}>
+                                <div className={`board-img ${dark ? 'dark' : 'light'}`} onClick={() => setBarIcon(false)} >
                                     <img src={patientslist} alt="Healthcare" />
-                                    <p className='board-para'>Patient List</p>
+                                    <p className='board-para' style={{color: dark ? '#BBBBBB' : 'black', fontWeight: '500'}}>Patient List</p>
                                 </div>
                             </Link>
 
-                            <Link to="/account/new-appointment">
-                                <div className='board-img' onClick={() => setBarIcon(false)} >
+                            <Link to="/account/new-appointment" style={{width: '100%'}}>
+                                <div className={`board-img ${dark ? 'dark' : 'light'}`} onClick={() => setBarIcon(false)} >
                                     <img src={appointment} alt="Healthcare" />
-                                    <p className='board-para'>Reserve Appointment</p>
+                                    <p className='board-para' style={{color: dark ? '#BBBBBB' : 'black', fontWeight: '500'}}>Reserve Appointment</p>
                                 </div>
                             </Link>
 
-                            <Link to="/account/appointments">
-                                <div className='board-img' onClick={() => setBarIcon(false)} >
+                            <Link to="/account/appointments" style={{width: '100%'}}>
+                                <div className={`board-img ${dark ? 'dark' : 'light'}`} onClick={() => setBarIcon(false)} >
                                     <img src={appointmentslist} alt="Healthcare" />
-                                    <p className='board-para'>View All Appointments</p>
+                                    <p className='board-para' style={{color: dark ? '#BBBBBB' : 'black', fontWeight: '500'}}>View All Appointments</p>
                                 </div>
                             </Link>
 
-                            <Link to="/account/appointmentsuccess">
-                                <div className='board-img' onClick={() => setBarIcon(false)} >
+                            <Link to="/account/appointmentsuccess" style={{width: '100%'}}>
+                                <div className={`board-img ${dark ? 'dark' : 'light'}`} onClick={() => setBarIcon(false)} >
                                     <img src={trackstatus} alt="Healthcare" />
-                                    <p className='board-para'>Track Status</p>
-                                </div>
-                            </Link>
-
-                            <Link to="/account/users">
-                                <div className='board-img' onClick={() => setBarIcon(false)} >
-                                    <img src={usersetting} alt="Healthcare" />
-                                    <p className='board-para'>View User Settings</p>
+                                    <p className='board-para' style={{color: dark ? '#BBBBBB' : 'black', fontWeight: '500'}}>Track Status</p>
                                 </div>
                             </Link>
 
                         </div>
+                        <div style={{height: '50dvh', position: 'relative'}}>
+                            <Link to="/account/users">
+                                <div className={`board-img ${dark ? 'dark' : 'light'}`} style={{justifyContent: 'start', alignItems: 'center', width: '100%', borderTop: dark ? '0.01px solid #333333' : '0.01px solid #ccc', position: 'absolute', bottom: '7dvh'}} onClick={() => setBarIcon(false)} >
+                                    <img src={usersetting} alt="Healthcare" />
+                                    <p className='board-para' style={{color: dark ? '#BBBBBB' : 'black', fontWeight: '500'}}>View User Settings</p>
+                                </div>
+                            </Link>
+                        </div>
 
                     </div>
-
+        
                 </div>
 
-                <Link to='/account'><p>Nexcare</p></Link>
+                <Link to='/account' style={{color: dark ? '#EAEAEA' : 'black'}}><p>Nexcare</p></Link>
 
             </div>
 
             <div className='nav-end'>
+
+                <div 
+                    onClick={() => setDark(!dark)}
+                    className='darkmode'
+                    style={{backgroundColor: dark ? 'black' : 'aliceblue', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}
+                >
+                    <FontAwesomeIcon icon={dark ? faMoon : faSun} style={{color: dark ? '#EAEAEA' : 'black'}} />
+                </div>
                
                 <div ref={notifyRef}>
 
-                    <div onClick={() => setOpenNotificationBar(!openNotificationBar) } className='navbar-bell'>
+                    <div onClick={() => setOpenNotificationBar(!openNotificationBar) } className='navbar-bell' style={{border: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}>
 
                         <div className='notify'>
 
@@ -291,12 +294,14 @@ const DashHeader = () => {
 
                         </div>
 
-                        <FontAwesomeIcon icon={faBell} className='bell-icon' />
-                        <p className='notify-hover'>Notifications</p>
+                        <FontAwesomeIcon className='bell-icon' icon={faBell} style={{color: dark ? 'white' : 'black'}} />
+                        <p className='notify-hover' style={{backgroundColor: dark ? 'gray' : 'black', color: 'white'}}>Notifications</p>
 
                     </div>
                     
-                    <div className={`notification-container ${openNotificationBar ? 'active' : 'inactive'}`}>
+                    <div className={`notification-container ${openNotificationBar ? 'active' : 'inactive'}`}
+                        style={{backgroundColor: dark ? '#272525' : 'white'}}
+                    >
                         <Notifications setOpenNotificationBar = {setOpenNotificationBar} refreshNotiyLength={profileNotify} />
                     </div>
 
@@ -311,21 +316,21 @@ const DashHeader = () => {
                                 <div>
                                     <img src={imageSrc} alt='profile' className='profile-picture-head' />
                                 </div>
-                            ) : <div className = 'profile-pic-icon'><FontAwesomeIcon icon={faUser} /></div> }
-                            <p className='navbar-user'>Profile</p>
+                            ) : <div className = 'profile-pic-icon' style={{border: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}><FontAwesomeIcon icon={faUser} style={{color: dark ? 'white' : 'black'}} /></div> }
+                            <p className='navbar-user' style={{backgroundColor: dark ? 'gray' : 'black', color: 'white'}}>Profile</p>
                         </div>
 
                     </div>
 
                     <div className={`profile-menu ${openSidebar ? 'active' : 'inactive'}`}>
 
-                        <ul className='proclose'>
+                        <ul className='proclose' style={{backgroundColor: dark ? '#272525' : 'white'}}>
 
                             <li className='close-icon' onClick={() => setOpenSidebar(false)}>
-                                <FontAwesomeIcon icon={faXmark} />
+                                <FontAwesomeIcon icon={faXmark} style={{color: dark ? 'silver' : 'black'}} />
                             </li>
 
-                            <li className='profile-name'>{name}</li>
+                            <li className='profile-name' style={{color: dark ? 'silver' : 'black'}}>{name}</li>
 
                             <li className='profile-edit-container'>
                                 <div className='profile-edit-section' onClick={handleMyProfile}>
@@ -360,23 +365,32 @@ const DashHeader = () => {
             <div ref={navbarRef} className='navbar'>
 
                 <div className="navbar bar" onClick={() => setNavbar(!navbar)}>
-                    <FontAwesomeIcon icon={faBars} />
+                    <FontAwesomeIcon icon={faBars} style={{color: dark ? 'white' : 'black'}} />
                 </div>
 
-                <div className={`navbar-container ${navbar ? 'active' : 'inactive'} `}>
+                <div className={`navbar-container ${navbar ? 'active' : 'inactive'} `} style={{backgroundColor: dark ? 'gray' : 'white'}}>
 
                     <div className='barnotify-position'>
 
                         <ul>
 
-                            <div className='bar-roles'>
-                                <li className='profile-name'>{name}</li>
-                                <li className='pro-status'>{roles}</li>
+                            <div className='bar-roles' style={{backgroundColor: dark ? 'silver' : '#ecf3feff', color: dark ? 'white' : 'gray'}}>
+                                <li className='profile-name' >{name}</li>
+                                <li className='pro-status' style={{color: dark ? 'black' : 'gray'}}>{roles}</li>
                             </div>
 
                             <div className='scroll-bar'>
 
-                                <div className='bar-icons' onClick={() => setNavbar(false)}>
+                                <div 
+                                    className='bar-icons'
+                                    onClick={() => setDark(!dark)}
+                                >
+                                    <li><FontAwesomeIcon icon={dark ? faSun : faMoon} style={{color: dark ? 'white' : 'black'}} /></li>
+
+                                    <p style={{color: dark ? 'white' : 'black', whiteSpace: 'nowrap'}}>Dark Mode <span style={{color: dark ? 'purple' : 'gray', fontWeight: 'bold', fontSize: '10px'}}>{dark ? 'on' : 'off'}</span></p>
+                                </div>
+
+                                <div className='bar-icons' onClick={() => setNavbar(false)} style={{color: dark ? 'white' : 'black'}}>
 
                                     <li className='barimg-container'>
                                         {
@@ -392,7 +406,7 @@ const DashHeader = () => {
 
                                 </div>
 
-                                <div className='bar-icons barnotify-container'>
+                                <div className='bar-icons barnotify-container' style={{color: dark ? 'white' : 'black'}}>
 
                                     <div className='barnotiy'>
 
@@ -408,20 +422,20 @@ const DashHeader = () => {
                                             }
                                         </Link>
 
-                                        <Link to='/account/notifications-bar'><li onClick={() => setNavbar(false)}><FontAwesomeIcon icon={faBell} /></li></Link>
+                                        <Link to='/account/notifications-bar'><li onClick={() => setNavbar(false)}><FontAwesomeIcon icon={faBell} style={{color: dark ? 'white' : 'black'}} /></li></Link>
                                     
                                     </div>
 
                                     
-                                    <Link to='/account/notifications-bar'><p onClick={() => setNavbar(false)}>Notifications</p></Link>
+                                    <Link to='/account/notifications-bar' style={{color: dark ? 'white' : 'black'}}><p onClick={() => setNavbar(false)}>Notifications</p></Link>
                                 
                                 </div>
 
-                                <div className='bar-icons' onClick={signOutBar}>
+                                <div className='bar-icons' onClick={signOutBar} >
                                     <li>
-                                        <FontAwesomeIcon icon={faRightFromBracket} />
+                                        <FontAwesomeIcon icon={faRightFromBracket} style={{color: dark ? 'white' : 'black'}} />
                                     </li>
-                                    <p>Sign out</p>
+                                    <p style={{color: dark ? 'white' : 'black'}}>Sign out</p>
                                 </div>
 
                             </div>

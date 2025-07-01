@@ -3,10 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {faFloppyDisk, faTrash} from '@fortawesome/free-solid-svg-icons'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import { useNavigate } from 'react-router-dom'
+import useAuth from '../../hooks/useAuth'
 
 const USER_REGEX = /^[A-z]{3,20}$/;
 
 const EditUserPage = ({singleUser, userId}) => {
+
+    const {dark} = useAuth()
 
     const errRef = useRef()
     const axiosPrivate = useAxiosPrivate()
@@ -75,13 +78,14 @@ const EditUserPage = ({singleUser, userId}) => {
 
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
-        <h1>Update User</h1>
+        <h1 style={{color: dark ? '#EAEAEA' : 'black'}}>Update User</h1>
 
         <form className='form'> 
 
-            <label className="form__label" htmlFor="username">
+            <label style={{color: dark ? '#BBBBBB' : 'black'}} className="form__label" htmlFor="username">
                 Username: <span className="nowrap">[3-20 letters]</span></label>
             <input
+                style={{backgroundColor: dark ? '#BBBBBB' : 'white'}}
                 id="username"
                 name="username"
                 type="text"
@@ -91,8 +95,8 @@ const EditUserPage = ({singleUser, userId}) => {
                 required
             />
                         
-            <label htmlFor='role'>Role:</label>
-            <select name='role' value={roles} onChange={(e) => setRoles(Array.from(e.target.selectedOptions, option => option.value))} multiple>
+            <label style={{color: dark ? '#BBBBBB' : 'black'}} htmlFor='role'>Role:</label>
+            <select style={{backgroundColor: dark ? '#BBBBBB' : 'white'}} name='role' value={roles} onChange={(e) => setRoles(Array.from(e.target.selectedOptions, option => option.value))} multiple>
                 <option value='Admin'>Admin</option>
                 <option value='HealthcareProvider'>HealthcareProvider</option>
                 <option value='User'>User</option>

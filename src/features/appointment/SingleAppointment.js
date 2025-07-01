@@ -11,7 +11,7 @@ const SingleAppointment = () => {
     const [loading, setLoading] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
 
-    const { setAppId } = useAuth()
+    const { setAppId, dark } = useAuth()
     const navigate = useNavigate()
     const { notId, appId } = useParams();
     
@@ -35,7 +35,7 @@ const SingleAppointment = () => {
         try {
             setLoading(true)
             const response = await axiosPrivate.get(`/appointments/${appId}`);
-            setAppointment(response.data)
+            setAppointment(response.data)            
             setAppId(appId)
             setLoading(false)
         } catch (err) {
@@ -113,7 +113,7 @@ const SingleAppointment = () => {
     if(loading){
         return(
             <>
-                {/* <p>Loading...</p> */}
+                <p style={{color: dark ? '#EAEAEA' : 'black'}}>Loading...</p>
                 <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
             </>
         )
@@ -131,30 +131,30 @@ const SingleAppointment = () => {
     // return appointment ? <NotificationView appointment = {appointment}/> : <p>Data Not Found</p>
     return(
         <>
-            <section className="single-appointment">
+            <section className="single-appointment" style={{zIndex: 2, border: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}>
                 <div className="content-visible">
                     <h5>New Appointment</h5>
-                    <p>Patient Name: {appointment.patientName}</p>
+                    <p style={{color: dark ? '#777777' : 'black'}}>Patient Name: {appointment.patientName}</p>
                     <br />
-                    <p>Doctor: {appointment.doctor}</p>
+                    <p style={{color: dark ? '#777777' : 'black'}}>Doctor: {appointment.doctor}</p>
                     <br />
-                    <p>Date: {date}</p>
+                    <p style={{color: dark ? '#777777' : 'black'}}>Date: {date}</p>
                     <br />
-                    <p>
+                    <p style={{color: dark ? '#777777' : 'black'}}>
                         Time: {timeFrom} - {timeTo}
                     </p>
                     <br />
-                    <p>Required Test: {appointment.test}</p>
+                    <p style={{color: dark ? '#777777' : 'black'}}>Required Test: {appointment.test}</p>
                     <br />
-                    <p>Status: {appointment.status}</p>
+                    <p style={{color: dark ? '#777777' : 'black'}}>Status: {appointment.status}</p>
                     <br />
                 </div>
             </section>
-            <div className="singlepage-permission">
+            <div className="singlepage-permission" style={{marginBottom: '5rem'}}>
                 {appointment.status === "pending" && (
                     <div className="appointment-status">
-                        <button onClick={handleAccept} disabled={isDisabled}>Accept</button>
-                        <button onClick={handleDeny} disabled={isDisabled}>Deny</button>
+                        <button onClick={handleAccept} disabled={isDisabled} style={{border: 'none'}}>Accept</button>
+                        <button onClick={handleDeny} disabled={isDisabled} style={{border: 'none'}}>Deny</button>
                     </div>
                 )}
             </div>

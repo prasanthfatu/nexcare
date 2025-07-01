@@ -10,7 +10,7 @@ const Patients = () => {
     const errRef = useRef(null)
     const [errMsg, setErrMsg] = useState('')
 
-    const { patients, setPatients} = useAuth()
+    const { patients, setPatients, dark} = useAuth()
     const [loading, setLoading] = useState(true)
     const [search, setSearch] = useState('')
 
@@ -58,7 +58,7 @@ const Patients = () => {
     if(loading) {
         return(
             <>
-                <p>Loading...</p>
+                <p style={{color: dark ? '#EAEAEA' : 'black'}}>Loading...</p>
                 <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
             </>
         )
@@ -75,10 +75,11 @@ const Patients = () => {
     const content = (
         <div className = 'patients-list'>
 
-            <div className="search-bar">
-                <div className="search-icon"><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
+            <div className="search-bar" style={{border: dark ? '0.01px solid #333333' : '0.1px solid #ccc', position: 'relative'}}>
+                <div className="search-icon" style={{position: 'absolute', top: '50%', left: '10%', transform: 'translate(-50%, -50%)'}}><FontAwesomeIcon icon={faMagnifyingGlass} style={{color: dark ? '#333333' : 'black', fontSize: '12.5px'}} /></div>
                 <input 
                     className="input-box"
+                    style={{position: 'absolute', top: '50%', left: '15%', transform: 'translate(0, -50%)', caretColor: dark ? 'gray' : 'black', color: dark ? 'gray' : 'black'}}
                     type="text"
                     placeholder="search..."
                     value={search}
@@ -94,11 +95,11 @@ const Patients = () => {
 
                     <thead>
                         <tr className='patient-head'>
-                            <th>Patient Name</th>
-                            <th className="patient-age-style">Age</th>
-                            <th className="patient-gender">Gender</th>
-                            <th>Email</th>
-                            <th>View</th>
+                            <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Patient Name</th>
+                            <th className="patient-age-style" style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Age</th>
+                            <th className="patient-gender" style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Gender</th>
+                            <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Email</th>
+                            <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>View</th>
                         </tr>
                     </thead>
 

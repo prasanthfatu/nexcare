@@ -1,8 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"
 import { Link } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
 
 const UsersList = ({users}) => {
+
+  const {dark} = useAuth()
 
   const userses = users.sort((a, b) => {
     const roleA = a.roles[0]
@@ -17,10 +20,10 @@ const UsersList = ({users}) => {
           const {username, roles, _id} = user
           return (
             <tr key={_id}>
-              <td>{username}</td>
-              <td>{roles.toString().replaceAll(',', ', ')}</td>
+              <td style={{color: dark ? '#777777' : 'black'}}>{username}</td>
+              <td style={{color: dark ? '#777777' : 'black'}}>{roles.toString().replaceAll(',', ', ')}</td>
               <td>
-                  <Link to={`/account/users/${_id}`}><FontAwesomeIcon icon={faPenToSquare} /></Link>
+                  <Link to={`/account/users/${_id}`}><FontAwesomeIcon icon={faPenToSquare} style={{color: dark ? '#777777' : 'black'}} /></Link>
               </td>
             </tr>
           )

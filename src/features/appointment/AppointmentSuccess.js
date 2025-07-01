@@ -15,7 +15,7 @@ const AppointmentSuccess = () => {
  
   const errRef = useRef(null)
 
-  const { auth } = useAuth()
+  const { auth, dark } = useAuth()
   const axiosPrivate = useAxiosPrivate()
 
   const [status, setStatus] = useState([])
@@ -68,7 +68,7 @@ const AppointmentSuccess = () => {
   if (loading) {
     return(
       <>
-          <p>Loading...</p>
+          <p style={{color: dark ? '#EAEAEA' : 'black'}}>Loading...</p>
           <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
       </>
     )
@@ -130,12 +130,13 @@ const AppointmentSuccess = () => {
     <>
       <table className="track-table">
           <thead>
-              <TrackHead />
+              <TrackHead dark={dark} />
           </thead>
           <tbody>
               <EditTrack 
                 filteredStatus={filteredStatus} 
                 deleteAppointment={deleteAppointment}
+                dark={dark}
               />
           </tbody>
       </table>
@@ -143,8 +144,11 @@ const AppointmentSuccess = () => {
   )
 
   return (
-    <div className="track-container">
-      {filteredStatus.length > 0 ? content : <p className="track-para">You have not applied any appointment!</p>}
+    <div className="track-container" style={{position: 'relative'}}>
+      {/* <span 
+        style={{position: 'absolute', top: '0', left: '50%', width: '50px', height: '50px', border: '0.01px solid #ccc', borderRadius: '50%'}}
+      ></span> */}
+      {filteredStatus.length > 0 ? content : <p style={{cursor: 'default'}} className="track-para">You have not applied any appointment!</p>}
       <ToastContainer />
     </div>
   ) 

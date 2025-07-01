@@ -7,7 +7,7 @@ const Signout = () => {
 
     const errRef = useRef(null)
 
-    const {setAuth} = useAuth()
+    const {setAuth, dark} = useAuth()
 
     const axiosPrivate = useAxiosPrivate()
 
@@ -52,7 +52,7 @@ const Signout = () => {
     if(loading){
         return(
             <>
-                <p>Signing out...</p>
+                <p style={{color: dark ? 'silver' : 'black'}}>Signing out...</p>
                 <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
             </>
         )

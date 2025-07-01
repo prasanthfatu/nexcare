@@ -14,7 +14,7 @@ const Appointments = () => {
   const errRef = useRef(null)
   const [errMsg, setErrMsg] = useState('')
 
-  const {auth} = useAuth()
+  const {auth, dark} = useAuth()
   const decode = auth?.accessToken ? 
                                   jwtDecode(auth.accessToken)
                                       : undefined
@@ -80,7 +80,7 @@ const errClass = errMsg ? "errmsg" : "offscreen"
 if(loading){
   return(
     <>
-        <p>Loading...</p>
+        <p style={{color: dark ? '#EAEAEA' : 'black'}}>Loading...</p>
         <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
     </>
   )
@@ -103,7 +103,7 @@ return (
   { filteredAppointments.length > 0 &&
   <div>
       <h2 className='appointment-head'>Appointments</h2>
-      <ul className='all-appointments'>
+      <ul className='all-appointments' style={{border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', marginBottom: '5rem'}}>
           { 
               filteredAppointments.map(appointment => {
                   const date = moment(appointment.startTime).format('YYYY-MM-DD');
@@ -111,7 +111,7 @@ return (
                   const timeTo = moment(appointment.endTime).format('HH:mm');
 
                   return (
-                      <li key={appointment._id}>
+                      <li style={{backgroundColor: dark ? '#777777' : 'aliceblue'}} key={appointment._id}>
                           <div>Patient Name: {appointment.patientName}</div>
                           <div>Date: {date}</div>
                           <div>Time: {timeFrom} - {timeTo}</div>

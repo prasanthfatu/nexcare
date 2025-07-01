@@ -2,11 +2,13 @@ import { useParams } from "react-router-dom"
 import { useState, useEffect, useRef } from "react"
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import EditPage from "./EditPage"
+import useAuth from "../../hooks/useAuth"
 
 const EditPatientForm = () => {
 
   const errRef = useRef(null)
   const [errMsg, setErrMsg] = useState('')
+  const {dark} = useAuth()
 
   const {patientId} = useParams()
   const axiosPrivate = useAxiosPrivate()
@@ -45,7 +47,7 @@ const EditPatientForm = () => {
     return(
       <>
         <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
-        <p>Loading...</p>
+        <p style={{color: dark ? '#EAEAEA' : 'black'}}>Loading...</p>
       </>
     )
   }

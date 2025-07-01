@@ -15,7 +15,7 @@ const NotificationsBar = () => {
     const params = useParams()
     const user = params.user
 
-    const { auth, notificationLen } = useAuth()
+    const { auth, notificationLen, dark } = useAuth()
     const decode = auth?.accessToken ?
         jwtDecode(auth.accessToken)
         : undefined
@@ -93,9 +93,9 @@ const NotificationsBar = () => {
     }
 
     return (
-        < div className='notify-overflow'>
-            <div className="notify-bar-container">
-                <h4>Notifications</h4>
+        < div className='notify-overflow' style={{zIndex: 2, marginBottom: '3rem'}}>
+            <div className="notify-bar-container" style={{border: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}>
+                <h4 style={{color: dark ? 'silver' : 'black', marginTop: '1rem'}}>Notifications</h4>
                 <ul>
                     {filterednotifications.slice().sort((a,b) => {
                         if(a.createdAt > b.createdAt) return -1;
@@ -103,8 +103,8 @@ const NotificationsBar = () => {
                         return 0;
                     }).map(notification => (
                         <div className="notify-list-bar" key={notification._id}>
-                            <li className={`notify-list-icon-bar ${notification.read ? 'read' : 'unread'}`} key={notification._id} onClick={() => refreshAndNavigate(notification)}>
-                                <div><strong>{notification.type}:</strong> {notification.content}</div><br />
+                            <li style={{border: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}} className={`notify-list-icon-bar ${notification.read ? 'read' : 'unread'}`} key={notification._id} onClick={() => refreshAndNavigate(notification)}>
+                                <div style={{color: dark ? 'white' : 'black'}}><strong>{notification.type}:</strong> {notification.content}</div><br />
                                 <div className="notify-del-view-bar">{timeAgoFromCreatedAt(notification.createdAt)}
                                     <div className='notify-remove-icon-bar'>
                                         <p className="notify-remove-bar" onClick={(e) => deleteNotify(e, notification._id)}><FontAwesomeIcon icon={faTrash} /></p>

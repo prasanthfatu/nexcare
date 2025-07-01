@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import doc from "../img/doc.jpg"
 import test from '../img/test.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faBars, faRightToBracket, faUserPlus, faCircleInfo, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faRightToBracket, faUserPlus, faCircleInfo, faUser, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
 import Page from './Page'
 import axios from '../app/api/axios'
@@ -22,7 +22,7 @@ const Public = () => {
     const [loading, setLoading] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
 
-    const { setAuth, user } = useAuth()
+    const { setAuth, user, dark, setDark } = useAuth()
 
     useEffect(() => {
         let handle = (e) => {
@@ -109,32 +109,45 @@ const Public = () => {
     const handlePageRef = () => {
         pageRef.current?.scrollIntoView({behavior: 'smooth'})
     }
+
+    const txtColor = dark ? '#EAEAEA' : 'black' 
+    const bgColor = dark ? 'white' : 'black' 
+
     const content = (
 
-        <section className="public">
+        <section className="public"
+            style={{backgroundColor: dark ? '#0D0D0D' : 'aliceblue'}}
+        >
             <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
-            <header className='loginheader'>
-
+            <header className='loginheader' style={{backgroundColor: dark ? 'black' : 'aliceblue', borderBottom: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}>
                 <div className="nav-menu">
+
+                    <div 
+                        className='nav-login'
+                        onClick={() => setDark(!dark)}
+                        style={{marginRight: '2rem', width: '20px', height: '20px', cursor: 'pointer', color: dark ? '#EAEAEA' : 'black'}}
+                    >
+                        <FontAwesomeIcon icon={dark ? faSun : faMoon} />
+                    </div>
     
                     <div className='nav-login'>
-                        <button className='loginpad guest' disabled={isDisabled} onClick={handleGuest}>Guest User</button>
+                        <button className='loginpad guest' disabled={isDisabled} onClick={handleGuest} style={{background: dark ? '#EAEAEA' : 'black', color: dark ? 'black' : 'white' }}>Guest User</button>
                     </div>
 
                     <div className='nav-login'>
-                        <Link to="/login" className='loginpad'><FontAwesomeIcon icon={faRightToBracket} /></Link>
-                        <span className="hover-text">Sign in</span>
+                        <Link to="/login" className='loginpad'><FontAwesomeIcon icon={faRightToBracket} style={{color: txtColor}} /></Link>
+                        <span className="hover-text" style={{color: txtColor}}>Sign in</span>
                     </div>
 
                     <div className="nav-login">
-                        <Link to="/register" className='loginpad'><FontAwesomeIcon icon={faUserPlus} /></Link>
-                        <span className="hover-text">Sign up</span>
+                        <Link to="/register" className='loginpad'><FontAwesomeIcon icon={faUserPlus} style={{color: txtColor}} /></Link>
+                        <span className="hover-text" style={{color: txtColor}}>Sign up</span>
                     </div>
 
                     <div className="nav-login">
-                        <Link to="/about" className='info'><FontAwesomeIcon icon={faCircleInfo} /></Link>
-                        <span className="hover-text">About</span>
+                        <Link to="/about" className='info'><FontAwesomeIcon icon={faCircleInfo} style={{color: txtColor}} /></Link>
+                        <span className="hover-text" style={{color: txtColor}}>About</span>
                     </div>
 
                 </div>
@@ -142,15 +155,26 @@ const Public = () => {
                 <div ref={docRef}>
 
                     <div className='nav-sidebar' onClick={() => setOpenbar(!openbar)}>
-                        <FontAwesomeIcon icon={faBars} />
+                        <FontAwesomeIcon icon={faBars} style={{color: txtColor}} />
                     </div>
 
                     <div className={`dropdown-menu ${openbar ? 'active' : 'inactive'}`}>
                         <ul>
-                            <div className='bar-list' onClick={handleGuest}><li className='baricon'><FontAwesomeIcon icon={faUser} /></li><p className='signup'>Guest User</p></div>
-                            <div className='bar-list' onClick={() => navigate('/login')}><li className='baricon'><FontAwesomeIcon icon={faRightToBracket} /></li><p className='signup'>Sign in</p></div>
-                            <div className='bar-list' onClick={() => navigate('/register')}><li className='baricon'><FontAwesomeIcon icon={faUserPlus} /></li><p>Sign up</p></div>
-                            <div className='bar-list' onClick={() => navigate('/about')}><li className='baricon'><FontAwesomeIcon icon={faCircleInfo} /></li><p className='signup'>About</p></div>
+                            <div 
+                                className='bar-list'
+                                onClick={() => setDark(!dark)}
+                                style = {{backgroundColor: dark ? '#272525' : 'white'}}
+                            >
+                                <li className='baricon'><FontAwesomeIcon icon={dark ? faSun : faMoon} style={{width: '15px', height: '15px', color: dark ? '#EAEAEA' : 'black'}} /></li><p style={{color: txtColor}}>Dark Mode <span style={{color: dark ? 'purple' : 'gray', fontWeight: 'bold', fontSize: '10px'}}>{dark ? 'on' : 'off'}</span></p>
+                            </div>
+
+                            <div className='bar-list' onClick={handleGuest} style={{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faUser} style={{color: txtColor}} /></li><p className='signup' style={{color: txtColor}}>Guest User</p></div>
+
+                            <div className='bar-list' onClick={() => navigate('/login')} style = {{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faRightToBracket} style={{color: txtColor}} /></li><p className='signup' style={{color: txtColor}}>Sign in</p></div>
+
+                            <div className='bar-list' onClick={() => navigate('/register')} style = {{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faUserPlus} style={{color: txtColor}} /></li><p style={{color: txtColor}}>Sign up</p></div>
+
+                            <div className='bar-list' onClick={() => navigate('/about')} style = {{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faCircleInfo} style={{color: txtColor}} /></li><p className='signup' style={{color: txtColor}}>About</p></div>
                         </ul>
                     </div>
 
@@ -162,17 +186,17 @@ const Public = () => {
 
                 <div className='first-box'>
 
-                    <h1><span className='nowrap'>Nexcare Innovate</span></h1>
+                    <h1><span className='nowrap' style={{color: dark ? '#777777' : 'black'}}>Nexcare Innovate</span></h1>
                     <br />
 
-                    <p className='main-para'>
+                    <p className='main-para' style={{color: dark ? 'silver' : '#272525', cursor: 'default'}}>
                         Our experienced and certified medical professionals are dedicated to ensuring the highest standards of accuracy in every test.
                     </p>
 
                     <div className='doc-card'>
                         <div className="gallery">
                             <img className="doc-img" src={doc} alt='Healthcare' />
-                            <p>Book your appointment</p>
+                            <p style={{color: txtColor, cursor: 'default'}}>Book your appointment</p>
                         </div>
                     </div>
 
@@ -184,7 +208,7 @@ const Public = () => {
 
                 <div className='second-box'>
                    
-                    <p>
+                    <p style={{color: txtColor, cursor: 'default'}}>
                         <span className='para-span'>Best Medical Test. For Everyone.</span><br />
                         <br />
                         These tests encompass a broad spectrum, ranging from routine blood tests to sophisticated imaging procedures such as MRIs and CT scans. With advancements in technology and research, medical tests play an integral role in providing accurate diagnoses, guiding treatment decisions, and promoting overall wellness and quality of life for patients.<br />
@@ -198,9 +222,9 @@ const Public = () => {
                 </div>
                 <br />
 
-                <p className='para'>Test with Nexcare Innovate</p>
+                <p className='para' style={{color: txtColor, cursor: 'default'}}>Test with Nexcare Innovate</p>
 
-                <p className='para-public'>
+                <p className='para-public' style={{cursor: 'default'}}>
                     Medical tests are essential for diagnosing and monitoring health conditions, ranging from routine blood tests to advanced imaging techniques. They play a vital role in guiding treatment decisions and promoting overall well-being.
                 </p>
 

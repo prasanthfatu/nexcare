@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import UsersList from "./UsersList";
+import useAuth from "../../hooks/useAuth";
 
 const Users = () => {
+    const {dark} = useAuth()
     const [users, setUsers] = useState([]);
     const navigate = useNavigate()
     const location = useLocation()
@@ -34,9 +36,9 @@ const content = (
     <table className="user-table">
         <thead>
             <tr>
-                <th>Username</th>
-                <th>Roles</th>
-                <th>Edit</th>
+                <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Username</th>
+                <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Roles</th>
+                <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -47,7 +49,7 @@ const content = (
 
 
 if(!users || users.length === 0) {
-    return <p>Loading...</p>
+    return <p style={{color: dark ? '#EAEAEA' : 'black'}}>Loading...</p>
 }
 
 return content;
