@@ -10,7 +10,7 @@ export const AuthProvider = ({children}) => {
     const [appId, setAppId] = useState('null')
     const [dark, setDark] = useState(false)
 
-    // const [persist, setPersist] = useState(JSON.parse(localStorage.getItem('persist')) || false)
+    const [persist, setPersist] = useState(JSON.parse(localStorage.getItem('persist')) || false)
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const [isSubmenuOpen, setIsSubmenuOpen] = useState(true)
@@ -41,8 +41,8 @@ export const AuthProvider = ({children}) => {
     return(
         <AuthContext.Provider value={{auth,
          setAuth, 
-        //  persist, 
-        //  setPersist, 
+         persist, 
+         setPersist, 
          dark,
          setDark,
          patients, 
