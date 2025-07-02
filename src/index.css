@@ -794,7 +794,6 @@ form {
   right: 0;
   width: 50%;
   height: auto;
-  border: 0.01px solid red;
   /* background-color: #FFF; */
 }
 .dropdown-menu li {
@@ -822,7 +821,6 @@ form {
   align-items: center;
   white-space: nowrap;
   margin: 0.25px;
-  border: none;
 }
 .bar-list:hover {
   background-color: aliceblue;

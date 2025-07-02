@@ -158,8 +158,8 @@ const Public = () => {
                         <FontAwesomeIcon icon={faBars} style={{color: txtColor}} />
                     </div>
 
-                    <div className={`dropdown-menu ${openbar ? 'active' : 'inactive'}`}>
-                        <ul style={{border: '0.01px solid green'}}>
+                    <div className={`dropdown-menu ${openbar ? 'active' : 'inactive'}`} style={{backgroundColor: dark ? '#272525' : 'white'}}>
+                        <ul>
                             <div 
                                 className='bar-list'
                                 onClick={() => setDark(!dark)}
