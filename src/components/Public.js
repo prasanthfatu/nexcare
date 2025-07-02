@@ -159,16 +159,33 @@ const Public = () => {
                     </div>
 
                     <div className={`dropdown-menu ${openbar ? 'active' : 'inactive'}`}>
-                        <ul>
+                        <ul style={{border: '0.01px solid green'}}>
                             <div 
                                 className='bar-list'
                                 onClick={() => setDark(!dark)}
                                 style = {{backgroundColor: dark ? '#272525' : 'white'}}
                             >
-                                <li className='baricon'><FontAwesomeIcon icon={dark ? faSun : faMoon} style={{width: '15px', height: '15px', color: dark ? '#EAEAEA' : 'black'}} /></li><p style={{color: txtColor}}>Dark Mode <span style={{color: dark ? 'purple' : 'gray', fontWeight: 'bold', fontSize: '10px'}}>{dark ? 'on' : 'off'}</span></p>
+                                <li className='baricon'>
+                                    <FontAwesomeIcon icon={dark ? faSun : faMoon} style={{width: '15px', height: '15px', color: dark ? '#EAEAEA' : 'black'}} />
+                                </li>
+                                <p style={{color: txtColor}}>
+                                    Dark Mode 
+                                    <span style={{color: dark ? 'purple' : 'gray', fontWeight: 'bold', fontSize: '10px'}}>{dark ? 'on' : 'off'}</span>
+                                </p>
                             </div>
 
-                            <div className='bar-list' onClick={handleGuest} style={{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faUser} style={{color: txtColor}} /></li><p className='signup' style={{color: txtColor}}>Guest User</p></div>
+                            <div 
+                                className='bar-list' 
+                                onClick={handleGuest} 
+                                style={{backgroundColor: dark ? '#272525' : 'white'}}
+                            >
+                                <li className='baricon'>
+                                    <FontAwesomeIcon icon={faUser} style={{color: txtColor}} />
+                                </li>
+                                <p className='signup' style={{color: txtColor}}>
+                                    Guest User
+                                </p>
+                            </div>
 
                             <div className='bar-list' onClick={() => navigate('/login')} style = {{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faRightToBracket} style={{color: txtColor}} /></li><p className='signup' style={{color: txtColor}}>Sign in</p></div>
 
