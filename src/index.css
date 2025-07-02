@@ -789,12 +789,18 @@ form {
   display: none;
 }
 .dropdown-menu {
+  margin: 0;
+  padding: 0;
   position: absolute;
   top: 40px;
   right: 0;
-  width: 50%;
+  width: 40%;
   height: auto;
-  /* background-color: #FFF; */
+  white-space: unwrap;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
 }
 .dropdown-menu li {
   list-style-type: none;
@@ -812,18 +818,6 @@ form {
   visibility: hidden;
   transform: translateY(-20px);
   transition: all 0.5s ease;
-}
-.bar-list {
-  margin-left: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  white-space: nowrap;
-  margin: 0.25px;
-}
-.bar-list:hover {
-  background-color: aliceblue;
 }
 .signup {
   margin-left: 1.25rem;
@@ -2595,9 +2589,9 @@ background: hsl(0, 0%, 85%);
   .navbar-container{
     width: 60%;
   }
-  .dropdown-menu {
+  /* .dropdown-menu {
     width: 70%;
-  }
+  } */
   .bar-list {
     margin-left: 0;
   }

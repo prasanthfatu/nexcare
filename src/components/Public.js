@@ -111,7 +111,6 @@ const Public = () => {
     }
 
     const txtColor = dark ? '#EAEAEA' : 'black' 
-    const bgColor = dark ? 'white' : 'black' 
 
     const content = (
 
@@ -158,41 +157,131 @@ const Public = () => {
                         <FontAwesomeIcon icon={faBars} style={{color: txtColor}} />
                     </div>
 
-                    <div className={`dropdown-menu ${openbar ? 'active' : 'inactive'}`} style={{backgroundColor: dark ? '#272525' : 'white'}}>
-                        <ul>
-                            <div 
-                                className='bar-list'
-                                onClick={() => setDark(!dark)}
-                                style = {{backgroundColor: dark ? '#272525' : 'white'}}
+                    <div
+                    className={`dropdown-menu ${openbar ? 'active' : 'inactive'}`}
+                    style={{ backgroundColor: dark ? '#272525' : 'white' }}
+                    >
+                    <div
+                        style={{
+                        margin: 0,
+                        padding: 0,
+                        backgroundColor: dark ? '#272525' : 'white',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        whiteSpace: 'nowrap'
+                        }}
+                    >
+                        <button
+                        onClick={() => setDark(!dark)}
+                        style={{
+                            backgroundColor: dark ? '#272525' : 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '10px',
+                            textAlign: 'left',
+                        }}
+                        >
+                        <span className='baricon'>
+                            <FontAwesomeIcon
+                            icon={dark ? faSun : faMoon}
+                            style={{ width: '15px', height: '15px', color: dark ? '#EAEAEA' : 'black' }}
+                            />
+                        </span>
+                        <p style={{ color: txtColor, marginLeft: '8px' }}>
+                            Dark Mode
+                            <span
+                            style={{
+                                color: dark ? 'purple' : 'gray',
+                                fontWeight: 'bold',
+                                fontSize: '10px',
+                                marginLeft: '4px',
+                            }}
                             >
-                                <li className='baricon'>
-                                    <FontAwesomeIcon icon={dark ? faSun : faMoon} style={{width: '15px', height: '15px', color: dark ? '#EAEAEA' : 'black'}} />
-                                </li>
-                                <p style={{color: txtColor}}>
-                                    Dark Mode 
-                                    <span style={{color: dark ? 'purple' : 'gray', fontWeight: 'bold', fontSize: '10px'}}>{dark ? 'on' : 'off'}</span>
-                                </p>
-                            </div>
+                            {dark ? 'on' : 'off'}
+                            </span>
+                        </p>
+                        </button>
 
-                            <div 
-                                className='bar-list' 
-                                onClick={handleGuest} 
-                                style={{backgroundColor: dark ? '#272525' : 'white'}}
-                            >
-                                <li className='baricon'>
-                                    <FontAwesomeIcon icon={faUser} style={{color: txtColor}} />
-                                </li>
-                                <p className='signup' style={{color: txtColor}}>
-                                    Guest User
-                                </p>
-                            </div>
+                        <button
+                        onClick={handleGuest}
+                        style={{
+                            backgroundColor: dark ? '#272525' : 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '10px',
+                            textAlign: 'left',
+                        }}
+                        >
+                        <span className='baricon'>
+                            <FontAwesomeIcon icon={faUser} style={{ color: txtColor }} />
+                        </span>
+                        <p className='signup' style={{ color: txtColor, marginLeft: '8px' }}>Guest User</p>
+                        </button>
 
-                            <div className='bar-list' onClick={() => navigate('/login')} style = {{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faRightToBracket} style={{color: txtColor}} /></li><p className='signup' style={{color: txtColor}}>Sign in</p></div>
+                        <button
+                        onClick={() => navigate('/login')}
+                        style={{
+                            backgroundColor: dark ? '#272525' : 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '10px',
+                            textAlign: 'left',
+                        }}
+                        >
+                        <span className='baricon'>
+                            <FontAwesomeIcon icon={faRightToBracket} style={{ color: txtColor }} />
+                        </span>
+                        <p className='signup' style={{ color: txtColor, marginLeft: '8px' }}>Sign in</p>
+                        </button>
 
-                            <div className='bar-list' onClick={() => navigate('/register')} style = {{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faUserPlus} style={{color: txtColor}} /></li><p style={{color: txtColor}}>Sign up</p></div>
+                        <button
+                        onClick={() => navigate('/register')}
+                        style={{
+                            backgroundColor: dark ? '#272525' : 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '10px',
+                            textAlign: 'left',
+                        }}
+                        >
+                        <span className='baricon'>
+                            <FontAwesomeIcon icon={faUserPlus} style={{ color: txtColor }} />
+                        </span>
+                        <p style={{ color: txtColor, marginLeft: '8px' }}>Sign up</p>
+                        </button>
 
-                            <div className='bar-list' onClick={() => navigate('/about')} style = {{backgroundColor: dark ? '#272525' : 'white'}}><li className='baricon'><FontAwesomeIcon icon={faCircleInfo} style={{color: txtColor}} /></li><p className='signup' style={{color: txtColor}}>About</p></div>
-                        </ul>
+                        <button
+                        onClick={() => navigate('/about')}
+                        style={{
+                            backgroundColor: dark ? '#272525' : 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '10px',
+                            textAlign: 'left',
+                        }}
+                        >
+                        <span className='baricon'>
+                            <FontAwesomeIcon icon={faCircleInfo} style={{ color: txtColor }} />
+                        </span>
+                        <p className='signup' style={{ color: txtColor, marginLeft: '8px' }}>About</p>
+                        </button>
+                    </div>
                     </div>
 
                 </div>
