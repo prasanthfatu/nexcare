@@ -802,11 +802,6 @@ form {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
 }
-.dropdown-menu li {
-  list-style-type: none;
-  padding: 5px 10px;
-  margin: 1rem;
-}
 .dropdown-menu.active {
   opacity: 1;
   visibility: visible;
@@ -818,9 +813,6 @@ form {
   visibility: hidden;
   transform: translateY(-20px);
   transition: all 0.5s ease;
-}
-.signup {
-  margin-left: 1.25rem;
 }
 .bar-list:hover {
   cursor: pointer;
@@ -1798,15 +1790,18 @@ background: hsl(0, 0%, 85%);
   cursor: pointer;
 }
 .navbar-container {
-  display: none;
   position: absolute;
   top: 2.5em;
-  right: 1rem;
+  right: 0.5rem;
   background-color: #FFF;
-  width: 50%;
+  width: 40%;
   height: auto;
   border: 0.5px solid #ccc;
   border-radius: 1rem;
+  white-space: unwrap;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
 }
 .notify-position {
   position: relative;
@@ -1825,8 +1820,7 @@ background: hsl(0, 0%, 85%);
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding: 0.2rem;
-  padding-right: 1rem;
+  padding: 0.5rem;
   position: relative;
 }
 .bar-icons li, p {
@@ -1868,7 +1862,6 @@ background: hsl(0, 0%, 85%);
 .barnotify-para {
   position: absolute;
   top: 0;
-  margin-left: 3.2em;
   color: whitesmoke;
   min-width: 25px;
   width: auto;
@@ -1884,24 +1877,18 @@ background: hsl(0, 0%, 85%);
   font-size: 0.8rem;
   font-weight: 500;
 }
-.navbar-container li {
-  list-style-type: none;
-  padding: 1rem;
-}
 .navbar-container.active{
-  display: block;
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
   pointer-events: auto;
 }
 .navbar-container.inactive{
-  display: none;
   visibility: hidden;
   opacity: 0;
   transform: translateY(-20px);
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
 }
 .profile {
   width: 25%;
@@ -2589,9 +2576,6 @@ background: hsl(0, 0%, 85%);
   .navbar-container{
     width: 60%;
   }
-  /* .dropdown-menu {
-    width: 70%;
-  } */
   .bar-list {
     margin-left: 0;
   }

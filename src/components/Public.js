@@ -112,6 +112,22 @@ const Public = () => {
 
     const txtColor = dark ? '#EAEAEA' : 'black' 
 
+    const styles = {
+        btnStyle: {
+            backgroundColor: dark ? '#272525' : 'white',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '12.5px',
+            textAlign: 'left',
+        },
+        iconStyle: {
+            width: '15px', height: '15px', color: dark ? '#EAEAEA' : 'black'
+        }
+    }
+
     const content = (
 
         <section className="public"
@@ -174,21 +190,12 @@ const Public = () => {
                     >
                         <button
                         onClick={() => setDark(!dark)}
-                        style={{
-                            backgroundColor: dark ? '#272525' : 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '10px',
-                            textAlign: 'left',
-                        }}
+                        style={styles.btnStyle}
                         >
                         <span className='baricon'>
                             <FontAwesomeIcon
                             icon={dark ? faSun : faMoon}
-                            style={{ width: '15px', height: '15px', color: dark ? '#EAEAEA' : 'black' }}
+                            style={styles.iconStyle}
                             />
                         </span>
                         <p style={{ color: txtColor, marginLeft: '8px' }}>
@@ -208,78 +215,42 @@ const Public = () => {
 
                         <button
                         onClick={handleGuest}
-                        style={{
-                            backgroundColor: dark ? '#272525' : 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '10px',
-                            textAlign: 'left',
-                        }}
+                        style={styles.btnStyle}
                         >
                         <span className='baricon'>
-                            <FontAwesomeIcon icon={faUser} style={{ color: txtColor }} />
+                            <FontAwesomeIcon icon={faUser} style={styles.iconStyle} />
                         </span>
-                        <p className='signup' style={{ color: txtColor, marginLeft: '8px' }}>Guest User</p>
+                        <p style={{ color: txtColor, marginLeft: '8px' }}>Guest User</p>
                         </button>
 
                         <button
                         onClick={() => navigate('/login')}
-                        style={{
-                            backgroundColor: dark ? '#272525' : 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '10px',
-                            textAlign: 'left',
-                        }}
+                        style={styles.btnStyle}
                         >
                         <span className='baricon'>
-                            <FontAwesomeIcon icon={faRightToBracket} style={{ color: txtColor }} />
+                            <FontAwesomeIcon icon={faRightToBracket} style={styles.iconStyle} />
                         </span>
-                        <p className='signup' style={{ color: txtColor, marginLeft: '8px' }}>Sign in</p>
+                        <p style={{ color: txtColor, marginLeft: '8px' }}>Sign in</p>
                         </button>
 
                         <button
                         onClick={() => navigate('/register')}
-                        style={{
-                            backgroundColor: dark ? '#272525' : 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '10px',
-                            textAlign: 'left',
-                        }}
+                        style={styles.btnStyle}
                         >
                         <span className='baricon'>
-                            <FontAwesomeIcon icon={faUserPlus} style={{ color: txtColor }} />
+                            <FontAwesomeIcon icon={faUserPlus} style={styles.iconStyle} />
                         </span>
                         <p style={{ color: txtColor, marginLeft: '8px' }}>Sign up</p>
                         </button>
 
                         <button
                         onClick={() => navigate('/about')}
-                        style={{
-                            backgroundColor: dark ? '#272525' : 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '1rem',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '10px',
-                            textAlign: 'left',
-                        }}
+                        style={styles.btnStyle}
                         >
                         <span className='baricon'>
-                            <FontAwesomeIcon icon={faCircleInfo} style={{ color: txtColor }} />
+                            <FontAwesomeIcon icon={faCircleInfo} style={styles.iconStyle} />
                         </span>
-                        <p className='signup' style={{ color: txtColor, marginLeft: '8px' }}>About</p>
+                        <p style={{ color: txtColor, marginLeft: '8px' }}>About</p>
                         </button>
                     </div>
                     </div>

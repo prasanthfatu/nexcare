@@ -89,7 +89,7 @@ const NotificationsBar = () => {
    }
 
     if (filterednotifications.length === 0) {
-        return  <h4 className="notify-heading">Notification is empty.</h4>
+        return  <h4 className="notify-heading" style={{color: dark ? 'silver' : 'black'}}>Notification is empty.</h4>
     }
 
     return (
