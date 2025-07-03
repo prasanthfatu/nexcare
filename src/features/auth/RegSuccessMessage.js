@@ -1,8 +1,11 @@
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect, useRef, useCallback} from 'react'
 import { useParams } from 'react-router-dom'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
+import useAuth from '../../hooks/useAuth'
 
 const RegSuccessMessage = () => {
+
+  const { dark } = useAuth()
 
   const errRef = useRef(null)
 
@@ -14,11 +17,11 @@ const RegSuccessMessage = () => {
   const [notification, setNotification] = useState('')
 
   const {notId} = useParams()
-  
-  useEffect(() => {
-    const regNotification = async() => {
+
+  const regNotification = useCallback(async() => {
+    setLoading(true)
+    setErrMsg('')
       try {
-        setLoading(true)
         const response = await axiosPrivate.get(`/notifications/${notId}`)
         setNotification(response.data)
       } catch (err) {
@@ -32,11 +35,11 @@ const RegSuccessMessage = () => {
       } finally {
         setLoading(false)
     }    
-  }
-
-  regNotification ()
-
   }, [axiosPrivate, notId])
+  
+  useEffect(() => {
+    regNotification()
+  }, [regNotification])
 
   useEffect(() => {
     if (errMsg) {
@@ -50,23 +53,26 @@ const RegSuccessMessage = () => {
       return(
           <>
               <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+              <p style={{color: dark ? '#EAEAEA' : 'black'}}>Loading...</p> 
           </>
       )
   }
 
   if (errMsg) {
-      return (
-          <section>
-              <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
-          </section>
-      )
-  }
+        return (
+            <section style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0.5rem 0'}}>
+                <p ref={errRef} className={errClass} aria-live="assertive" style={{cursor: 'default'}}>{errMsg}</p>
+                <p style={{color: dark ? 'gray' : 'black', margin: '0.25rem 0 1rem', cursor: 'default'}}>Could not retrieve information</p>
+                <button onClick={regNotification} style={{cursor: 'pointer', fontSize: '12px', padding: '0.25rem 0.5rem', backgroundColor: '#007bff', color: 'white', borderRadius: '5px', fontWeight: 'bold'}}>Retry</button>
+            </section>
+        )
+    }
   
   const content = (
-      <section className="single-appointment">
+      <section className="single-appointment" style={{border: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}>
           <div className="content-visible">
               <h5>Welcome to NexCare Innovate.</h5>
-              <p>{notification.recipient} your account is now active and ready to access our comprehensive medical testing services.</p>
+              <p style={{color: dark ? 'silver' : 'black'}}>{notification.recipient} your account is now active and ready to access our comprehensive medical testing services.</p>
               <br/>
           </div>
       </section>

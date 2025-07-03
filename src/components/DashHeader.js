@@ -367,99 +367,6 @@ const DashHeader = () => {
 
             </div>
 
-            {/* <div ref={navbarRef} className='navbar'>
-
-                <div className="navbar bar" onClick={() => setNavbar(!navbar)}>
-                    <FontAwesomeIcon icon={faBars} style={{color: dark ? 'white' : 'black'}} />
-                </div>
-
-                <div className={`navbar-container ${navbar ? 'active' : 'inactive'} `} style={{backgroundColor: dark ? 'gray' : 'white'}}>
-
-                    <div className='barnotify-position'>
-
-                        <ul>
-
-                            <div className='bar-roles' style={{backgroundColor: dark ? 'silver' : '#ecf3feff', color: dark ? 'white' : 'gray'}}>
-                                <li className='profile-name' >{name}</li>
-                                <li className='pro-status' style={{color: dark ? 'black' : 'gray'}}>{roles}</li>
-                            </div>
-
-                            <div className='scroll-bar'>
-
-                                <div 
-                                    className='bar-icons'
-                                    onClick={() => setDark(!dark)}
-                                    style={{backgroundColor: 'blue', cursor: 'pointer'}}
-                                >
-                                    <li><FontAwesomeIcon icon={dark ? faSun : faMoon} style={{color: dark ? 'white' : 'black'}} /></li>
-
-                                    <p style={{color: dark ? 'white' : 'black', whiteSpace: 'nowrap'}}>Dark Mode <span style={{color: dark ? 'purple' : 'gray', fontWeight: 'bold', fontSize: '10px'}}>{dark ? 'on' : 'off'}</span></p>
-                                </div>
-
-                                <div 
-                                    className='bar-icons' 
-                                    onClick={handleProNav} 
-                                    style={{color: dark ? 'white' : 'black', backgroundColor: 'green', cursor: 'pointer'}}>
-
-                                    <li className='barimg-container'>
-                                        {
-                                            profile ? (
-                                                <img src={imageSrc} alt='profile-pic' className='navprofile-img' />
-                                            ) : (
-                                                <FontAwesomeIcon icon={faUser} />
-                                            )
-                                        }
-                                    </li>
-
-                                    <p>Profile</p>
-
-                                </div>
-
-                                <div 
-                                    className='bar-icons barnotify-container' 
-                                    style={{color: dark ? 'white' : 'black', backgroundColor: 'yellow', cursor:'pointer'}}
-                                >
-
-                                    <div className='barnotiy'>
-
-                                        <Link to='/account/notifications-bar'>
-                                            {
-                                                filterednotifications.length === 0 ? (
-                                                    <div className='barnotify-para-hide'>
-                                                        {null}
-                                                    </div>
-                                                ) : (
-                                                    <p className='barnotify-para'onClick={() => setNavbar(false)}>{filterednotifications.length}</p>
-                                                )
-                                            }
-                                        </Link>
-
-                                        <Link to='/account/notifications-bar'><li onClick={() => setNavbar(false)}><FontAwesomeIcon icon={faBell} style={{color: dark ? 'white' : 'black'}} /></li></Link>
-                                    
-                                    </div>
-
-                                    
-                                    <Link to='/account/notifications-bar' style={{color: dark ? 'white' : 'black'}}><p onClick={() => setNavbar(false)}>Notifications</p></Link>
-                                
-                                </div>
-
-                                <div className='bar-icons' onClick={signOutBar} >
-                                    <li>
-                                        <FontAwesomeIcon icon={faRightFromBracket} style={{color: dark ? 'white' : 'black'}} />
-                                    </li>
-                                    <p style={{color: dark ? 'white' : 'black'}}>Sign out</p>
-                                </div>
-
-                            </div>
-
-                        </ul>
-
-                    </div>
-
-                </div>
-
-            </div> */}
-
             <div ref={navbarRef} className="navbar">
 
                 <div className="navbar bar" onClick={() => setNavbar(!navbar)}>
@@ -471,9 +378,9 @@ const DashHeader = () => {
                     <div className="barnotify-position">
 
                     {/* User Info */}
-                    <div className="bar-roles" style={{ backgroundColor: dark ? 'silver' : '#ecf3feff', color: dark ? 'white' : 'gray', padding: '0.5rem' }}>
-                        <p className="profile-name">{name}</p>
-                        <p className="pro-status" style={{ color: dark ? 'black' : 'gray' }}>{roles}</p>
+                    <div className="bar-roles" style={{ backgroundColor: dark ? 'silver' : '#ecf3feff', color: dark ? 'white' : 'gray' }}>
+                        <p className="profile-name" style={{ color: dark ? '#272525' : 'black' }}>{name}</p>
+                        <p className="pro-status" style={{ color: dark ? 'gray' : '#333333' }}>{roles}</p>
                     </div>
 
                     {/* Menu Items */}

@@ -202,12 +202,10 @@ form {
   height: 100dvh; 
   min-width: 275px;
   background-color: var(--BGCOLOR);
-  /* border: 0.5px solid #ccc; */
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   white-space: nowrap;
-  /* transition: all 1.5s ease-in-out; */
 }
 .board-close {
   text-align: end;
@@ -1676,6 +1674,9 @@ background: hsl(0, 0%, 85%);
 .pro-status {
   color: gray;
   font-size: 1rem;
+  padding: 2.5px;
+  cursor: default;
+  font-weight: bold;
 }
 .profile-menu.active {
   display: block;
@@ -1720,6 +1721,8 @@ background: hsl(0, 0%, 85%);
 .profile-name{
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   font-size: 2em;
+  cursor: default;
+  padding: 2.5px;
 }
 .profile-edit-container {
   position: relative;
@@ -2079,14 +2082,13 @@ background: hsl(0, 0%, 85%);
 /*  ||Single Appointment */
 .single-appointment {
   padding: 0.5rem;
-  border: 0.5px solid #ccc;
+  border: 0.01px solid #ccc;
   border-radius: 0.5rem;
   width: 60%;
   height: auto;
   margin: 0 auto;
   padding: 0.5rem 1.5rem;
   position: relative;
-  /* z-index: -1; */
 
   &::before {
     content: '';
