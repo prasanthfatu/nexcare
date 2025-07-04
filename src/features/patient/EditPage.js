@@ -171,6 +171,33 @@ const EditPage = ({ patient, patientId }) => {
     lightlabel: {
       color: 'gray', position: 'absolute', transform: 'translate(0, -50%)', backgroundColor: '#fff', zIndex: 1, transition: 'top 0.3s linear', padding: '2px 5px', marginLeft: '1.5px'
     },
+    overlay: {
+    position: 'fixed',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  },
+  modal: {
+    backgroundColor: '#fff',
+    padding: '25px',
+    borderRadius: '10px',
+    width: '90%',
+    maxWidth: '400px',
+    position: 'relative',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+  },
+  closeBtn: {
+    position: 'absolute',
+    top: '10px',
+    right: '15px',
+    border: 'none',
+    background: 'transparent',
+    fontSize: '18px',
+    cursor: 'pointer',
+  },
   }
 
 
@@ -392,15 +419,28 @@ const EditPage = ({ patient, patientId }) => {
         <div>
         {
               confirmDelete && (
-                <div className="confirm-delete">  
-                  <div className="xmark-icon"><div className='xmark-pointer' onClick={() => setConfirmDelete(false)}><FontAwesomeIcon icon={faXmark} /></div></div>
-                  <p>Do you want to delete?</p> 
-                    <div className="confirm-delete-btn">
-                      <button type='button' onClick={deletePatient}>yes</button>
-                      <button type='button' onClick={() => setConfirmDelete(false)}>no</button>
+                  <div style={styles.overlay}>  
+
+                    <div style={styles.modal}>
+
+                      <div onClick={() => setConfirmDelete(false)} style={styles.closeBtn}>
+                        <FontAwesomeIcon icon={faXmark} />
+                      </div>
+
+                      <p style={{ color: '#333333', fontSize: '15px', cursor: 'default', padding: '10px', textAlign: 'center'}}>Do you want to delete?</p> 
+
+                      <div className="confirm-delete-btn">
+
+                        <button type='button' onClick={() => setConfirmDelete(false)} style={{backgroundColor: '#007bff', color: 'white', fontSize: '12px', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>cancel</button>
+
+                        <button type='button' onClick={deletePatient} style={{backgroundColor: 'firebrick', color: 'white', fontSize: '12px', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>delete</button>
+
+                      </div>
+
                     </div>
+
                 </div>  
-                )
+              )
           }
         </div>
 

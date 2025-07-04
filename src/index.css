@@ -2441,56 +2441,12 @@ background: hsl(0, 0%, 85%);
   align-items: center;
   position: relative;
 }
-.confirm-delete {
-  min-width: 50%;
-  height: 250px;
-  position: fixed;
-  background-color: #fff;
-  padding: 2rem;
-  top: 25%;
-  right: 25%;
-  text-align: center;
-  border: 0.5px solid #ccc;
-  border-radius: 1rem;
-  z-index: 1;
-}
-.confirm-delete p {
-  color: #0672b1;
-  font-weight: 500;
-  cursor: default;
-}
-.xmark-icon {
-  text-align: end;
-}
-.xmark-pointer {
-  display: inline-block;
-}
-.xmark-pointer:hover {
-  cursor: pointer;
-}
 .confirm-delete-btn {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 5rem;
-}
-.confirm-delete-btn button {
-  background-color: var(--BGCOLOR);
-  cursor: pointer;
-  padding: 0 1rem;
-  border-radius: 1rem;
-  text-align: center;
-  padding-bottom: 0.25rem;
-  border: 0.25px solid #ccc;
-}
-.confirm-delete-btn button:first-child:hover {
-  background-color: green;
-  color: #fff;
-}
-.confirm-delete-btn button:last-child:hover {
-  background-color: var(--ERROR);
-  color: #fff;
+  margin-top: 5PX;
 }
 .patient-save-btn:hover {
   cursor: pointer;
@@ -2716,11 +2672,6 @@ background: hsl(0, 0%, 85%);
     top: -1.5rem;
     left: 67%;
     font-size: 0.75em;
-  }
-  .confirm-delete {
-    min-width: 70%;
-    height: 250px;
-    right: 15%;
   } 
   .patient-address-show {
     display: block;
