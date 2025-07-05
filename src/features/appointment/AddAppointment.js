@@ -82,11 +82,12 @@ const AddAppointment = () => {
     }
   }, [errMsg]);
 
-  const options = healthcare.map(doctor => (
+  const options = healthcare.length > 0
+    && healthcare.map((doctor) => (
       <option key={doctor._id} value={doctor.username}>
         {doctor.username}
       </option>
-  ))
+    ))
 
   const handleSubmit = async (e) => {
 
@@ -187,6 +188,15 @@ const AddAppointment = () => {
     setIsFocused((prev) => ({
       ...prev, [field]: false
     }))
+  }
+
+   if(loading){
+    return(
+      <>
+        <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+        <p style={{color: dark ? '#EAEAEA' : 'black'}}>Please wait...</p>
+      </>
+    )
   }
 
   const errClass = errMsg ? "errmsg" : "offscreen"
@@ -355,8 +365,9 @@ const AddAppointment = () => {
     </>
   )
 
-  return options.length > 0 ? content 
-                                  : (loading ? <p style={{color: dark ? '#EAEAEA' : 'black'}}>Please wait...</p> : <p style={{color: dark ? '#EAEAEA' : 'black'}}>Please wait...</p>)
+  return options.length > 0 
+            ? content 
+            : <p style={{color: dark ? '#EAEAEA' : 'black'}}>Doctors not found.</p>
 
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
 import { useParams, Link } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faPenToSquare, faAddressBook, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons'
@@ -14,13 +14,13 @@ const SinglePatientPage = () => {
     const { patientId } = useParams()
 
     const axiosPrivate = useAxiosPrivate()
-    const [patient, setPatient] = useState(null)
+    const [patient, setPatient] = useState({})
     const [loading, setLoading] = useState(false)
 
-    useEffect(() => {
-        const fetchSinglePatient = async () => {
-            setLoading(true)
-            try {
+    const fetchSinglePatient = useCallback(async () => {
+        setLoading(true)
+        setErrMsg('')
+         try {
                 const response = await axiosPrivate.get(`/tests/${patientId}`)
                 setPatient(response.data)
             } catch (err) {
@@ -33,9 +33,11 @@ const SinglePatientPage = () => {
             } finally {
                 setLoading(false)
             }
-        }
-        fetchSinglePatient()
     }, [axiosPrivate, patientId])
+
+    useEffect(() => {
+        fetchSinglePatient()
+    }, [fetchSinglePatient])
 
     useEffect(() => {
         if (errMsg) {
@@ -54,13 +56,19 @@ const SinglePatientPage = () => {
         )
     }
 
-   if (errMsg || !patient) {
+    if (errMsg) {
         return (
-            <section>
-                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
-            </section>
+            <section style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0.5rem 0'}}>
+
+                <p ref={errRef} className={errClass} aria-live="assertive" style={{cursor: 'default'}}>{errMsg}</p>
+
+                <p style={{color: dark ? 'gray' : 'black', margin: '0.25rem 0 1rem', cursor: 'default'}}>Could not retrieve information</p>
+
+                <button onClick={fetchSinglePatient} style={{cursor: 'pointer', fontSize: '12px', padding: '0.25rem 0.5rem', backgroundColor: '#007bff', color: 'white', borderRadius: '5px', fontWeight: 'bold'}}>Retry</button>
+
+            </section>    
         )
-    }
+  }
 
     const content = (
         <section className="singlepage-patient">
@@ -135,7 +143,7 @@ const SinglePatientPage = () => {
         </section>
     )
 
-    return content
+    return patient ? content : <p style={{color: dark ? '#EAEAEA' : 'black'}}>No patient found.</p>
 
 }
 

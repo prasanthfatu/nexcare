@@ -37,6 +37,10 @@ const Public = () => {
         }
     })
 
+    useEffect(() => {
+        localStorage.setItem('darkMode', dark)
+    }, [dark])
+
      const handleGuest = async() => {
         setOpenbar(false)
     

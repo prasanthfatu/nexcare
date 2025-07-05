@@ -8,7 +8,7 @@ export const AuthProvider = ({children}) => {
     const [patients, setPatients] = useState([])
     const [track, setTrack] = useState({})
     const [appId, setAppId] = useState('null')
-    const [dark, setDark] = useState(false)
+    const [dark, setDark] = useState(JSON.parse(localStorage.getItem('darkMode')) || false)
 
     const [persist, setPersist] = useState(JSON.parse(localStorage.getItem('persist')) || false)
 

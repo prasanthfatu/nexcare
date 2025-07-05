@@ -19,6 +19,7 @@ const Patients = () => {
     const getPatients = useCallback(async () => {
         try {
             setLoading(true)
+            setErrMsg('')
             const response = await axiosPrivate.get('/tests');
             setPatients(response.data);
         } catch (err) {
@@ -44,13 +45,12 @@ const Patients = () => {
         if (errMsg) {
             errRef.current?.focus();
         }
-    }, [errMsg]);
-
+    }, [errMsg]);    
 
     const handleSearchChange = (e) => setSearch(e.target.value)
 
     const filteredPatients = patients.filter(patient => {
-        return search.toLocaleLowerCase() === '' ? patient : patient.patientName.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+        return search === '' ? patient : patient.patientName.toLowerCase().includes(search.toLocaleLowerCase())
     })
 
     const errClass = errMsg ? "errmsg" : "offscreen"
@@ -66,9 +66,16 @@ const Patients = () => {
 
     if (errMsg) {
         return (
-            <section>
-                <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
+            <section style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0.5rem 0'}}>
+
+                <p ref={errRef} className={errClass} aria-live="assertive" style={{cursor: 'default'}}>{errMsg}</p>
+
+                <p style={{color: dark ? 'gray' : 'black', margin: '0.25rem 0 1rem', cursor: 'default'}}>Could not retrieve information</p>
+
+                <button onClick={getPatients} style={{cursor: 'pointer', fontSize: '12px', padding: '0.25rem 0.5rem', backgroundColor: '#007bff', color: 'white', borderRadius: '5px', fontWeight: 'bold'}}>Retry</button>
+
             </section>
+        
         )
     }
 
@@ -113,11 +120,15 @@ const Patients = () => {
         </div>
     )
 
-    return( 
+    return (
         <section>
-            { patients.length > 0 && content }           
+            {patients.length > 0 
+                ? content 
+                : <p style={{color: dark ? '#EAEAEA' : 'black'}}>No patients available.</p>
+            }
         </section>
-    )
+   );
+
     
 }
 

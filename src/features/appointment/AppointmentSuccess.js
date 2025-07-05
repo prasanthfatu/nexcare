@@ -145,9 +145,6 @@ const AppointmentSuccess = () => {
 
   return (
     <div className="track-container" style={{position: 'relative'}}>
-      {/* <span 
-        style={{position: 'absolute', top: '0', left: '50%', width: '50px', height: '50px', border: '0.01px solid #ccc', borderRadius: '50%'}}
-      ></span> */}
       {filteredStatus.length > 0 ? content : <p style={{cursor: 'default'}} className="track-para">You have not applied any appointment!</p>}
       <ToastContainer />
     </div>

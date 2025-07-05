@@ -169,6 +169,10 @@ const DashHeader = () => {
         return notification.recipient === name && notification.read === false
     })
 
+    useEffect(() => {
+        localStorage.setItem('darkMode', dark)
+    }, [dark])
+
     const signOut = async () => {
             setOpenSidebar(false)
             navigate('/account/signout')
