@@ -2217,10 +2217,12 @@ background: hsl(0, 0%, 85%);
   font-size: small;
   font-weight: bold;
   padding: 1rem;
+  cursor: default;
 }
 .user-table, .patient-table{
   width: 100%;
   border-collapse: collapse;
+  height: 60dvh;
 }
 .user-table th,
 .user-table td {
@@ -2764,9 +2766,9 @@ background: hsl(0, 0%, 85%);
   .dot-linetwo-img p {
     font-size: x-small;
   }
-  .dash-footer {
+  /* .dash-footer {
     border-top: none;
-  }
+  } */
   .testcenter-info p {
     font-size: 0.8rem;
   }

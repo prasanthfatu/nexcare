@@ -6,7 +6,7 @@ import useAuth from '../hooks/useAuth'
 const Unauthorized = () => {
   const {dark} = useAuth()
   return (
-    <section className='about' style={{color: dark ? '#EAEAEA' : 'black'}}>
+    <section className='about' style={{color: dark ? '#EAEAEA' : 'black', height: '100dvh'}}>
         <Link to='/account'><FontAwesomeIcon icon={faArrowLeft} style={{color: dark ? '#EAEAEA' : 'black'}} /></Link>
         <p style={{cursor: 'default'}}>Unauthorized</p>
     </section>

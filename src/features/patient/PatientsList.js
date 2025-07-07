@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons'
 import useAuth from "../../hooks/useAuth"
 
-const PatientsList = ({filteredPatients}) => {
+const PatientsList = ({currentItems}) => {
 
-  const {dark} = useAuth()
-
+  const {dark} = useAuth()  
+  
   return (
     <>
       {
-        filteredPatients.map((patient) => {
+        currentItems.map((patient) => {
 
           const {_id, patientName, age, gender, email} = patient   
 

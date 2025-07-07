@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth"
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import PatientsList from "./PatientsList"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 const Patients = () => {
 
@@ -15,6 +15,14 @@ const Patients = () => {
     const [search, setSearch] = useState('')
 
     const axiosPrivate = useAxiosPrivate()
+
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const itemsPerPage = 5
+
+    const startIndex = (currentPage - 1) * itemsPerPage
+
+    const endIndex = startIndex + itemsPerPage
 
     const getPatients = useCallback(async () => {
         try {
@@ -47,11 +55,23 @@ const Patients = () => {
         }
     }, [errMsg]);    
 
-    const handleSearchChange = (e) => setSearch(e.target.value)
+    const handleSearchChange = (e) => {
+        setSearch(e.target.value)
+        setCurrentPage(1)
+    }
 
     const filteredPatients = patients.filter(patient => {
-        return search === '' ? patient : patient.patientName.toLowerCase().includes(search.toLocaleLowerCase())
+        return search === '' ? patient : patient.patientName.toLowerCase().includes(search.toLowerCase())
     })
+
+    const currentItems = filteredPatients.slice(startIndex, endIndex)
+
+    console.log(filteredPatients);
+    console.log('currentItems', currentItems);
+    
+    const totalPages = Math.ceil(filteredPatients.length / itemsPerPage)
+
+    console.log('totalPages', totalPages);
 
     const errClass = errMsg ? "errmsg" : "offscreen"
 
@@ -80,7 +100,7 @@ const Patients = () => {
     }
 
     const content = (
-        <div className = 'patients-list'>
+        <div className = 'patients-list' style={{backgroundColor: dark ? 'black' : 'aliceblue'}}>
 
             <div className="search-bar" style={{border: dark ? '0.01px solid #333333' : '0.1px solid #ccc', position: 'relative'}}>
                 <div className="search-icon" style={{position: 'absolute', top: '50%', left: '10%', transform: 'translate(-50%, -50%)'}}><FontAwesomeIcon icon={faMagnifyingGlass} style={{color: dark ? '#333333' : 'black', fontSize: '12.5px'}} /></div>
@@ -97,9 +117,9 @@ const Patients = () => {
             { filteredPatients.length === 0  ? (
                 <p className="patients-list-para">Patient Not Found!</p> 
             ) : (
-
+                <>
                 <table className="patient-table">
-
+                
                     <thead>
                         <tr className='patient-head'>
                             <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Patient Name</th>
@@ -111,10 +131,28 @@ const Patients = () => {
                     </thead>
 
                     <tbody>
-                        <PatientsList filteredPatients={filteredPatients} />
+                        <PatientsList currentItems = {currentItems} />
                     </tbody>
 
                 </table>
+
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', margin: '1em 0'}}>
+                <button
+                    style={{ cursor: 'pointer', padding: '0.25rem 0.5rem', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', borderRadius: '10px'}}
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled = {currentPage === 1}
+                >
+                    <FontAwesomeIcon icon={faArrowLeft} />
+                </button>
+                <button
+                    style={{ cursor: 'pointer', padding: '0.25rem 0.5rem', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', borderRadius: '10px'}}
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled = {currentPage === totalPages}
+                >
+                    <FontAwesomeIcon icon={faArrowRight} />
+                </button>
+            </div>
+            </>
             ) }
 
         </div>
