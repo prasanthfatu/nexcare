@@ -41,6 +41,17 @@ const TestForm = () => {
     focusEmerPhone: false
   });
 
+  const toastOptions = {
+    position: "top-center",
+    autoClose: 5000,
+    theme: "light",
+    style: {
+      width: 'auto',
+      height: 'auto',
+      fontSize: "0.8rem"
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -100,33 +111,13 @@ const TestForm = () => {
     } catch (err) {
       console.error(err);
       if (!err.response) {
-        toast.error('Server Unreachable', { position: "top-center",
-        autoClose: 5000, theme: "light", style: {
-          width: 'auto',
-          height: 'auto',
-          fontSize: "0.8rem"
-        }})
+        toast.error('Server Unreachable', toastOptions)
       } else if (err.response.status === 400) {
-        toast.error(err.response.data.message, { position: "top-center",
-        autoClose: 5000, theme: "light", style: {
-          width: 'auto',
-          height: 'auto',
-          fontSize: "0.8rem"
-        }})
+        toast.error(err.response.data.message, toastOptions)
        } else if (err.response.status === 409) {
-        toast.error('Patient Name Taken', { position: "top-center",
-        autoClose: 5000, theme: "light", style: {
-          width: 'auto',
-          height: 'auto',
-          fontSize: "0.8rem"
-        }})
+        toast.error('Patient Name Taken', toastOptions)
       } else {
-        toast.error('Error submitting patient details.', { position: "top-center",
-        autoClose: 5000, theme: "light", style: {
-          width: 'auto',
-          height: 'auto',
-          fontSize: "0.8rem"
-        }})
+        toast.error('Error submitting patient details.', toastOptions)
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setIsDisabled(false)

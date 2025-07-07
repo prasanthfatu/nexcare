@@ -65,13 +65,8 @@ const Patients = () => {
     })
 
     const currentItems = filteredPatients.slice(startIndex, endIndex)
-
-    console.log(filteredPatients);
-    console.log('currentItems', currentItems);
     
     const totalPages = Math.ceil(filteredPatients.length / itemsPerPage)
-
-    console.log('totalPages', totalPages);
 
     const errClass = errMsg ? "errmsg" : "offscreen"
 
