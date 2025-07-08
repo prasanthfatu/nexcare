@@ -172,6 +172,7 @@ const AddAppointment = () => {
         }})
       }
       window.scroll({top:0, behavior: 'smooth'})
+    } finally {
       setIsDisabled(false)
       setLoading(false)
       setProcessing(false)
