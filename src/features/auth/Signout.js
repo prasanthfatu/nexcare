@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useAuth from '../../hooks/useAuth'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
@@ -16,30 +16,29 @@ const Signout = () => {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-
-        const logout = async() => {
-            try {
-                setLoadig(true)
-                await axiosPrivate.get('/logout')
-                setAuth({})
-                navigate('/')
-            } catch (err) {
-                console.error(err)
-                if (!err.response) {
-                    setErrMsg('Server Unreachable');
-                } else {
-                    setErrMsg(err.data?.message || 'Error signing out. Please try again.');
-                }
-                setLoadig(false)
-            } finally {
-                setLoadig(false)
+    const logout = useCallback(async() => {
+        try {
+            setLoadig(true)
+            setErrMsg('')
+            await axiosPrivate.get('/logout')
+            setAuth({})
+            navigate('/')
+        } catch (err) {
+            console.error(err)
+            if (!err.response) {
+                setErrMsg('Server Unreachable');
+            } else {
+                setErrMsg(err.data?.message || 'Error signing out. Please try again.');
             }
+            setLoadig(false)  
+        } finally {
+            setLoadig(false)
         }
-
-        logout()
-    
     }, [axiosPrivate, navigate, setAuth])
+
+    useEffect(() => {
+        logout() 
+    }, [logout])
 
     useEffect(() => {
         if (errMsg) {
@@ -52,19 +51,25 @@ const Signout = () => {
     if(loading){
         return(
             <>
-                <p style={{color: dark ? 'silver' : 'black'}}>Signing out...</p>
+                <p style={{color: dark ? 'silver' : 'black'}}>Logging out...</p>
                 <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
             </>
         )
     }
 
     if (errMsg) {
-        return (
-            <section>
+    return (
+        <section style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0.5rem 0'}}>
+
                 <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
-            </section>
-        )
-    }
+
+                <p style={{color: dark ? 'gray' : 'black', margin: '0.25rem 0 1rem', cursor: 'default'}}>Could not retrieve information</p>
+
+                <button onClick={logout} style={{cursor: 'pointer', fontSize: '12px', padding: '0.25rem 0.5rem', backgroundColor: '#007bff', color: 'white', borderRadius: '5px', fontWeight: 'bold'}}>Retry</button>
+
+        </section>
+    )
+  }
 
     return null
 }

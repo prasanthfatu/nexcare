@@ -37,6 +37,7 @@ html {
   color: var(--BORDER-COLOR);
   padding: 0.25em;
   margin-bottom: 0.5em;
+  cursor: default;
 }
 .errmsg a:any-link {
   color: var(--ERROR);
@@ -201,6 +202,7 @@ form {
   width: 30%;
   height: 100dvh; 
   min-width: 275px;
+  max-width: 400px;
   background-color: var(--BGCOLOR);
   display: flex;
   flex-direction: column;
@@ -1020,6 +1022,8 @@ form {
   top: 3.5em;
   right: 5.5em;
   width: 30%;
+  min-width: 350px;
+  max-width: 500px;
   height: 65vh;
   background-color:#FFF;
   overflow: auto;
@@ -1650,7 +1654,9 @@ background: hsl(0, 0%, 85%);
   position: absolute;
   top: 3.5em;
   right: 1.2em;
-  width: 45%;
+  width: 35%;
+  min-width: 400px;
+  max-width: 500px;
   height: auto;
   background-color: #FFF;
   border-radius: 1rem;
@@ -2273,6 +2279,14 @@ background: hsl(0, 0%, 85%);
 .track-cursor:hover {
   cursor: pointer;
   color: rgb(245, 53, 53);
+}
+.del-spin{
+  animation: deleteSpin 0.7s linear infinite;
+}
+@keyframes deleteSpin {
+  100%{
+    transform: rotate(360deg);
+  }
 }
 
 /* || SIDEBAR */

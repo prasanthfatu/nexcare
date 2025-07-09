@@ -2,7 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment'
 
-const EditTrack = ({filteredStatus, deleteAppointment, dark}) => {
+const EditTrack = ({filteredStatus, dark, setDelPopup, setAppointmentId}) => {
+
+  const handleDel = (appId) => {
+    setDelPopup(true)
+    setAppointmentId(appId)
+  }
 
   return (
     <>
@@ -19,7 +24,9 @@ const EditTrack = ({filteredStatus, deleteAppointment, dark}) => {
               <td style={{color: dark ? '#777777' : 'white', backgroundColor: dark ? '#0D0D0D' : '#777777'}} className="track-date-style">{date}</td>
               <td style={{color: dark ? '#777777' : 'white', backgroundColor: dark ? '#0D0D0D' : '#777777'}} className="track-time">{sTime} - {eTime}</td>
               <td style={{color: dark ? '#777777' : 'white', backgroundColor: dark ? '#0D0D0D' : '#777777'}}>{status}</td>
-              <td style={{backgroundColor: dark ? '#0D0D0D' : '#777777'}} className="track-cursor" onClick={() =>deleteAppointment(_id)}><FontAwesomeIcon icon={faTrash} style={{color: 'red'}} /></td>
+              <td style={{backgroundColor: dark ? '#0D0D0D' : '#777777'}} className="track-cursor" onClick={() => handleDel(_id)}>
+                <FontAwesomeIcon icon={faTrash} style={{color: 'red'}} />
+              </td>
             </tr>
           )
         })
