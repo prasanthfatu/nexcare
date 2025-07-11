@@ -1,17 +1,25 @@
 import { Link } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import useAuth from "../hooks/useAuth"
 
 const ChooseUs = () => {
 
+    const {dark} = useAuth()
+
     return (
 
-        <>
+        <div style={{position: 'relative'}}>
+
+            <div
+                style={{backgroundColor: 'rgba(0, 0, 0, 0.7)', position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, width: '100dvw', height: '100dvh', zIndex: -1}}
+            />
+
             <div className="visit-link">
-                <Link to='/'><FontAwesomeIcon icon={faArrowLeft} /></Link>
+                <Link to='/'><FontAwesomeIcon icon={faArrowLeft} style={{color: dark ? "black" : 'whitesmoke'}} /></Link>
             </div>
 
-            <section className="choose">
+            <section className="choose" style={{backgroundColor: dark ? '#121212' : 'whitesmoke'}}>
 
                 <div className="choose-container">
 
@@ -36,7 +44,7 @@ const ChooseUs = () => {
 
             </section>
 
-        </>
+        </div>
     )
 }
 
