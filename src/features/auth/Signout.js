@@ -63,8 +63,6 @@ const Signout = () => {
 
                 <p ref={errRef} className={errClass} aria-live="assertive">{errMsg}</p>
 
-                <p style={{color: dark ? 'gray' : 'black', margin: '0.25rem 0 1rem', cursor: 'default'}}>Could not retrieve information</p>
-
                 <button onClick={logout} style={{cursor: 'pointer', fontSize: '12px', padding: '0.25rem 0.5rem', backgroundColor: '#007bff', color: 'white', borderRadius: '5px', fontWeight: 'bold'}}>Retry</button>
 
         </section>

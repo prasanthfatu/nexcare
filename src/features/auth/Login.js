@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import useAuth from '../../hooks/useAuth'
 import axios from '../../app/api/axios'
+import faceImg from "../../img/login.jpg"
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +13,7 @@ const LOGIN_URL = '/auth'
 
 const Login = () => {
 
-    const { setAuth, persist, setPersist } = useAuth()
+    const { setAuth, persist, setPersist, dark } = useAuth()
     const userRef = useRef()
 
     const [show, setShow] = useState(false)
@@ -22,8 +23,27 @@ const Login = () => {
     const [user, setUser] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
+    const [isMobile, setIsMobile] = useState(false)
+
+    const [isFocused, setIsFocused] = useState({
+        focusUser: false,
+        focusPwd: false
+    });
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768)
+        }
+        handleResize()
+
+        window.addEventListener('resize', handleResize)
+
+        return () => window.removeEventListener('resize', handleResize)
+
+    }, [])
 
     useEffect(() => {
         userRef.current.focus()
@@ -119,80 +139,165 @@ const Login = () => {
         localStorage.setItem('persist', persist)
     }, [persist])
 
-    const content = (
+      const handleFocus = (field) => {
+    setIsFocused((prev) => ({
+      ...prev, [field] : true
+    }))
+  }
 
-        <section className="public-login">
+   const handleBlur = (field) => {
+    setIsFocused((prev) => ({
+      ...prev, [field] : false
+    }))
+  }
 
-            <main className="login">
-
-                <header>
-                    <h1>Sign in</h1>
-                </header>
-
-                <div>
-                    <p className={errClass} aria-live="assertive">{errMsg}</p>
-
-                    <form className="form" onSubmit={handleSubmit}>
-
-                        <label htmlFor="username">Username:</label>
-                        <input
-                            className="form__input"
-                            type="text"
-                            id="username"
-                            ref={userRef}
-                            value={user}
-                            onChange={handleUserInput}
-                            autoComplete="off"
-                            required
-                        />
-
-                        <label htmlFor="password">Password:</label>
-                        <div style={{position: 'relative'}}>
-                            <input
-                                className="form__input"
-                                type={show ? 'text' : 'password'}
-                                id="password"
-                                onChange={handlePwdInput}
-                                value={pwd}
-                                required
-                                style={{width: '100%'}}
-                            />
-                            <span onClick={() => setShow(!show)} style={{position: 'absolute', top: '8px', right: '10px', color: 'gray'}}>{show ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}</span>
-                        </div>
-
-                        <button className="form__submit-button" disabled={isDisabled}>Sign In</button>
-
-                        <div>
-                            <input
-                                type='checkbox'
-                                id='persist'
-                                onChange={togglePersist}
-                                checked={persist}
-                            />
-                            <label htmlFor='persist'>Trust this device</label>
-                        </div>
-
-                    </form>
-                </div>
-
-                 <div className='arrow'>
-                    <Link to='/'><FontAwesomeIcon icon={faArrowLeft} /></Link>
-                </div>
-
-            </main>
-
-            <ToastContainer />
-
-        </section>
-    )
+     const styles = {
+    darklabel: {
+      color: 'gray', position: 'absolute', transform: 'translate(0, -50%)', backgroundColor: '#0D0D0D', zIndex: 1, transition: 'top 0.3s linear', padding: '2px 5px', marginLeft: '1.5px'
+    },
+    lightlabel: {
+      color: 'gray', position: 'absolute', transform: 'translate(0, -50%)', backgroundColor: '#fff', zIndex: 1, transition: 'top 0.3s linear', padding: '2px 5px', marginLeft: '1.5px'
+    },
+  }
 
     return (
-        <div className='login-img'>
-            <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
-            {content}
-            <p className='login-para'>Please enter your credentials to access your account and explore our platform.</p>
-        </div>
+
+           <div>
+
+                <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
+
+                <div className='login-container' style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100vw', height: '100vh', display: 'flex', flexDirection: isMobile ? 'column' : 'row'}}>
+
+                   {
+                    !isMobile && (
+                         <div 
+                        className='login-img-box'
+                        style={{ backgroundColor: dark ? '#0D0D0D' : '#fff', width: '50vw', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '25px'}}
+                    > 
+
+                        <h6 style={{color: dark ? '#EAEAEA' : 'black', cursor: 'default'}}>Nexcare</h6>
+
+                        <span style={{ backgroundImage: `url(${faceImg})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '250px', height: '267px', borderRadius: '10px', aspectRatio: 3/2}}></span>
+
+                        <p style={{color: dark ? '#EAEAEA' : 'black', fontFamily: 'revert', cursor: 'default', fontSize: '1.1rem', fontWeight: 'bold'}}>
+                            <span style={{color: 'rgb(207, 75, 75)'}}>Please enter your credentials</span><br />
+                            <span style={{color: 'rgb(81, 146, 177)'}}>to access your account</span>
+                            <span style={{color: 'rgb(64, 116, 64)', marginLeft: '10px'}}>and </span>
+                            <span style={{color: 'rgb(202, 202, 68)'}}>explore our platform.</span>  
+                        </p>
+
+                    </div>
+                    )
+                   }
+
+                    <section className="public-login" style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: isMobile ? '100vw' : '50vw', height: '100dvh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+
+                        <main className="login" style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: '90%', height: '90%', position: 'absolute', top: '5%', left: '5%', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, padding: isMobile ? '10px' : '25px', borderRadius: isMobile ? '10px' : '25px', overflowY: 'auto'}}>
+
+                            <header>
+                                <h1 className='sign-reg-header' style={{color: dark ? '#EAEAEA' : 'black'}}>Sign in</h1>
+                            </header>
+
+                            <div>
+                                <p className={errClass} aria-live="assertive">{errMsg}</p>
+
+                                <form className="form" onSubmit={handleSubmit}>
+
+                                {/* Username */}
+                                <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
+
+                                    <label 
+                                        style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusUser || user !== '') ? '20px' : '48px', left: (isFocused.focusUser || user !== '') ? '30px' : '30px', fontSize: (isFocused.focusUser || user !== '') ? '13px' : '16px'}}
+                                    >
+                                        Username
+                                    </label>
+
+                                    <input 
+                                        style={{backgroundColor: 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
+                                        onFocus={() => handleFocus('focusUser')}
+                                        onBlur={() => handleBlur('focusUser')}
+                                        type="text" 
+                                        name="username" 
+                                        autoComplete='off'
+                                        id="username"
+                                        ref={userRef}
+                                        value={user}
+                                        onChange={handleUserInput}
+                                        required
+                                    />
+
+                                </div>
+
+
+                                {/* Password */}
+                                <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
+
+                                    <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusPwd || pwd !== '') ? '20px' : '48px', left: (isFocused.focusPwd || pwd !== '') ? '30px' : '30px', fontSize: (isFocused.focusPwd || pwd !== '') ? '13px' : '16px'}}>
+                                        Password
+                                    </label>
+
+                                    <input 
+                                        style={{backgroundColor: 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
+                                        onFocus={() => handleFocus('focusPwd')}
+                                        onBlur={() => handleBlur('focusPwd')} 
+                                        name="password"
+                                        type={show ? 'text' : 'password'}
+                                        id="password"
+                                        onChange={handlePwdInput}
+                                        value={pwd}
+                                        required
+                                    />
+
+                                    <span onClick={() => setShow(!show)} style={{position: 'absolute', top: '25%', right: '10%', transform: 'translate(50%, 50%)', color: 'gray'}}>{show ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}</span>
+
+                                </div>
+
+
+                                <button className="form__submit-button" disabled={isDisabled}  style={{opacity: isDisabled ? 0.3 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer'}}>Sign In</button>
+
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        id='persist'
+                                        onChange={togglePersist}
+                                        checked={persist}
+                                    />
+                                    <label htmlFor='persist' style={{color: dark ? '#EAEAEA' : 'black', marginLeft: '10px', fontSize: '14px', fontFamily: 'monospace'}}>Trust this device</label>
+                                </div>
+
+                                </form>
+
+                            </div>
+
+                            <div className='arrow'>
+                                <Link to='/'><FontAwesomeIcon icon={faArrowLeft} style={{color: dark ? '#EAEAEA' : 'black'}} /></Link>
+                            </div>
+
+                            {
+                            isMobile && (
+                                <div style={{ padding: '5px'}}>
+                                    <p style={{color: dark ? '#EAEAEA' : 'black', fontFamily: 'revert', cursor: 'default', fontSize: isMobile ? '0.5rem' : '1.1rem', fontWeight: 'bold', textAlign: 'end'}}>
+                                        <span style={{color: 'rgb(207, 75, 75)'}}>Please enter your credentials</span><br />
+                                        <span style={{color: 'rgb(81, 146, 177)', marginLeft: '2px'}}>to access your account</span><br />
+                                        <span style={{color: 'rgb(64, 116, 64)', marginLeft: '2px'}}>and </span><br />
+                                        <span style={{color: 'rgb(202, 202, 68)'}}>explore our platform.</span>  
+                                    </p>
+                                </div>
+                            )
+                            }
+
+                        
+                        </main>
+
+                        <ToastContainer />
+
+                    </section>
+
+                </div>
+               
+           </div>
+
     )
-    
+
 }
 export default Login

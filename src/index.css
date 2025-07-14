@@ -97,30 +97,10 @@ a:focus-visible {
 }
 
 /* || Register Form */
-.instructions {
-  font-size: 0.75rem;
-  border-radius: 0.5rem;
-  background: #06b178;
-  color: #FFF;
-  padding: 0.25rem;
-  position: relative;
-  bottom: 10px;
-}
-.instructions > svg {
-  margin-right: 0.25rem;
-}
 .offscreen {
   position: absolute;
   left: -9999px;
 }
-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  flex-grow: 1;
-  padding-bottom: 1rem;
-}
-
 /* || Sign In Page */
 .login header{
   margin-bottom: 1em;
@@ -151,9 +131,7 @@ form {
   left: 25%;
   transform: translateX(-50%);
   color: gray;
-  border: 0.5px solid #ccc;
   padding: 1px 5px;
-  border-radius: 1rem;
   white-space: nowrap;
 }
 .nav-login:hover .hover-text {
@@ -659,22 +637,6 @@ form {
   border-top: 0.5px solid #ccc;
   text-align: center;
 }
-.public-login {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.login-img {
-  max-width: 100%;
-  height: auto;
-  background-image: url('./img/face.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  padding: 1rem;
-}
 .data-loading {
   position: fixed;
   top: 0;
@@ -717,11 +679,6 @@ form {
 .public__main {
   padding: 1em 0;
 }
-.login {
-  margin-top: 1em;
-  width: 50%;
-  height: auto;
-}
 .arrow{
   margin-top: 2em;
 }
@@ -744,27 +701,6 @@ form {
 }
 
 /* || Register */
-.register {
-  background-image: url('./img/register.png');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  width: 100%;
-  height: 100vh;
-  margin: 0 auto;
-  padding: 0.5rem 2rem 0 2rem;
-}
-.register button {
-  cursor: pointer;
-}
-.register h1 {
-  margin-bottom: 1rem;
-}
-.register p {
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
-}
 .line {
   margin-top: 1rem;
 }
@@ -787,10 +723,14 @@ form {
 }
 
 /* || Nav Sidebar */
+.publicnavbar{
+  display: block;
+}
 .nav-sidebar {
   display: none;
 }
 .dropdown-menu {
+  display: 'none';
   margin: 0;
   padding: 0;
   position: absolute;
@@ -805,12 +745,14 @@ form {
   transition: all 0.3s ease;
 }
 .dropdown-menu.active {
+  display: block;
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   transition:all 0.5s ease;
 }
 .dropdown-menu.inactive {
+  display: 'none';
   opacity: 0;
   visibility: hidden;
   transform: translateY(-20px);
@@ -1296,6 +1238,7 @@ background: hsl(0, 0%, 85%);
 .choose-container p{
   margin: 10px 0 10px 0;
   color: gray;
+  cursor: default;
 }
 .choose-container h1 {
   margin-bottom: 1rem;
@@ -2510,12 +2453,14 @@ background: hsl(0, 0%, 85%);
 }
 .form__input,
 .form__submit-button {
-  border: 0.5px solid gray;
+  border: none;
   padding: 0.5em;
   border-radius: 15px;
-}
-.form__submit-button {
   cursor: pointer;
+  width: 150px;
+  margin: 0 auto;
+  background-color: #007bff;
+  color: white;
 }
 
 /* || Appointments */
@@ -2594,10 +2539,6 @@ background: hsl(0, 0%, 85%);
     flex-grow: 1;
     width: 100%;
   }
-  .login {
-    width: 90%;
-    height: 100vh;
-  }
   .login header{
     display: flex;
     flex-direction: column;
@@ -2607,11 +2548,13 @@ background: hsl(0, 0%, 85%);
   .dropdown-menu {
     width: 70%;
   }
-  .register h1 {
-    text-align: center;
-  }
   .about{
     padding: 1em;
+  }
+  .sign-reg-header{
+    text-align: center;
+    font-size: large;
+    margin-bottom: 0;
   }
 }
 
@@ -2887,10 +2830,6 @@ background: hsl(0, 0%, 85%);
   .app-list {
     grid-template-columns: 1fr 1fr 1fr;
   }
-  .login {
-    width: 90%;
-    height: 100vh;
-  }
   .arrow {
     margin-top: 7em
   }
@@ -2898,6 +2837,9 @@ background: hsl(0, 0%, 85%);
     grid-template-columns: 1fr 1fr;
   }
   .navbar {
+    display: none;
+  }
+  .publicnavbar{
     display: none;
   }
 }
