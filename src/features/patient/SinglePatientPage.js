@@ -71,7 +71,7 @@ const SinglePatientPage = () => {
   }
 
     const content = (
-        <section className="singlepage-patient">
+        <section className="singlepage-patient dash-outlet">
 
             <div className="patient-details" style={{backgroundColor: dark ? '#121212' : 'rgba(0, 0, 0, 0.9)'}}>
 

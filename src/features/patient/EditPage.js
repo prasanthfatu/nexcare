@@ -202,7 +202,7 @@ const EditPage = ({ patient, patientId }) => {
 
 
   return (
-    <section className='patient-editpage' style={{backgroundColor: dark ? '#0D0D0D' : '#fff'}}>
+    <section className='patient-editpage dash-outlet' style={{backgroundColor: dark ? '#0D0D0D' : '#fff'}}>
       <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
       <div className="patient-editpage-center">

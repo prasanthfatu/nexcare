@@ -154,7 +154,7 @@ const Patients = () => {
     )
 
     return (
-        <section>
+        <section className='dash-outlet'>
             {patients.length > 0 
                 ? content 
                 : <p style={{color: dark ? '#EAEAEA' : 'black'}}>No patients available.</p>

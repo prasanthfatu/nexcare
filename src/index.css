@@ -214,9 +214,9 @@ a:focus-visible {
 }
 .board-img {
   display: flex;
+  align-items: center;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-end;
   padding: 1rem;
   margin-bottom: 1rem;
 }
@@ -320,6 +320,10 @@ a:focus-visible {
   width: 25px;
   height: 25px;
 }
+.board-footer-img img{
+  width: 25px;
+  height: 25px;
+}
 .board-img p {
   font-size: 1rem;
 }
@@ -330,13 +334,21 @@ a:focus-visible {
   width: 100%;
   height: auto;
 }
-.board-responsive-container {
+/* .board-responsive-container {
+  display: none;
+} */
+.dash-footer{
   display: none;
 }
 .board-responsive {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+}
+.board-footer-img{
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 .footer-info {
@@ -1284,13 +1296,10 @@ background: hsl(0, 0%, 85%);
 }
 .dash-footer {
   width: 100%;
-  text-align: center;
-  border-top: 0.5px solid #ccc;
+  height: fit-content;
   position: fixed;
   bottom: 0;
   left: 0;
-  border-bottom: 0.5px solid #ccc;
-  background-color: aliceblue;
 }
 
 /* NAV Profile*/
@@ -2508,6 +2517,10 @@ background: hsl(0, 0%, 85%);
     width: 20px;
     height: 20px;
   }
+  .board-footer-img img{
+    width: 20px;
+    height: 20px;
+  }
   .last-tooltip .lastooltip {
     right: 450%;
   }
@@ -2732,9 +2745,6 @@ background: hsl(0, 0%, 85%);
   .dot-linetwo-img p {
     font-size: x-small;
   }
-  /* .dash-footer {
-    border-top: none;
-  } */
   .testcenter-info p {
     font-size: 0.8rem;
   }
@@ -2778,14 +2788,14 @@ background: hsl(0, 0%, 85%);
   .app-list {
     grid-template-columns: 1fr;
   }
-  .board-responsive-container {
+  .dash-footer {
     width: 100%;
     display: block;
   }
   .nav-name-baricon {
     display: none;
   }
-  .dash-container{
+  .dash-outlet{
     margin-bottom: 3.5em;
   }
   .scrolltop{

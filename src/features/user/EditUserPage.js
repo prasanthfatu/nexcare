@@ -74,7 +74,7 @@ const EditUserPage = ({singleUser, userId}) => {
     }
 
   return (
-    <section className="public">
+    <section className="public dash-outlet">
 
         <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
 
@@ -96,7 +96,7 @@ const EditUserPage = ({singleUser, userId}) => {
             />
                         
             <label style={{color: dark ? '#BBBBBB' : 'black'}} htmlFor='role'>Role:</label>
-            <select style={{backgroundColor: dark ? '#BBBBBB' : 'white'}} name='role' value={roles} onChange={(e) => setRoles(Array.from(e.target.selectedOptions, option => option.value))} multiple>
+            <select style={{backgroundColor: dark ? '#BBBBBB' : 'white', height: 'auto'}} name='role' value={roles} onChange={(e) => setRoles(Array.from(e.target.selectedOptions, option => option.value))} multiple>
                 <option value='Admin'>Admin</option>
                 <option value='HealthcareProvider'>HealthcareProvider</option>
                 <option value='User'>User</option>

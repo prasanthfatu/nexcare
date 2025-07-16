@@ -224,7 +224,7 @@ const AddAppointment = () => {
   }  
 
    const content = (
-      <>
+      <div className='dash-outlet'>
         <style>
             {
               `@keyframes ripple-effect {
@@ -364,7 +364,7 @@ const AddAppointment = () => {
               autoClose={5000}
           />
         </section>
-      </>
+      </ div>
     )
 
   return options.length > 0 ? content : <p style={{color: dark ? '#EAEAEA' : 'black'}}>Doctors not found.</p>

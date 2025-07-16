@@ -148,7 +148,7 @@ const TestForm = () => {
   }
 
   return (
-    <>
+    <div className='dash-outlet'>
       <style>
         {`
           @keyframes spin {
@@ -384,7 +384,7 @@ const TestForm = () => {
         </div>
 
       </section>
-    </>
+    </div>
   );
 
 

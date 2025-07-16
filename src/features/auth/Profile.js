@@ -206,7 +206,7 @@ const Profile = () => {
   
   return (
 
-    <div className='profile-detail-info'>
+    <div className='profile-detail-info dash-outlet'>
 
       <div className='profile-page'>
  

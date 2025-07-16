@@ -13,14 +13,12 @@ const DashFooter = () => {
 
     const content = (
 
-        <footer className="dash-footer" style={{backgroundColor: dark ? 'black' : 'aliceblue', borderTop: dark ? '0.01px solid #333333' : '0.01px solid #ccc', zIndex: 10}}>
-
-            <div className='board-responsive-container'>
+        <footer className="dash-footer" style={{ backgroundColor: dark ? 'black' : 'aliceblue', borderTop: dark ? '0.01px solid #333333' : '0.01px solid #ccc', padding: '0.5rem 0.25rem 0.25rem', zIndex: 10}}>
 
                <div className='board-responsive'>
 
                     <Link to="/account/medicaltest">
-                        <div className='board-img'>
+                        <div className='board-footer-img'>
                             <div className="tooltip first-tooltip">
                                 <img className='img-add' src={addpatient} alt="Healthcare" />
                                 <span className="tooltiptext firstooltip">Add New Patient</span>
@@ -29,7 +27,7 @@ const DashFooter = () => {
                     </Link>
 
                     <Link to="/account/patients">
-                        <div className='board-img'>
+                        <div className='board-footer-img'>
                             <div className="tooltip">
                                 <img className='img-add' src={patientslist} alt="Healthcare" />
                                 <span className="tooltiptext">Patient List</span>
@@ -38,7 +36,7 @@ const DashFooter = () => {
                     </Link>
 
                     <Link to="/account/new-appointment">
-                        <div className='board-img'>
+                        <div className='board-footer-img'>
                             <div className="tooltip">
                                 <img className='img-add' src={appointment} alt="Healthcare" />
                                 <span className="tooltiptext">Reserve Appointment</span>
@@ -47,7 +45,7 @@ const DashFooter = () => {
                     </Link>
 
                     <Link to="/account/appointments">
-                        <div className='board-img'>
+                        <div className='board-footer-img'>
                             <div className="tooltip">
                                 <img className='img-add' src={appointmentslist} alt="Healthcare" />
                                 <span className="tooltiptext">View All Appointments</span>
@@ -56,7 +54,7 @@ const DashFooter = () => {
                     </Link>
 
                     <Link to="/account/appointmentsuccess">
-                        <div className='board-img'>
+                        <div className='board-footer-img'>
                             <div className="tooltip">
                                 <img className='img-add' src={trackstatus} alt="Healthcare" />
                                 <span className="tooltiptext">Track Status</span>
@@ -65,7 +63,7 @@ const DashFooter = () => {
                     </Link>
 
                     <Link to="/account/users">
-                        <div className='board-img'>
+                        <div className='board-footer-img'>
                             <div className="tooltip last-tooltip">
                                 <img className='img-add' src={usersetting} alt="Healthcare" />
                                 <span className="tooltiptext lastooltip">View User Settings</span>
@@ -73,10 +71,8 @@ const DashFooter = () => {
                         </div>
                     </Link>
 
-                </div>
+                </div>  
 
-            </div>    
-        
         </footer>
 
     )
