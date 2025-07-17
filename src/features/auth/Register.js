@@ -38,7 +38,8 @@ const Register = () => {
     const [isFocused, setIsFocused] = useState({
         focusUser: false,
         focusPwd: false,
-        focusMatchPwd: false
+        focusMatchPwd: false,
+        focusHomeArrow: false,
     });
 
     useEffect(() => {
@@ -185,7 +186,7 @@ const Register = () => {
         
                             <section style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: isMobile ? '100vw' : '50vw', height: '100dvh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         
-                                <main style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: '90%', height: '90%', position: 'absolute', top: '5%', left: '5%', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, padding: isMobile ? '10px' : '25px', borderRadius: isMobile ? '10px' : '25px', overflowY: 'auto'}}>
+                                <main style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: '90%', height: '90%', position: 'absolute', top: '5%', left: '5%', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, padding: isMobile ? '10px' : '25px', borderRadius: isMobile ? '10px' : '25px', overflowY: 'auto', scrollbarWidth: 'none'}}>
         
                                     <header>
                                         <h4 className="sign-reg-header" style={{color: dark ? '#EAEAEA' : 'black'}}>Sign Up</h4>
@@ -193,7 +194,7 @@ const Register = () => {
         
                                     <div>
         
-                                        <form className="form" onSubmit={handleSubmit}>
+                                        <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         
                                         {/* Username */}
                                         <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
@@ -338,8 +339,13 @@ const Register = () => {
                                         <span><a href="/login" style={{cursor: 'pointer', color: dark ? '#EAEAEA' : 'black'}}>Sign In</a></span>
                                     </p>
 
-                                    <div className='home-link'>
-                                        <Link to='/'><FontAwesomeIcon icon={faArrowLeft} style={{color: dark ? '#EAEAEA' : 'black'}} /></Link>
+                                    <div 
+                                        style={{position: 'relative', width: 'fit-content'}}
+                                        onMouseEnter={() => handleFocus('focusHomeArrow')}
+                                        onMouseLeave={() => handleBlur('focusHomeArrow')}
+                                    >
+                                        <Link to='/'><FontAwesomeIcon icon={faArrowLeft} style={{color: dark ? '#EAEAEA' : 'black', marginTop: '35px'}} /></Link>
+                                        <span style={{display: isFocused.focusHomeArrow ? 'block' : 'none', position: 'absolute', bottom: '40%', left: '100%',  border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? '#EAEAEA' : 'black', whiteSpace: 'nowrap', fontSize: '10px', padding: '5px'}}>Back to home</span>
                                     </div>
 
                                     {

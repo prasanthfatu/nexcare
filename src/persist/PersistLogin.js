@@ -7,7 +7,7 @@ const PersistLogin = () => {
 
     const [isLoading, setIsLoading] = useState(true)
     const refresh = useRefreshToken()
-    const {auth, persist} = useAuth()
+    const {auth, persist, dark} = useAuth()
 
     useEffect(() => {
 
@@ -34,7 +34,9 @@ const PersistLogin = () => {
         {!persist ?
             <Outlet />
                 : isLoading ?
-                    <h2 className="protected-page-loading">Nexcare</h2>
+                    <div className="protected-page-loading" style={{backgroundColor: dark ? '#0D0D0D' : '#fff', color: dark ? '#EAEAEA' : 'black'}}>
+                        <h2 style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '90%', height: '90%', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, borderRadius: '15px'}}>Nexcare</h2>
+                    </div>
                         : <Outlet />
         }
     </>

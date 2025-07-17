@@ -27,7 +27,8 @@ const Login = () => {
 
     const [isFocused, setIsFocused] = useState({
         focusUser: false,
-        focusPwd: false
+        focusPwd: false,
+        focusHomeArrow: false
     });
 
     const navigate = useNavigate()
@@ -166,7 +167,7 @@ const Login = () => {
 
                 <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
-                <div className='login-container' style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100vw', height: '100vh', display: 'flex', flexDirection: isMobile ? 'column' : 'row'}}>
+                <div style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100vw', height: '100vh', display: 'flex', flexDirection: isMobile ? 'column' : 'row'}}>
 
                    {
                     !isMobile && (
@@ -190,9 +191,9 @@ const Login = () => {
                     )
                    }
 
-                    <section className="public-login" style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: isMobile ? '100vw' : '50vw', height: '100dvh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                    <section style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: isMobile ? '100vw' : '50vw', height: '100dvh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
-                        <main className="login" style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: '90%', height: '90%', position: 'absolute', top: '5%', left: '5%', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, padding: isMobile ? '10px' : '25px', borderRadius: isMobile ? '10px' : '25px', overflowY: 'auto'}}>
+                        <main style={{backgroundColor: dark ? '#0D0D0D' : '#fff', width: '90%', height: '90%', position: 'absolute', top: '5%', left: '5%', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, padding: isMobile ? '10px' : '25px', borderRadius: isMobile ? '10px' : '25px', overflowY: 'auto', scrollbarWidth: 'none'}}>
 
                             <header>
                                 <h1 className='sign-reg-header' style={{color: dark ? '#EAEAEA' : 'black'}}>Sign in</h1>
@@ -201,7 +202,7 @@ const Login = () => {
                             <div>
                                 <p className={errClass} aria-live="assertive">{errMsg}</p>
 
-                                <form className="form" onSubmit={handleSubmit}>
+                                <form onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
 
                                 {/* Username */}
                                 <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
@@ -255,22 +256,28 @@ const Login = () => {
 
                                 <button className="form__submit-button" disabled={isDisabled}  style={{opacity: isDisabled ? 0.3 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer'}}>Sign In</button>
 
-                                <div>
-                                    <input
-                                        type='checkbox'
-                                        id='persist'
-                                        onChange={togglePersist}
-                                        checked={persist}
-                                    />
-                                    <label htmlFor='persist' style={{color: dark ? '#EAEAEA' : 'black', marginLeft: '10px', fontSize: '14px', fontFamily: 'monospace'}}>Trust this device</label>
-                                </div>
-
                                 </form>
 
                             </div>
 
-                            <div className='arrow'>
+                            <div style={{marginTop: '10px'}}>
+                                <input
+                                    type='checkbox'
+                                    id='persist'
+                                    onChange={togglePersist}
+                                    checked={persist}
+                                />
+                                <label htmlFor='persist' style={{color: dark ? '#EAEAEA' : 'black', marginLeft: '10px', fontSize: '14px', fontFamily: 'monospace'}}>Trust this device</label>
+                            </div>
+
+                            <div 
+                                className='arrow' style={{position: 'relative', width: 'fit-content'}}
+                                onMouseEnter={() => handleFocus('focusHomeArrow')}
+                                onMouseLeave={() => handleBlur('focusHomeArrow')}
+
+                            >
                                 <Link to='/'><FontAwesomeIcon icon={faArrowLeft} style={{color: dark ? '#EAEAEA' : 'black'}} /></Link>
+                                <span style={{display: isFocused.focusHomeArrow ? 'block' : 'none', position: 'absolute', bottom: '100%', left: '100%',  border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? '#EAEAEA' : 'black', whiteSpace: 'nowrap', fontSize: '10px', padding: '5px'}}>Back to home</span>
                             </div>
 
                             {

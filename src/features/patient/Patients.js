@@ -11,7 +11,7 @@ const Patients = () => {
     const [errMsg, setErrMsg] = useState('')
 
     const { patients, setPatients, dark} = useAuth()
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [search, setSearch] = useState('')
 
     const axiosPrivate = useAxiosPrivate()

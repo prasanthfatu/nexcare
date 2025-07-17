@@ -102,9 +102,9 @@ a:focus-visible {
   left: -9999px;
 }
 /* || Sign In Page */
-.login header{
+/* .login header{
   margin-bottom: 1em;
-}
+} */
 .loginpad, .registerpad, .info{
   margin-right: 2rem;
 }
@@ -2470,6 +2470,7 @@ background: hsl(0, 0%, 85%);
   margin: 0 auto;
   background-color: #007bff;
   color: white;
+  text-align: center;
 }
 
 /* || Appointments */
