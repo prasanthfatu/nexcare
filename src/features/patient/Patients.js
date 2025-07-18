@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react"
+import { useEffect, useState, useCallback, useRef, useMemo } from "react"
 import useAuth from "../../hooks/useAuth"
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import PatientsList from "./PatientsList"
@@ -8,10 +8,12 @@ import { faMagnifyingGlass, faArrowLeft, faArrowRight } from '@fortawesome/free-
 const Patients = () => {
 
     const errRef = useRef(null)
+    const debounceRef = useRef(null)
     const [errMsg, setErrMsg] = useState('')
 
     const { patients, setPatients, dark} = useAuth()
     const [loading, setLoading] = useState(false)
+    const [searchInput, setSearchInput] = useState('')
     const [search, setSearch] = useState('')
 
     const axiosPrivate = useAxiosPrivate()
@@ -53,10 +55,29 @@ const Patients = () => {
         if (errMsg) {
             errRef.current?.focus();
         }
-    }, [errMsg]);    
+    }, [errMsg]);   
 
+    const debounceFunction = useCallback((func, timer) => {
+        return (...args) => {
+            if(debounceRef.current) {
+                clearTimeout(debounceRef.current)
+            }
+            debounceRef.current = setTimeout(() => {
+                func(...args)
+            }, timer)
+        }
+    }, [])
+
+    const searchPatient = useCallback((query) => {
+        setSearch(query)
+    }, [setSearch])
+
+    const debouncSearchFunction = useMemo(() => debounceFunction(searchPatient, 500), [searchPatient, debounceFunction])
+ 
     const handleSearchChange = (e) => {
-        setSearch(e.target.value)
+        const value = e.target.value
+        setSearchInput(value)
+        debouncSearchFunction(value)
         setCurrentPage(1)
     }
 
@@ -95,7 +116,7 @@ const Patients = () => {
     }
 
     const content = (
-        <div className = 'patients-list' style={{backgroundColor: dark ? 'black' : 'aliceblue'}}>
+        <div className = 'patients-list' style={{backgroundColor: dark ? 'black' : 'aliceblue',}}>
 
             <div className="search-bar" style={{border: dark ? '0.01px solid #333333' : '0.1px solid #ccc', position: 'relative'}}>
                 <div className="search-icon" style={{position: 'absolute', top: '50%', left: '10%', transform: 'translate(-50%, -50%)'}}><FontAwesomeIcon icon={faMagnifyingGlass} style={{color: dark ? '#333333' : 'black', fontSize: '12.5px'}} /></div>
@@ -104,7 +125,7 @@ const Patients = () => {
                     style={{position: 'absolute', top: '50%', left: '15%', transform: 'translate(0, -50%)', caretColor: dark ? 'gray' : 'black', color: dark ? 'gray' : 'black'}}
                     type="text"
                     placeholder="search..."
-                    value={search}
+                    value={searchInput}
                     onChange={handleSearchChange}
                 />
             </div>
@@ -112,43 +133,48 @@ const Patients = () => {
             { filteredPatients.length === 0  ? (
                 <p className="patients-list-para">Patient Not Found!</p> 
             ) : (
-                <>
-                <table className="patient-table">
-                
-                    <thead>
-                        <tr className='patient-head'>
-                            <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Patient Name</th>
-                            <th className="patient-age-style" style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Age</th>
-                            <th className="patient-gender" style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Gender</th>
-                            <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Email</th>
-                            <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>View</th>
-                        </tr>
-                    </thead>
+                <div style={{height: '390px'}}>
+                    <table className="patient-table">
+                    
+                        <thead>
+                            <tr className='patient-head'>
+                                <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Patient Name</th>
+                                <th className="patient-age-style" style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Age</th>
+                                <th className="patient-gender" style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Gender</th>
+                                <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>Email</th>
+                                <th style={{backgroundColor: '#121212', color: dark ? '#BBBBBB':'#EAEAEA'}}>View</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        <PatientsList currentItems = {currentItems} />
-                    </tbody>
+                        <tbody>
+                            <PatientsList currentItems = {currentItems} />
+                        </tbody>
 
-                </table>
-
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around', margin: '1em 0'}}>
-                <button
-                    style={{ cursor: 'pointer', padding: '0.25rem 0.5rem', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', borderRadius: '10px'}}
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                    disabled = {currentPage === 1}
-                >
-                    <FontAwesomeIcon icon={faArrowLeft} />
-                </button>
-                <button
-                    style={{ cursor: 'pointer', padding: '0.25rem 0.5rem', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', borderRadius: '10px'}}
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                    disabled = {currentPage === totalPages}
-                >
-                    <FontAwesomeIcon icon={faArrowRight} />
-                </button>
-            </div>
-            </>
+                    </table>
+                </div>
             ) }
+
+            {
+                filteredPatients.length > 0 && (
+                    
+                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                    <button
+                        style={{ cursor: 'pointer', padding: '0.25rem 0.5rem', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', borderRadius: '10px'}}
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled = {currentPage === 1}
+                    >
+                        <FontAwesomeIcon icon={faArrowLeft} />
+                    </button>
+                    <button
+                        style={{ cursor: 'pointer', padding: '0.25rem 0.5rem', border: dark ? '0.01px solid #333333' : '0.01px solid #ccc', borderRadius: '10px'}}
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled = {currentPage === totalPages}
+                    >
+                        <FontAwesomeIcon icon={faArrowRight} />
+                    </button>
+                    </div>
+                )
+            }
 
         </div>
     )

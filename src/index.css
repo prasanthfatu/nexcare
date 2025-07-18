@@ -2154,7 +2154,7 @@ background: hsl(0, 0%, 85%);
 /*  || TABLE */
 .patients-list {
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 .search-bar {
   display: flex;
@@ -2186,18 +2186,20 @@ background: hsl(0, 0%, 85%);
 .user-table, .patient-table{
   width: 100%;
   border-collapse: collapse;
-  height: 60dvh;
+  height: auto;
 }
 .user-table th,
 .user-table td {
   border: 0.01px solid #ccc;
   padding: 8px;
+  border-collapse: collapse;
   text-align: left;
 }
 .patient-table th,
 .patient-table td {
   border: 0.01px solid #333333;
   padding: 8px;
+  border-collapse: collapse;
   text-align: left;
 }
 .patient-head, .patient-body {

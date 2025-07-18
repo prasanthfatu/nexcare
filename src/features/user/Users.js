@@ -74,7 +74,7 @@ const Users = () => {
         }
 
     const content = (
-        <>
+        <div style={{width: '100%', height: '100%'}}>
         <h3 style={{color: dark ? '#EAEAEA' : 'black', textAlign: 'center', marginBottom: '12px'}}>Users</h3>
         <table className="user-table">
             <thead>
@@ -88,7 +88,7 @@ const Users = () => {
                 <UsersList users={users} />
             </tbody>
         </table>
-        </>
+        </div>
     )
 
     return !loading && users.length > 0 ? content : <p style={{ color: dark ? '#EAEAEA' : 'black' }}>No users found.</p>;
