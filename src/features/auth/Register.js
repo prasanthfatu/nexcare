@@ -200,7 +200,7 @@ const Register = () => {
                                         <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
         
                                             <label 
-                                                style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusUser || user !== '') ? '20px' : '48px', left: (isFocused.focusUser || user !== '') ? '30px' : '30px', fontSize: (isFocused.focusUser || user !== '') ? '13px' : '16px'}}
+                                                style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusUser || user !== '') ? '20px' : '48px', left: (isFocused.focusUser || user !== '') ? '30px' : '30px', fontSize: (isFocused.focusUser || user !== '') ? '13px' : '16px', pointerEvents: 'none'}}
                                             >
                                                 Username
                                             </label>
@@ -245,7 +245,7 @@ const Register = () => {
                                         {/* Password */}
                                         <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
         
-                                            <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusPwd || pwd !== '') ? '20px' : '48px', left: (isFocused.focusPwd || pwd !== '') ? '30px' : '30px', fontSize: (isFocused.focusPwd || pwd !== '') ? '13px' : '16px'}}>
+                                            <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusPwd || pwd !== '') ? '20px' : '48px', left: (isFocused.focusPwd || pwd !== '') ? '30px' : '30px', fontSize: (isFocused.focusPwd || pwd !== '') ? '13px' : '16px', pointerEvents: 'none'}}>
                                                 Password
                                             </label>
         
@@ -289,7 +289,7 @@ const Register = () => {
                                         {/* Confirm Password */}
                                         <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
         
-                                            <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusMatchPwd || matchPwd !== '') ? '20px' : '48px', left: (isFocused.focusMatchPwd || matchPwd !== '') ? '30px' : '30px', fontSize: (isFocused.focusMatchPwd || matchPwd !== '') ? '13px' : '16px'}}>
+                                            <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusMatchPwd || matchPwd !== '') ? '20px' : '48px', left: (isFocused.focusMatchPwd || matchPwd !== '') ? '30px' : '30px', fontSize: (isFocused.focusMatchPwd || matchPwd !== '') ? '13px' : '16px', pointerEvents: 'none'}}>
                                                 Confirm Password
                                             </label>
         

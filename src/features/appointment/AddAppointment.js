@@ -275,7 +275,7 @@ const AddAppointment = () => {
                 {/* Test */}
                 <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
   
-                  <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusTest || test !== '') ? '20px' : '48px', left: (isFocused.focusTest || test !== '') ? '30px' : '30px', fontSize: (isFocused.focusTest || test !== '') ? '13px' : '16px'}}>Test</label>
+                  <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusTest || test !== '') ? '20px' : '48px', left: (isFocused.focusTest || test !== '') ? '30px' : '30px', fontSize: (isFocused.focusTest || test !== '') ? '13px' : '16px', pointerEvents: 'none'}}>Test</label>
   
                   <select 
                     style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
@@ -302,7 +302,7 @@ const AddAppointment = () => {
               {/* Healthcare Provider */}
               <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
   
-                <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusDoctor || doctor !== '') ? '20px' : '48px', left: (isFocused.focusDoctor || doctor !== '') ? '30px' : '30px', fontSize: (isFocused.focusDoctor || doctor !== '') ? '13px' : '16px'}}>Healthcare Provider</label>
+                <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusDoctor || doctor !== '') ? '20px' : '48px', left: (isFocused.focusDoctor || doctor !== '') ? '30px' : '30px', fontSize: (isFocused.focusDoctor || doctor !== '') ? '13px' : '16px', pointerEvents: 'none'}}>Healthcare Provider</label>
   
                 <select 
                   style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}

@@ -143,19 +143,19 @@ const EditUserPage = ({singleUser, userId}) => {
 
         <h1 style={{color: dark ? '#EAEAEA' : 'black', marginBottom: '10px'}}>Update User</h1>
 
-        <form className='form'> 
+        <form className='form' style={{backgroundColor: dark ? '#0D0D0D' : '#fff', marginTop: '10px', padding: '10px'}}> 
 
-             {/* Name */}
+             {/* Username */}
            <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-            <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusUser || user !== '') ? '20px' : '48px', left: (isFocused.focusUser || user !== '') ? '30px' : '30px', fontSize: (isFocused.focusUser || user !== '') ? '13px' : '16px'}}>
-              Patient Name
+            <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusUser || user !== '') ? '20px' : '48px', left: (isFocused.focusUser || user !== '') ? '30px' : '30px', fontSize: (isFocused.focusUser || user !== '') ? '13px' : '16px', pointerEvents: 'none'}}>
+              Username
             </label>
 
             <input 
                 style={{backgroundColor: 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
-                onFocus={() => handleFocus('focusName')}
-                onBlur={() => handleBlur('focusName')}
+                onFocus={() => handleFocus('focusUser')}
+                onBlur={() => handleBlur('focusUser')}
               type="text" name="username" autoComplete='off' value={user} onChange={(e) => setUser(e.target.value)} required />
 
           </div>
@@ -163,7 +163,7 @@ const EditUserPage = ({singleUser, userId}) => {
             {/* Role */}
                 <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: 'auto', height: '200px'}}>
   
-                  <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusRoles || roles !== '') ? '20px' : '48px', left: (isFocused.focusRoles || roles !== '') ? '30px' : '30px', fontSize: (isFocused.focusRoles || roles !== '') ? '13px' : '16px'}}>Role</label>
+                  <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusRoles || roles !== '') ? '20px' : '48px', left: (isFocused.focusRoles || roles !== '') ? '30px' : '30px', fontSize: (isFocused.focusRoles || roles !== '') ? '13px' : '16px', pointerEvents: 'none'}}>Role</label>
   
                   <select 
                     style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}

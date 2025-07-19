@@ -51,6 +51,7 @@ const DashHeader = () => {
     const [openSidebar, setOpenSidebar] = useState(false)
     const [navbar, setNavbar] = useState(false)
     const [hide, setHide] = useState(false)
+    const [showConfirm, setShowConfirm] = useState(false);
 
     const {getProfile} = useProfile(name, auth)
     
@@ -173,14 +174,19 @@ const DashHeader = () => {
         localStorage.setItem('darkMode', dark)
     }, [dark])
 
+    const handleLogout = () => {
+        navigate('/account/signout')
+        setShowConfirm(false);
+    };
+
     const signOut = async () => {
-            setOpenSidebar(false)
-            navigate('/account/signout')
+        setOpenSidebar(false)
+        setShowConfirm(true)
     }
 
     const signOutBar = async () => {
         setNavbar(false)
-        navigate('/account/signout')
+        setShowConfirm(true)
     }
     
     const handleMyProfile = () => {
@@ -451,13 +457,35 @@ const DashHeader = () => {
                 </div>
             </div>
         </div>
-            </div>
-
+            </div>               
 
     </header>
     )
 
-    return content
+    return (
+        <div>
+            {content}
+            {showConfirm && (
+                <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1000}}>
+                    <div style={{ position: 'relative', backgroundColor: '#fff', padding: '25px', borderRadius: '10px', width: '90%', maxWidth: '400px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)' }}>
+                        <p style={{ color: '#333333', fontSize: '15px', cursor: 'default', padding: '10px', textAlign: 'center'}}>Are you sure you want to logout?</p>
+                        <div className="confirm-delete-btn">
+                            <button 
+                            type='button'
+                            style={{backgroundColor: 'firebrick', color: 'white', fontSize: '12px', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}
+                            onClick={handleLogout}
+                        >Yes</button>
+                        <button 
+                            type='button'
+                            style={{backgroundColor: '#007bff', color: 'white', fontSize: '12px', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}
+                            onClick={() => setShowConfirm(false)}
+                        >Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
 
 }
 

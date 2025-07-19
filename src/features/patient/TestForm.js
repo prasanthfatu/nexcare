@@ -120,6 +120,7 @@ const TestForm = () => {
         toast.error('Error submitting patient details.', toastOptions)
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } finally {
       setIsDisabled(false)
       setLoading(false)
       setProcessing(false)
@@ -185,7 +186,7 @@ const TestForm = () => {
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
               <label 
-                style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusName || patientName !== '') ? '20px' : '48px', left: (isFocused.focusName || patientName !== '') ? '30px' : '30px', fontSize: (isFocused.focusName || patientName !== '') ? '13px' : '16px'}}
+                style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusName || patientName !== '') ? '20px' : '48px', left: (isFocused.focusName || patientName !== '') ? '30px' : '30px', fontSize: (isFocused.focusName || patientName !== '') ? '13px' : '16px', pointerEvents: 'none'}}
               >
                 Patient Name
               </label>
@@ -203,7 +204,7 @@ const TestForm = () => {
             {/* Age */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusAge || age !== '') ? '20px' : '48px', left: (isFocused.focusAge || age !== '') ? '30px' : '30px', fontSize: (isFocused.focusAge || age !== '') ? '13px' : '16px'}}>
+              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusAge || age !== '') ? '20px' : '48px', left: (isFocused.focusAge || age !== '') ? '30px' : '30px', fontSize: (isFocused.focusAge || age !== '') ? '13px' : '16px', pointerEvents: 'none'}}>
                 Age
               </label>
 
@@ -220,13 +221,17 @@ const TestForm = () => {
             {/* Gender */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusGender || gender !== '') ? '20px' : '48px', left: (isFocused.focusGender || gender !== '') ? '30px' : '30px', fontSize: (isFocused.focusGender || gender !== '') ? '13px' : '16px'}}>
+              <label 
+                style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusGender || gender !== '') ? '20px' : '48px', left: (isFocused.focusGender || gender !== '') ? '30px' : '30px', fontSize: (isFocused.focusGender || gender !== '') ? '13px' : '16px', pointerEvents: 'none'}}>
                 Select Gender
               </label>
 
-              <select style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
+              <select 
+                style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
                 onFocus={() => handleFocus('focusGender')}
-                onBlur={() => handleBlur('focusGender')}  name="gender" value={gender} onChange={(e) => setGender(e.target.value)} required>
+                onBlur={() => handleBlur('focusGender')}  name="gender" value={gender} onChange={(e) => setGender(e.target.value)} 
+                required
+              >
                 <option value=""></option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
@@ -243,7 +248,7 @@ const TestForm = () => {
               {/* Marital Status */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusMaritalStatus || maritalStatus !== '') ? '20px' : '48px', left: (isFocused.focusMaritalStatus || maritalStatus !== '') ? '30px' : '30px', fontSize: (isFocused.focusMaritalStatus|| maritalStatus !== '') ? '13px' : '16px'}}>Marital Status</label>
+              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusMaritalStatus || maritalStatus !== '') ? '20px' : '48px', left: (isFocused.focusMaritalStatus || maritalStatus !== '') ? '30px' : '30px', fontSize: (isFocused.focusMaritalStatus|| maritalStatus !== '') ? '13px' : '16px', pointerEvents: 'none'}}>Marital Status</label>
 
               <select  
                 style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
@@ -264,7 +269,7 @@ const TestForm = () => {
             {/* Address */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusAddress || address !== '') ? '9px' : '48px', left: (isFocused.focusAddress || address !== '') ? '30px' : '30px', fontSize: (isFocused.focusAddress|| address !== '') ? '13px' : '16px'}}>Address</label>
+              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusAddress || address !== '') ? '9px' : '48px', left: (isFocused.focusAddress || address !== '') ? '30px' : '30px', fontSize: (isFocused.focusAddress|| address !== '') ? '13px' : '16px', pointerEvents: 'none'}}>Address</label>
 
               <textarea
                 style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px', resize: 'none'}}
@@ -279,7 +284,7 @@ const TestForm = () => {
             {/* Phone Number */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusPhone || phone !== '') ? '20px' : '48px', left: (isFocused.focusPhone || phone !== '') ? '30px' : '30px', fontSize: (isFocused.focusPhone|| phone !== '') ? '13px' : '16px'}}>
+              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusPhone || phone !== '') ? '20px' : '48px', left: (isFocused.focusPhone || phone !== '') ? '30px' : '30px', fontSize: (isFocused.focusPhone|| phone !== '') ? '13px' : '16px', pointerEvents: 'none'}}>
                 Phone Number
               </label>
 
@@ -297,7 +302,7 @@ const TestForm = () => {
             {/* Email */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
 
-              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusEmail || email !== '') ? '20px' : '48px', left: (isFocused.focusEmail || email !== '') ? '30px' : '30px', fontSize: (isFocused.focusEmail|| email !== '') ? '13px' : '16px'}}>
+              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusEmail || email !== '') ? '20px' : '48px', left: (isFocused.focusEmail || email !== '') ? '30px' : '30px', fontSize: (isFocused.focusEmail|| email !== '') ? '13px' : '16px', pointerEvents: 'none'}}>
                 Email
               </label>
 
@@ -319,7 +324,7 @@ const TestForm = () => {
              {/* Full Name */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}> 
 
-                <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusFullName || fullname !== '') ? '20px' : '48px', left: (isFocused.focusFullName || fullname !== '') ? '30px' : '30px', fontSize: (isFocused.focusFullName|| fullname !== '') ? '13px' : '16px'}}>Full Name</label>
+                <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusFullName || fullname !== '') ? '20px' : '48px', left: (isFocused.focusFullName || fullname !== '') ? '30px' : '30px', fontSize: (isFocused.focusFullName|| fullname !== '') ? '13px' : '16px', pointerEvents: 'none'}}>Full Name</label>
 
                 <input 
                   style={{backgroundColor: 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
@@ -335,7 +340,7 @@ const TestForm = () => {
             {/* Relationship */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}> 
 
-              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusRelationship || relationship !== '') ? '20px' : '48px', left: (isFocused.focusRelationship || relationship !== '') ? '30px' : '30px', fontSize: (isFocused.focusRelationship|| relationship !== '') ? '13px' : '16px'}}>Relationship</label>
+              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusRelationship || relationship !== '') ? '20px' : '48px', left: (isFocused.focusRelationship || relationship !== '') ? '30px' : '30px', fontSize: (isFocused.focusRelationship|| relationship !== '') ? '13px' : '16px', pointerEvents: 'none'}}>Relationship</label>
 
               <select 
                 style={{backgroundColor: dark ? '#0D0D0D' : 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
@@ -358,7 +363,7 @@ const TestForm = () => {
             {/* Emergency Phone Number */}
             <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}> 
 
-              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusEmerPhone || emerPhone !== '') ? '20px' : '48px', left: (isFocused.focusEmerPhone || emerPhone !== '') ? '30px' : '30px', fontSize: (isFocused.focusEmerPhone|| emerPhone !== '') ? '13px' : '16px'}}>Emergency Phone Number</label>
+              <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusEmerPhone || emerPhone !== '') ? '20px' : '48px', left: (isFocused.focusEmerPhone || emerPhone !== '') ? '30px' : '30px', fontSize: (isFocused.focusEmerPhone|| emerPhone !== '') ? '13px' : '16px', pointerEvents: 'none'}}>Emergency Phone Number</label>
 
               <input 
                 style={{backgroundColor: 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
