@@ -2505,6 +2505,29 @@ background: hsl(0, 0%, 85%);
   cursor: default;
 }
 
+/* TIME SLOTS  */
+.time-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.time-slot {
+  padding: 10px 15px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+}
+
+.time-slot.selected {
+  background: #007bff;
+  color: white;
+}
+
+
 /* ******************************************************************************* */
 
 /*  || Responsive Design */
