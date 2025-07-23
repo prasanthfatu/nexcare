@@ -2517,7 +2517,7 @@ background: hsl(0, 0%, 85%);
 .time-slot {
   padding: 10px 15px;
   border: 1px solid #007bff;
-  border-radius: 5px;
+  border-radius: 6px;
   background: white;
   cursor: pointer;
 }
