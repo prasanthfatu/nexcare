@@ -2510,8 +2510,8 @@ background: hsl(0, 0%, 85%);
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  /* margin-top: 10px;
+  margin-bottom: 10px; */
 }
 
 .time-slot {
