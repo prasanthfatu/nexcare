@@ -106,11 +106,8 @@ const AddAppointment = () => {
           const dateKey = date.toLocaleDateString('en-CA', {
             timeZone: 'Asia/kolkata'
           })
-          console.log('dateKey: ', dateKey);
-
           const response = await axiosPrivate.post('/available',
           JSON.stringify({ doctor, dateKey }));
-          console.log(response.data.availableTimes)
           setAvailableTimes(response.data.availableTimes)
       } catch (err) {
         console.log(err)
@@ -150,7 +147,6 @@ const AddAppointment = () => {
     const selectedDate = date.toLocaleDateString('en-CA', {
       timeZone: 'Asia/kolkata'
     })
-    console.log(selectedDate);
     
     const button = rippleRef.current
 
@@ -262,9 +258,7 @@ const AddAppointment = () => {
 
   const fetchErrClass = fetchErrMsg ? "errmsg" : "offscreen"
 
-    if (fetchErrMsg) {
-      console.log(fetchErrMsg);
-      
+    if (fetchErrMsg) {      
         return (
             <section style={{display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '0.5rem 0'}}>
                 <p ref={fetchErrRef} className={fetchErrClass} aria-live="assertive" style={{cursor: 'default'}}>{fetchErrMsg}</p>
@@ -287,10 +281,7 @@ const AddAppointment = () => {
     setErrDate('')
     const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/kolkata' })
     const selectedDateString = new Date(datevalue).toLocaleDateString('en-CA', { timeZone: 'Asia/kolkata' })
-    console.log('today: ', today);
-    console.log('sdate: ', selectedDateString);
-    
-
+   
     if(!datevalue) {
       setErrDate('Please select date')
     }else if(today > selectedDateString){
@@ -483,8 +474,7 @@ const AddAppointment = () => {
                             const slotTime = new Date(now)
                             slotTime.setHours(hours, minutes, 0, 0)
                             const isPast = today === selectedDateString && slotTime <= now
-                            console.log('slotTime: ', slotTime)
-                            console.log('now: ', now)
+                            
                             return(
                             <button
                               key={t}
