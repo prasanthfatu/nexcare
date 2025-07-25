@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import moment from 'moment'
 
 const EditTrack = ({filteredStatus, dark, setDelPopup, setAppointmentId}) => {
 
@@ -13,16 +12,12 @@ const EditTrack = ({filteredStatus, dark, setDelPopup, setAppointmentId}) => {
     <>
       {
         filteredStatus.map((currentStatus) => {
-          const { test, status, startTime, endTime, _id } = currentStatus
-          const date = moment(startTime).format('YYYY-MM-DD')
-          const sTime = moment(startTime).format('HH:mm')
-          const eTime = moment(endTime).format('HH:mm')
-        
+          const { test, status, time, date, _id } = currentStatus
           return(
             <tr key={_id} className="track-body">
               <td style={{color: dark ? '#777777' : 'white', backgroundColor: dark ? '#0D0D0D' : '#777777'}} className='track-body-test'>{test}</td>
               <td style={{color: dark ? '#777777' : 'white', backgroundColor: dark ? '#0D0D0D' : '#777777'}} className="track-date-style">{date}</td>
-              <td style={{color: dark ? '#777777' : 'white', backgroundColor: dark ? '#0D0D0D' : '#777777'}} className="track-time">{sTime} - {eTime}</td>
+              <td style={{color: dark ? '#777777' : 'white', backgroundColor: dark ? '#0D0D0D' : '#777777'}} className="track-time">{time}</td>
               <td style={{color: dark ? '#777777' : 'white', backgroundColor: dark ? '#0D0D0D' : '#777777'}}>{status}</td>
               <td style={{backgroundColor: dark ? '#0D0D0D' : '#777777'}} className="track-cursor" onClick={() => handleDel(_id)}>
                 <FontAwesomeIcon icon={faTrash} style={{color: 'red'}} />
