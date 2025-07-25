@@ -111,8 +111,7 @@ const AddAppointment = () => {
           setAvailableTimes(response.data.availableTimes)
       } catch (err) {
         console.log(err)
-        setErrTime(err.response.data.message || 'Server error try again')
-        setAvailableTimes([])
+        setErrTime('Server error try again')
       } finally {
         setHasFetched(true)
         setFinding(false)
@@ -442,8 +441,8 @@ const AddAppointment = () => {
                   <button
                     type="button"
                     onClick={fetchAvailableTimes}
-                    disabled = {!date || !doctor || errDate}
-                    style={{ width: '215px', padding: '10px 16px', color: 'black', border: 'none', borderRadius: '6px', fontSize: '16px', fontWeight: 'bold', cursor: (!date || !doctor || errDate) ? 'not-allowed' : 'pointer',boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)', transition: 'background-color 0.3s ease', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, position: 'relative'
+                    disabled = {!date || !doctor || errDate || finding }
+                    style={{ width: '215px', padding: '10px 16px', color: 'black', borderRadius: '6px', fontSize: '16px', fontWeight: 'bold', cursor: (!date || !doctor || errDate || finding) ? 'not-allowed' : 'pointer',boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)', transition: 'background-color 0.3s ease', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, position: 'relative'
                     }}
                   >
                     {finding ? 'finding time slots' : 'Check Availability'}
@@ -456,46 +455,49 @@ const AddAppointment = () => {
                   <div className="time-slots">
                       {doctor && date && (
 
-                          hasFetched && (
-                        Array.isArray(availableTimes) && availableTimes.length > 0 ? (
+                        hasFetched && !errTime && (
 
-                          enabledSlots.length === 0 ? (
-                             <p style={{ marginLeft: '10px', marginTop: 0, color: 'red', fontSize: '14px', cursor: 'default', fontFamily: 'monospace' }}>
-                              All time slots have passed for today.
-                            </p>
-                          ) : (
-                          
-                          availableTimes.map((t) => {
+                          Array.isArray(availableTimes) && availableTimes.length > 0 ? (
 
-                            const [timer, modifier] = t.split(' ')
-                            let [hours, minutes] = timer.split(':').map(Number)
-                            if(modifier === 'PM' && hours < 12) hours += 12
-                            if(modifier === 'AM' && hours === 12) hours = 0
-                            const slotTime = new Date(now)
-                            slotTime.setHours(hours, minutes, 0, 0)
-                            const isPast = today === selectedDateString && slotTime <= now
+                            enabledSlots.length === 0 ? (
+                              <p style={{ marginLeft: '10px', marginTop: 0, color: 'red', fontSize: '14px', cursor: 'default', fontFamily: 'monospace' }}>
+                                All time slots have passed for today.
+                              </p>
+                            ) : (
                             
-                            return(
-                            <button
-                              key={t}
-                              type="button"
-                              onClick={() => setTime(t)}
-                              disabled = {isPast}
-                              style={{
-                                padding: '8px 12px',
-                                margin: '5px',
-                                backgroundColor: time === t ? '#4CAF50' : '#f0f0f0',
-                                border: '1px solid #ccc',
-                                cursor: isPast ? 'not-allowed' : 'pointer',
-                                opacity: isPast ? 0.5 : 1
-                              }}
-                            >
-                              {t}
-                            </button>)
-                          })
-                        )) : (
-                          <p style={{ marginLeft: '10px', color: 'red', fontSize: '14px', cursor: 'default', fontFamily: 'monospace' }}>No available time slots for this date</p>
-                        ))
+                            availableTimes.map((t) => {
+
+                              const [timer, modifier] = t.split(' ')
+                              let [hours, minutes] = timer.split(':').map(Number)
+                              if(modifier === 'PM' && hours < 12) hours += 12
+                              if(modifier === 'AM' && hours === 12) hours = 0
+                              const slotTime = new Date(now)
+                              slotTime.setHours(hours, minutes, 0, 0)
+                              const isPast = today === selectedDateString && slotTime <= now
+
+                              return(
+                              <button
+                                key={t}
+                                type="button"
+                                onClick={() => setTime(t)}
+                                disabled = {isPast}
+                                style={{
+                                  padding: '8px 12px',
+                                  margin: '5px',
+                                  backgroundColor: time === t ? '#4CAF50' : '#f0f0f0',
+                                  border: '1px solid #ccc',
+                                  cursor: isPast ? 'not-allowed' : 'pointer',
+                                  opacity: isPast ? 0.5 : 1
+                                }}
+                              >
+                                {t}
+                              </button>)
+                            })
+                          )) : (
+                            <p style={{ marginLeft: '10px', color: 'red', fontSize: '14px', cursor: 'default', fontFamily: 'monospace' }}>No available time slots for this date</p>
+                          )
+
+                        )
                   
                       )}
                   </div>
