@@ -59,23 +59,6 @@ const AddAppointment = () => {
   const selectedDateString = new Date(date).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
   const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/kolkata' }))
 
-  const enabledSlots = availableTimes.filter((t) => {
-  const cleanTime = t.trim().replace(/(AM|PM)$/, ' $1');
-  const [timer, modifier] = cleanTime.split(' ');
-  let [hours, minutes] = timer.split(':').map(Number);
-  if (modifier === 'PM' && hours < 12) hours += 12;
-  if (modifier === 'AM' && hours === 12) hours = 0;
-
-  const slotTime = new Date(now);
-  slotTime.setHours(hours, minutes, 0, 0);
-  slotTime.setSeconds(0, 0);
-
-  // Disable only if slot is in the past and selected date is today
-  const isPast = today === selectedDateString && slotTime <= now;
-
-  return !isPast; // Keep only active (not disabled) slots
-});
-
   const getHealthcare = useCallback(async () => {
       setFetchLoading(true)
       setFetchErrMsg('')
@@ -442,14 +425,20 @@ const AddAppointment = () => {
                     type="button"
                     onClick={fetchAvailableTimes}
                     disabled = {!date || !doctor || errDate || finding }
-                    style={{ width: '215px', padding: '10px 16px', color: 'black', borderRadius: '6px', fontSize: '16px', fontWeight: 'bold', cursor: (!date || !doctor || errDate || finding) ? 'not-allowed' : 'pointer',boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)', transition: 'background-color 0.3s ease', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, position: 'relative'
+                    style={{ width: '215px', padding: '10px 16px', color: dark ? 'whitesmoke' : 'black', borderRadius: '6px', fontSize: '16px', fontWeight: 'bold', cursor: (!date || !doctor || errDate || finding) ? 'not-allowed' : 'pointer',boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)', backgroundColor: 'transparent', transition: 'background-color 0.3s ease', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, position: 'relative'
                     }}
                   >
                     {finding ? 'finding time slots' : 'Check Availability'}
-                    {finding && <span style={{ position: 'absolute', top: '25%', left: '12px', width: '20px', height: '20px', border: '5px solid black', borderTop: '5px solid transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite'}}></span>}
                   </button>
                   <span style={{ display: (!doctor || !date) ? 'block' : 'none', marginLeft: '10px', color: 'red', fontSize: '14px', cursor: 'default', fontFamily: 'monospace'}}>required - Healthcare Provider & Date to find available time slots</span>
                   {errTime && (<p style={{color: 'red'}}>{errTime}</p>)}
+                  {finding && (
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', position: 'fixed', t0p: 0, right: 0, bottom: 0, left: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 1000}}>
+                      <div style={{width: '90%', maxWidth: '400px', height: '100px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                        <span style={{width: '100px', height: '100px', border: '5px solid silver', borderTop: '5px solid transparent', borderRadius: '50%', animation: 'spin 0.7s linear infinite'}}></span>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                   <div className="time-slots">
@@ -459,12 +448,6 @@ const AddAppointment = () => {
 
                           Array.isArray(availableTimes) && availableTimes.length > 0 ? (
 
-                            enabledSlots.length === 0 ? (
-                              <p style={{ marginLeft: '10px', marginTop: 0, color: 'red', fontSize: '14px', cursor: 'default', fontFamily: 'monospace' }}>
-                                All time slots have passed for today.
-                              </p>
-                            ) : (
-                            
                             availableTimes.map((t) => {
 
                               const [timer, modifier] = t.split(' ')
@@ -473,9 +456,15 @@ const AddAppointment = () => {
                               if(modifier === 'AM' && hours === 12) hours = 0
                               const slotTime = new Date(now)
                               slotTime.setHours(hours, minutes, 0, 0)
+
                               const isPast = today === selectedDateString && slotTime <= now
 
                               return(
+                                <div
+                                  key={t}
+                                  style={{ display: 'inline-block', position: 'relative' }}
+                                  title={isPast ? 'Expired' : ''}
+                                >
                               <button
                                 key={t}
                                 type="button"
@@ -484,15 +473,20 @@ const AddAppointment = () => {
                                 style={{
                                   padding: '8px 12px',
                                   margin: '5px',
-                                  backgroundColor: time === t ? '#4CAF50' : '#f0f0f0',
-                                  border: '1px solid #ccc',
+                                  backgroundColor: isPast
+                                      ? '#E0E0E0'
+                                      : time === t
+                                      ? '#28A745'  // selected = green
+                                      : '#F0F0F0', // normal
+                                  color: time === t ? '#F0F0F0' : isPast ? '#1b1b1bff' : '#000000',
+                                  border: dark ?  `1px solid #333333`:  `1px solid #ccc`,
                                   cursor: isPast ? 'not-allowed' : 'pointer',
-                                  opacity: isPast ? 0.5 : 1
+                                  opacity: isPast ? 0.5 : 1,
                                 }}
                               >
                                 {t}
-                              </button>)
-                            })
+                              </button></div>)
+                            }
                           )) : (
                             <p style={{ marginLeft: '10px', color: 'red', fontSize: '14px', cursor: 'default', fontFamily: 'monospace' }}>No available time slots for this date</p>
                           )

@@ -156,17 +156,17 @@ const Public = () => {
 
                     <div className='nav-login'>
                         <Link to="/login" className='loginpad'><FontAwesomeIcon icon={faRightToBracket} style={{color: txtColor}} /></Link>
-                        <span className='hover-text' style={{color: txtColor}}>Sign in</span>
+                        <span className='hover-text' style={{color: txtColor, fontFamily: 'monospace'}}>Sign in</span>
                     </div>
 
                     <div className="nav-login">
                         <Link to="/register" className='loginpad'><FontAwesomeIcon icon={faUserPlus} style={{color: txtColor}} /></Link>
-                        <span className="hover-text" style={{color: txtColor}}>Sign up</span>
+                        <span className="hover-text" style={{color: txtColor, fontFamily: 'monospace'}}>Sign up</span>
                     </div>
 
                     <div className="nav-login">
                         <Link to="/about" className='info'><FontAwesomeIcon icon={faCircleInfo} style={{color: txtColor}} /></Link>
-                        <span className="hover-text" style={{color: txtColor}}>About</span>
+                        <span className="hover-text" style={{color: txtColor, fontFamily: 'monospace'}}>About</span>
                     </div>
 
                 </div>
