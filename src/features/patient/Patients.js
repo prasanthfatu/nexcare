@@ -4,9 +4,12 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import PatientsList from "./PatientsList"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import Breadcrumbs from "../../components/Breadcrumbs"
+import { useLocation } from "react-router-dom"
 
 const Patients = () => {
 
+    const location = useLocation()
     const errRef = useRef(null)
     const debounceRef = useRef(null)
     const [errMsg, setErrMsg] = useState('')
@@ -181,6 +184,7 @@ const Patients = () => {
 
     return (
         <section className='dash-outlet'>
+            <Breadcrumbs pathname={location.pathname} />
             {patients.length > 0 
                 ? content 
                 : <p style={{color: dark ? '#EAEAEA' : 'black'}}>No patients available.</p>

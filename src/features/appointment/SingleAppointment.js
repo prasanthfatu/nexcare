@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState, useCallback, useRef } from "react";
-import moment from "moment";
 import useAuth from "../../hooks/useAuth";
 
 const SingleAppointment = () => {
@@ -18,10 +17,6 @@ const SingleAppointment = () => {
     const [appointment, setAppointment] = useState('');
 
     const axiosPrivate = useAxiosPrivate();
-
-    const date = moment(appointment.startTime).format("YYYY-MM-DD");
-    const timeFrom = moment(appointment.startTime).format("HH:mm");
-    const timeTo = moment(appointment.endTime).format("HH:mm");
 
     const readNotification = useCallback(async () => {
         try {
@@ -127,9 +122,7 @@ const SingleAppointment = () => {
         )
     }
 
-    
-    // return appointment ? <NotificationView appointment = {appointment}/> : <p>Data Not Found</p>
-    return(
+        return(
         <>
             <section className="single-appointment" style={{zIndex: 2, border: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}>
                 <div className="content-visible">
@@ -138,10 +131,10 @@ const SingleAppointment = () => {
                     <br />
                     <p style={{color: dark ? '#777777' : 'black'}}>Doctor: {appointment.doctor}</p>
                     <br />
-                    <p style={{color: dark ? '#777777' : 'black'}}>Date: {date}</p>
+                    <p style={{color: dark ? '#777777' : 'black'}}>Date: {appointment.date}</p>
                     <br />
                     <p style={{color: dark ? '#777777' : 'black'}}>
-                        Time: {timeFrom} - {timeTo}
+                        Time: {appointment.time}
                     </p>
                     <br />
                     <p style={{color: dark ? '#777777' : 'black'}}>Required Test: {appointment.test}</p>

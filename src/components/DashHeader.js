@@ -254,7 +254,7 @@ const DashHeader = () => {
                                 </div>
                             </Link>
 
-                            <Link to="/account/appointmentsuccess" style={{width: '100%'}}>
+                            <Link to="/account/appointmentstatus" style={{width: '100%'}}>
                                 <div className={`board-img ${dark ? 'dark' : 'light'}`} onClick={() => setBarIcon(false)} >
                                     <img src={trackstatus} alt="Healthcare" />
                                     <p className='board-para' style={{color: dark ? '#BBBBBB' : 'black', fontWeight: '500'}}>Track Status</p>

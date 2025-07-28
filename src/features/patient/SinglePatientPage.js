@@ -143,7 +143,14 @@ const SinglePatientPage = () => {
         </section>
     )
 
-    return patient ? content : <p style={{color: dark ? '#EAEAEA' : 'black'}}>No patient found.</p>
+    return (
+        <>
+            <nav style={{ margin: '10px 0', fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}>
+                <Link to="/account" style={{color: dark ? '#EAEAEA' : 'black' }}>Home</Link> / <Link to="/account/patients" style={{color: dark ? '#EAEAEA' : 'black' }}>Patients</Link> / {patient.patientName}
+            </nav>
+            { patient ? content : <p style={{color: dark ? '#EAEAEA' : 'black'}}>No patient found.</p> }
+        </>
+    )
 
 }
 

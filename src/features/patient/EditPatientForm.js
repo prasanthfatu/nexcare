@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams} from "react-router-dom"
 import { useState, useEffect, useRef, useCallback } from "react"
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import EditPage from "./EditPage"
@@ -70,10 +70,9 @@ const EditPatientForm = () => {
     )
   }
 
-  return   patient 
-    ? <EditPage key={patient._id} patient={patient} patientId={patientId} /> 
-    : <p style={{color: dark ? '#EAEAEA' : 'black'}}>No patient found.</p> 
-      
+  return patient 
+        ? <EditPage key={patient._id} patient={patient} patientId={patientId} /> 
+          : <p style={{color: dark ? '#EAEAEA' : 'black'}}>No patient found.</p> 
 }
 
 export default EditPatientForm

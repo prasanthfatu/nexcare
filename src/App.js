@@ -61,7 +61,7 @@ function App() {
 
                   <Route path='medicaltest' element={<TestForm />}/>
                   <Route path='new-appointment' element={<AddAppointment />} />
-                  <Route path='appointmentsuccess' element={<AppointmentSuccess />} />
+                  <Route path='appointmentstatus' element={<AppointmentSuccess />} />
                   <Route path='guestregistered/:notId' element={<GuestPage />} />
                   <Route path='notifications-bar' element={<NotificationsBar />} />
                   <Route path='singleappointment/:notId/:appId' element={<SingleAppointment />} />

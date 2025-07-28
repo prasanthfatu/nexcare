@@ -53,7 +53,7 @@ const DashFooter = () => {
                         </div>
                     </Link>
 
-                    <Link to="/account/appointmentsuccess">
+                    <Link to="/account/appointmentstatus">
                         <div className='board-footer-img'>
                             <div className="tooltip">
                                 <img className='img-add' src={trackstatus} alt="Healthcare" />

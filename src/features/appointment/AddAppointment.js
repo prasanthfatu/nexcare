@@ -175,7 +175,7 @@ const AddAppointment = () => {
           fontSize: "0.8rem"
         },
         onClose: () => {
-          navigate('/account/appointmentsuccess');
+          navigate('/account/appointmentstatus');
         }
       })
     } catch (err) {
