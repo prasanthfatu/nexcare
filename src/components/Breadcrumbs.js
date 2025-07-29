@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import useAuth from "../hooks/useAuth"
 
-function Breadcrumbs({pathname, patientName}) {
+function Breadcrumbs({pathname}) {
     const {dark} = useAuth()
     const breadcrumpsPath = pathname.split('/').filter(Boolean)
     const paths = breadcrumpsPath.filter(val => val !== 'account')
