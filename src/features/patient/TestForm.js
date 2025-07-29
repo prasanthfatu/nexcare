@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const TestForm = () => {
   const [processing, setProcessing] = useState(false)
   const rippleRef = useRef()
-  const {dark} = useAuth()
+  const { dark } = useAuth()
 
   const navigate = useNavigate()
   const axiosPrivate = useAxiosPrivate()

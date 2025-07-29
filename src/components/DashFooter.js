@@ -9,7 +9,7 @@ import useAuth from '../hooks/useAuth'
 
 const DashFooter = () => {
 
-    const {dark} = useAuth()
+    const { dark } = useAuth()
 
     const content = (
 

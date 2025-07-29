@@ -20,7 +20,7 @@ const AppointmentSuccess = () => {
  
   const errRef = useRef(null)
 
-  const { auth, dark } = useAuth()
+  const {auth, dark} = useAuth()
   const axiosPrivate = useAxiosPrivate()
 
   const [status, setStatus] = useState([])

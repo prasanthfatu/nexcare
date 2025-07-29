@@ -20,7 +20,7 @@ const DashHeader = () => {
 
     const imgURL = 'https://nexcare-api.onrender.com/img/'
 
-    const {profileNotify} = useNotifyCount()
+    const { profileNotify } = useNotifyCount()
     
     const [imageSrc, setImageSrc] = useState('');
 

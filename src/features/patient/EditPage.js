@@ -18,7 +18,7 @@ const EditPage = ({ patient, patientId }) => {
 
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
-  const {dark} = useAuth()
+  const { dark } = useAuth()
 
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [loading, setLoading] = useState(false)

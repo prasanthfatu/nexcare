@@ -2285,7 +2285,6 @@ background: hsl(0, 0%, 85%);
   grid-template-columns: 1fr;
 }
 .patient-details, .emergency-details {
-  /* background-color: rgba(0, 0, 0, 0.9); */
   width: 90%;
   height: auto;
   margin: 0 auto;

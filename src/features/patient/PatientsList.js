@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth"
 
 const PatientsList = ({currentItems}) => {
 
-  const {dark} = useAuth()  
+  const { dark } = useAuth()  
   
   return (
     <>

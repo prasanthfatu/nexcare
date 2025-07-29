@@ -22,7 +22,7 @@ const AddAppointment = () => {
   const [fetchErrMsg, setFetchErrMsg] = useState('')
   const [processing, setProcessing] = useState(false)
 
-  const { setTrack, auth, dark } = useAuth()
+  const {setTrack, auth, dark} = useAuth()
 
   const decode = auth?.accessToken ?
     jwtDecode(auth.accessToken)

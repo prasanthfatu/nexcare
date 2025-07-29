@@ -8,7 +8,7 @@ const EditPatientForm = () => {
 
   const errRef = useRef(null)
   const [errMsg, setErrMsg] = useState('')
-  const {dark} = useAuth()
+  const { dark } = useAuth()
 
   const {patientId} = useParams()
   const axiosPrivate = useAxiosPrivate()

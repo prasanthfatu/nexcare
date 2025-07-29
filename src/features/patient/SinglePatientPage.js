@@ -9,7 +9,7 @@ const SinglePatientPage = () => {
 
     const errRef = useRef(null)
     const [errMsg, setErrMsg] = useState('')
-    const {dark} = useAuth()
+    const { dark } = useAuth()
 
     const { patientId } = useParams()
 

@@ -61,6 +61,7 @@ const Patients = () => {
     }, [errMsg]);   
 
     const debounceFunction = useCallback((func, timer) => {
+
         return (...args) => {
             if(debounceRef.current) {
                 clearTimeout(debounceRef.current)
@@ -69,6 +70,7 @@ const Patients = () => {
                 func(...args)
             }, timer)
         }
+        
     }, [])
 
     const searchPatient = useCallback((query) => {
