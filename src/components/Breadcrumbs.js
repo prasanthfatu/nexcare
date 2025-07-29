@@ -7,8 +7,8 @@ function Breadcrumbs({pathname}) {
     const paths = breadcrumpsPath.filter(val => val !== 'account')
 
   return (
-    <nav>
-        <Link to='/account' style={{ margin: '10px 0', fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}>Home</Link>
+    <nav style={{ display: 'inline-block', marginTop: 0, marginBottom: '10px'}}>
+        <Link to='/account' style={{ fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}>Home</Link>
         {
             paths.map((path, i) => {
                 const route = '/account/' + paths.slice(0, i+1).join('/')
@@ -17,9 +17,9 @@ function Breadcrumbs({pathname}) {
 
                 return ( isLast || paths.length === 1 )  ?
 
-                    <span key={path} style={{ margin: '10px 0', fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}> / {label}</span> 
+                    <span key={path} style={{ fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}> / {label}</span> 
 
-                        : <span key={path} style={{ margin: '10px 0', fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}> / <Link to={route} style={{color: dark ? '#EAEAEA' : 'black'}}>{label}</Link> </span>
+                        : <span key={path} style={{ fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}> / <Link to={route} style={{color: dark ? '#EAEAEA' : 'black'}}>{label}</Link> </span>
             })
         }
     </nav>

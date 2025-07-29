@@ -203,7 +203,7 @@ const EditPage = ({ patient, patientId }) => {
 
   return (
     <>
-    <nav style={{ margin: '10px 0', fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}>
+    <nav style={{ marginBottom: '10px', marginTop: 0, fontSize: '14px', color: dark ? '#EAEAEA' : 'black' }}>
       <Link to="/account" style={{color: dark ? '#EAEAEA' : 'black' }}>Home</Link> / <Link to="/account/patients" style={{color: dark ? '#EAEAEA' : 'black' }}>Patients</Link> / <Link to={`/account/patients/${patientId}`} style={{color: dark ? '#EAEAEA' : 'black' }}>{patient.patientName}</Link> / Edit
     </nav>
     <section className='patient-editpage dash-outlet' style={{backgroundColor: dark ? '#0D0D0D' : '#fff'}}>
