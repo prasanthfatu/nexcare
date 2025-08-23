@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { jwtDecode } from "jwt-decode";
 import useAuth from "../../hooks/useAuth";
@@ -16,6 +16,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const AddAppointment = () => {  
+
+  const [searchParams] = useSearchParams()
+  const doc = searchParams.get('specialist')
 
   const fetchErrRef = useRef(null)
   const rippleRef = useRef()
@@ -35,7 +38,7 @@ const AddAppointment = () => {
 
   const [healthcare, setHealthcare] = useState([])
 
-  const [test, setTest] = useState('')
+  const [test, setTest] = useState('General Checkup')
   const [isDisabled, setIsDisabled] = useState(false)
   const [loading, setLoading] = useState(false)
   const [fetchLoading, setFetchLoading] = useState(false)
@@ -43,7 +46,7 @@ const AddAppointment = () => {
   const [finding, setFinding] = useState(false)
   const [hasFetched, setHasFetched] = useState(false)
 
-  const [doctor, setDoctor] = useState('')
+  const [doctor, setDoctor] = useState(doc || '')
   const [date, setDate] = useState(new Date())
   const [time, setTime] = useState('')
   const [errDate, setErrDate] = useState('')
@@ -338,6 +341,7 @@ const AddAppointment = () => {
                     onChange={(e) => setTest(e.target.value)}
                   >
                     <option value=''></option>
+                    <option value="General Checkup">General Checkup</option>
                     <option value='Complete Blood Count (CBC)'>Complete Blood Count (CBC)</option>
                     <option value='Blood Glucose Test'>Blood Glucose Test</option>
                     <option value='Lipid Panel'>Lipid Panel</option>

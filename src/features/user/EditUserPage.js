@@ -8,9 +8,8 @@ import useAuth from '../../hooks/useAuth'
 const USER_REGEX = /^[A-z]{3,20}$/;
 
 const EditUserPage = ({singleUser, userId}) => {
-
-    const {dark} = useAuth()
-
+  
+    const { dark } = useAuth()
     const errRef = useRef()
     const axiosPrivate = useAxiosPrivate()
     const navigate = useNavigate()
@@ -21,11 +20,13 @@ const EditUserPage = ({singleUser, userId}) => {
     const [user, setUser] = useState(singleUser?.username)
     const [validUser, setValidUser] = useState(false)
     const [roles, setRoles] = useState(singleUser?.roles)
+    const [department, setDepartment] = useState(singleUser?.department || '')
     const [errMsg, setErrMsg] = useState('')
 
     const [isFocused, setIsFocused] = useState({
         focusUser: false,
-        focusRoles: false
+        focusRoles: false,
+        focusDepartment: false
     })
 
     useEffect(() => {
@@ -46,7 +47,7 @@ const EditUserPage = ({singleUser, userId}) => {
         try {
           setLoading(true)
             await axiosPrivate.put(`/users`, 
-                JSON.stringify({userId, username: user, roles})
+                JSON.stringify({userId, username: user, roles, department})
             )
             setUser('')
             navigate(`/account/users`)
@@ -179,6 +180,25 @@ const EditUserPage = ({singleUser, userId}) => {
                   </select>
   
                 </div> 
+
+                {/* Department */}
+              {
+                roles.includes("HealthcareProvider") && (
+                  <div style={{position: 'relative', backgroundColor: dark ? '#0D0D0D' : '#fff', width: '100%', height: '100px'}}>
+
+                <label style={{...(dark ? styles.darklabel : styles.lightlabel), top: (isFocused.focusDepartment || department !== '') ? '20px' : '48px', left: (isFocused.focusDepartment || department !== '') ? '30px' : '30px', fontSize: (isFocused.focusDepartment || department !== '') ? '13px' : '16px', pointerEvents: 'none'}}>
+                  Department
+                </label>
+
+                <input 
+                    style={{backgroundColor: 'transparent', width: '95%', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', outline: 'none', border: dark ?  `0.01px solid #333333`:  `0.01px solid #ccc`, color: dark ? 'white' : 'black', padding: '16px 10px'}}
+                    onFocus={() => handleFocus('focusDepartment')}
+                    onBlur={() => handleBlur('focusDepartment')}
+                  type="text" name="department" autoComplete='off' value={department} onChange={(e) => setDepartment(e.target.value)} required />
+
+              </div>
+                )
+              }
 
                 <div className="btn-container" style={{marginTop: '17px'}}>
                     <button className="patient-save-btn" type="button" onClick={saveUser} style={{backgroundColor: 'transparent'}}><FontAwesomeIcon icon={faFloppyDisk} style={{color: dark ? '#EAEAEA' : 'black'}} /></button>

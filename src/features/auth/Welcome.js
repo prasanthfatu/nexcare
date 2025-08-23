@@ -11,10 +11,12 @@ import healthsupport from '../../img/health-support.png'
 import healthdigital from '../../img/health-digital.png'
 import { useState, useEffect, useRef } from 'react'
 import useAuth from '../../hooks/useAuth'
+import AIassistant from '../../components/AIassistant'
 
 const Welcome = () => {
 
     const [isVisible, setIsVisible] = useState(false)
+    const [aiOpen, setAiOpen] = useState(false)
 
     const {dark} = useAuth()
 
@@ -189,7 +191,105 @@ const Welcome = () => {
                 >
                 ↑
                 </span>
-            )}
+                )}
+
+                {aiOpen && (
+                    <div
+                        style={{
+                            position: "fixed",
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            left: 0,
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            backgroundColor: "rgba(0, 0, 0, 0.6)",
+                            zIndex: 1000,
+                        }}
+                    >
+                        <div
+                            className="ai-modal"
+                            style={{
+                                position: "relative",
+                                backgroundColor: dark ? "#1e1e1e" : "#fff",
+                                padding: "20px",
+                                borderRadius: "12px",
+                                height: "80%",
+                                width: "90%",
+                                maxWidth: "500px",
+                                display: "flex",
+                                flexDirection: "column",
+                                boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                            }}
+                            >
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setAiOpen(false)}
+                                style={{
+                                position: "absolute",
+                                top: "10px",
+                                right: "15px",
+                                background: "transparent",
+                                border: "none",
+                                fontSize: "20px",
+                                fontWeight: "bold",
+                                color: dark ? "white" : "black",
+                                cursor: "pointer",
+                                }}
+                            >
+                                ✖
+                            </button>
+    
+                            {/* Chat Title */}
+                            <h3
+                                style={{
+                                textAlign: "center",
+                                marginBottom: "10px",
+                                color: dark ? "white" : "#333",
+                                }}
+                            >
+                                Nexcare Assistant 🤖
+                            </h3>
+    
+                            {/* AI Chat Component */}
+                            <div style={{ flex: 1, overflow: "hidden" }}>
+                                <AIassistant />
+                            </div>
+                        </div>
+                    </div>
+                                  
+                )}
+                
+                {!aiOpen && (
+                    <button
+                        onClick={() => setAiOpen(true)}
+                        style={{
+                        position: "fixed",
+                        bottom: "40px",
+                        right: "40px",
+                        backgroundColor: dark ? "#2d3748" : "#2563eb", // Dark gray (dark mode) / Blue-600 (light mode)
+                        color: "white",
+                        padding: "12px 20px",
+                        border: "none",
+                        borderRadius: "30px",
+                        cursor: "pointer",
+                        fontWeight: "500",
+                        fontSize: "16px",
+                        boxShadow: "0 4px 12px rgba(0,0,0,0.25)",
+                        transition: "all 0.3s ease-in-out",
+                        }}
+                        onMouseOver={(e) =>
+                        (e.currentTarget.style.backgroundColor = dark ? "#4a5568" : "#1d4ed8")
+                        }
+                        onMouseOut={(e) =>
+                        (e.currentTarget.style.backgroundColor = dark ? "#2d3748" : "#2563eb")
+                        }
+                    >
+                        Ask Nexcare 💬
+                    </button>
+                )}
+                
 
             </div>
 
