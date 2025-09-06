@@ -1,10 +1,12 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import useAuth from '../../hooks/useAuth'
 import axios from '../../app/api/axios'
-import faceImg from "../../img/login.jpg"
+import log1 from '../../img/log1.jpg'
+import log2 from '../../img/log2.jpg'
+import log3 from '../../img/log3.jpg'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,7 +25,9 @@ const Login = () => {
     const [user, setUser] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
-    const [isMobile, setIsMobile] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)     
+    const images = [log1, log2, log3]
+    const [currentIndex, setCurrentIndex] = useState(0)
 
     const [isFocused, setIsFocused] = useState({
         focusUser: false,
@@ -32,6 +36,11 @@ const Login = () => {
     });
 
     const navigate = useNavigate()
+    const goNext = useCallback(() => {
+        const isLast = currentIndex === images.length - 1
+        const result = isLast ? 0 : currentIndex + 1
+        setCurrentIndex(result)
+    }, [currentIndex, images.length])
 
     useEffect(() => {
 
@@ -53,6 +62,14 @@ const Login = () => {
     useEffect(() => {
         setErrMsg('');
     }, [user, pwd])
+
+    useEffect(() => {
+        if(images.length === 0) return
+        const id = setTimeout(() => {
+            goNext()
+        }, 3000)
+        return () => clearTimeout(id)
+    }, [goNext, images.length])
 
     const handleSubmit = async (e) => {
 
@@ -172,18 +189,24 @@ const Login = () => {
                    {
                     !isMobile && (
                          <div 
-                        className='login-img-box'
-                        style={{ backgroundColor: dark ? '#0D0D0D' : '#fff', width: '50vw', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '25px'}}
+                        style={{ backgroundColor: dark ? '#0D0D0D' : '#fff', width: '50vw', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '10px', padding: '5px'}}
                     > 
 
-                        <h6 style={{color: dark ? '#EAEAEA' : 'black', cursor: 'default'}}>Nexcare</h6>
+                        <p style={{color: dark ? '#EAEAEA' : '#0D0D0D', cursor: 'default', fontSize: '14px'}}>Nexcare</p>
 
-                        <span style={{ backgroundImage: `url(${faceImg})`, backgroundSize: 'cover', backgroundPosition: 'center', width: '250px', height: '267px', borderRadius: '10px', aspectRatio: 3/2}}></span>
+                        <span style={{width: '95%', height: '400px', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                            <img 
+                                src={`${images[currentIndex]}`}
+                                alt={`slide-${currentIndex}`}
+                                loading='lazy'
+                                style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px', transition: 'all 0.7s ease'}}
+                            />
+                        </span>
 
-                        <p style={{color: dark ? '#EAEAEA' : 'black', fontFamily: 'revert', cursor: 'default', fontSize: '1.1rem', fontWeight: 'bold'}}>
+                        <p style={{color: dark ? '#EAEAEA' : 'black', fontFamily: 'revert', cursor: 'default', fontSize: '1rem', fontWeight: '500'}}>
                             <span style={{color: 'rgb(207, 75, 75)'}}>Please enter your credentials</span><br />
                             <span style={{color: 'rgb(81, 146, 177)'}}>to access your account</span>
-                            <span style={{color: 'rgb(64, 116, 64)', marginLeft: '10px'}}>and </span>
+                            <span style={{color: 'rgba(19, 155, 110, 1)', marginLeft: '10px'}}>and </span>
                             <span style={{color: 'rgb(202, 202, 68)'}}>explore our platform.</span>  
                         </p>
 

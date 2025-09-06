@@ -1,6 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom'
-import doc from "../img/doc.jpg"
-import test from '../img/test.jpg'
+import babytest from "../img/babytest.jpg"
+import doct from "../img/doct.jpg"
+import img1 from "../img/scroll1.jpg"
+import img2 from "../img/scroll2.jpg"
+import img3 from "../img/scroll3.jpg"
+import img4 from "../img/scroll4.jpg"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faRightToBracket, faUserPlus, faCircleInfo, faUser, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from 'react'
@@ -18,13 +22,33 @@ const Public = () => {
 
     const docRef = useRef()
     const pageRef = useRef()
+    const scrollRef = useRef(null)
     const [aiOpen, setAiOpen] = useState(false)
     
     const [openbar, setOpenbar] = useState(false)
     const [loading, setLoading] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
+    const [currentIndex, setCurrentIndex] = useState(0)
+
+    const images = [img1, img2, img3, img4]
 
     const { setAuth, user, dark, setDark } = useAuth()
+
+    const resetCurrrentIndex = () => {
+        if(scrollRef.current){
+            clearTimeout(scrollRef.current)
+        }
+    }
+
+    useEffect(() => {
+        if(images.length === 0) return
+        resetCurrrentIndex()
+        scrollRef.current = setTimeout(() => {
+            setCurrentIndex(prev => (prev + 1) % images.length)
+        }, 3000)
+        return () => resetCurrrentIndex()
+    }, [currentIndex, images.length])
 
     useEffect(() => {
         let handle = (e) => {
@@ -141,7 +165,7 @@ const Public = () => {
         >
             <div className={`data-loading ${loading ? 'active' : 'inactive'}`}></div>
 
-            <header className='loginheader' style={{backgroundColor: dark ? 'black' : 'aliceblue', borderBottom: dark ? '0.01px solid #333333' : '0.01px solid #ccc'}}>
+            <header className='loginheader' style={{backgroundColor: dark ? 'black' : 'aliceblue', borderBottom: dark ? '0.01px solid #333333' : '0.01px solid #ccc', zIndex: 1000}}>
                 <div className="nav-menu">
 
                     <div 
@@ -277,33 +301,87 @@ const Public = () => {
                     </p>
 
                     <div className='doc-card'>
-                        <div className="gallery">
-                            <img className="doc-img" src={doc} alt='Healthcare' />
-                            <p style={{color: txtColor, cursor: 'default'}}>Book your appointment</p>
+                        <div style={{width: '95%', height: 'auto', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+                            <img 
+                                className="doc-img" 
+                                src={doct} 
+                                loading='lazy'
+                                alt='Healthcare' 
+                            />
+                            <p style={{color: txtColor, cursor: 'default', fontFamily: 'monospace', fontSize: '14px'}}>Book your appointment</p>
                         </div>
                     </div>
 
                 </div>
                 <br />
 
+                <div className='dot-line'>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                </div>                   
+                                    
                 <button className='learn-btn' onClick={() => navigate('/health-care')}>Learn more</button>
                 <br />
+
+                <div className='dot-line'>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                </div>
 
                 <div className='second-box'>
                    
                     <p style={{color: txtColor, cursor: 'default'}}>
-                        <span className='para-span'>Best Medical Test. For Everyone.</span><br />
+                        <span className='para-span' style={{}}>Best Medical Test. For Everyone.</span>
                         <br />
+                        <span style={{color: dark ? 'gray' : 'GrayText'}}>
                         These tests encompass a broad spectrum, ranging from routine blood tests to sophisticated imaging procedures such as MRIs and CT scans. With advancements in technology and research, medical tests play an integral role in providing accurate diagnoses, guiding treatment decisions, and promoting overall wellness and quality of life for patients.<br />
+                        </span>
                         <br />
-                        <span className='link-para' onClick={handlePageRef}>Learn more</span>
+                        <span className='link-para' onClick={handlePageRef}>View More</span>
 
                     </p>
 
-                    <img className="doc-img" src={test} alt='Healthcare' />
+                    <div style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+
+                        <div 
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
+                            style={{width: '90%', height: '90%', borderRadius: '1rem', position: 'relative', overflow: 'hidden'}}>
+                            <img 
+                                className="doc-img" 
+                                src={babytest} 
+                                alt='Healthcare' 
+                                loading='lazy' 
+                                style={{position: 'relative', transform: isHovered ? 'scale(1.1)' : 'scale(1)', transition: 'transform 0.3s ease'}}
+                            />
+                            {isHovered && (<span style={{position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', display: 'flex', flexDirection: 'column', justifyContent:'center', alignItems: 'center', opacity: isHovered ? 1 : 0, transition: 'opacity 0.3s ease', fontSize: '14.5px'}}>
+                                Consult top doctors online or offline
+                            </span>)}
+                        </div>
+
+                    </div>
 
                 </div>
                 <br />
+
+                <div className='dot-line'>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                </div>
 
                 <p className='para' style={{color: txtColor, cursor: 'default'}}>Test with Nexcare Innovate</p>
 
@@ -312,6 +390,58 @@ const Public = () => {
                 </p>
 
                 <button className='learn-btn' onClick={() => navigate('/visit-our-medicalcenter')}>Visit our Medical test center</button>
+
+                <div className='dot-line'>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                </div>
+
+                <div style={{width: '100%', height: '600px', position: 'relative', overflow: 'hidden'}}>
+                    <div className=''>
+                        <div style={{width: '100%', height: '600px', whiteSpace: 'nowrap', transform: `translateX(-${currentIndex * 100}%)`, transition: 'transform 0.7s ease'}}>
+                            {
+                                images.map((src, i) => (
+                                    <img 
+                                        key={i}
+                                        src={src}
+                                        alt={`slide-${i}`}
+                                        style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                                    />
+                                ))
+                            }
+                        </div>
+
+                        <div style={{width: '100%', height: '400px', whiteSpace: 'nowrap', transform: `translateX(-${currentIndex * 100}%)`, transition: 'transform 0.7s ease'}}>
+                            {
+                                images.map((src, i) => (
+                                    <img 
+                                        key={i}
+                                        src={src}
+                                        alt={`slide-${i}`}
+                                        style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                                    />
+                                ))
+                            }
+                        </div>
+                    </div>
+                    <div style={{position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px'}}>
+                        {
+                            images.map((_, i) => (
+                                <button 
+                                    key={i}
+                                    onClick={() => setCurrentIndex(i)}
+                                    style={{width: '12px', height: '12px', borderRadius: '50%', backgroundColor: currentIndex === i ? '#0D0D0D' : 'white', border: '1px solid black'}}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
 
                 <div ref={pageRef}>
                     <Page />

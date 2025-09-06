@@ -522,9 +522,9 @@ a:focus-visible {
 }
 .health-support {
   position: absolute;
-  bottom: 5%;
+  bottom: 10%;
   left: 0;
-  width: 250px;
+  width: 200px;
   height: 250px;
   z-index: 1;
 }
@@ -657,7 +657,7 @@ a:focus-visible {
   height: 3px;
   background: #218bff;
   animation: data 2s forwards cubic-bezier(0,0,0,0);
-  z-index: 1000;
+  z-index: 2000;
 }
 .data-loading.active {
   display: block;
@@ -1070,9 +1070,13 @@ background: hsl(0, 0%, 85%);
   text-align: left;
 }
 .doc-card {
-  width: 250px;
-  height: auto;
+  width: 100%;
+  height: 100%;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .doc-img {
   margin-top: 1em;
@@ -1082,7 +1086,6 @@ background: hsl(0, 0%, 85%);
 .doc-card p {
   padding: 1rem;
   text-align: center;
-  width: 250px;
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .learn-btn {
@@ -1111,13 +1114,13 @@ background: hsl(0, 0%, 85%);
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: default;
 }
 .second-box img{
   margin: auto;
-  width: 85%;
-  height: auto;
+  width: 100%;
+  height: 100%;
   border-radius: 1rem;
-  float: left;
 }
 .para {
   margin-top: 1em;
@@ -1125,9 +1128,13 @@ background: hsl(0, 0%, 85%);
   font-size: 2em;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+.link-para {
+  width: fit-content;
+  color:#4a8eb6;
+}
 .link-para:hover {
   cursor: pointer;
-  color: gray;
+  color: #408cb8;
   text-decoration: underline;
 }
 .para-public {
@@ -2762,12 +2769,13 @@ background: hsl(0, 0%, 85%);
     font-size: 0.8rem;
   }
   .health-digital {
-    width: 100px;
+    width: 90px;
     height: 75px;
+    top: 10%;
     right: 0;
   }
   .health-support {
-    width: 65px;
+    width: 55px;
     height: 65px;
     bottom: 10%;
   }

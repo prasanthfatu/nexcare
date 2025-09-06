@@ -1,5 +1,4 @@
 import healthplus from '.././img/health-plus.png'
-import circles from '.././img/circles.png'
 import doctorvisit from '.././img/doctor-visit.png'
 import health from '.././img/healt.png'
 import medicalteam from '.././img/medical-team.png'
@@ -7,6 +6,8 @@ import family from '.././img/family.png'
 import useAuth from '../hooks/useAuth'
 
 const Page = () => {
+
+  const year = new Date().getFullYear()
 
   const { dark } = useAuth()
 
@@ -18,6 +19,17 @@ const Page = () => {
 
       <h1>
         Our medical test content undergoes rigorous review by <span className='page-wordone'>expert professionals</span> and is continuously updated to <span className='page-wordtwo'>ensure accuracy</span> and <span className='page-wordthree'>reliability</span> for our users <span className='page-wordfour'>peace of mind.</span></h1>
+
+      <div className='dot-line'>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                </div>
 
       <h4 style={{color: dark ? '#EAEAEA' : 'rgb(41, 40, 40)'}}>Laboratory Testing</h4>
 
@@ -44,6 +56,21 @@ const Page = () => {
         </div>
 
       </div>
+
+      <footer
+        style={{
+          backgroundColor: dark ? 'black' : 'aliceblue',
+          color: dark ? 'silver' : '#272525',         
+          textAlign: "center",
+          padding: "15px",
+          fontSize: "13px",
+          fontFamily: "Arial, sans-serif",
+          borderTop: dark ? "0.1px solid #333333" : '0.01px solid #ccc',
+          whiteSpace: 'nowrap'
+        }}
+    >
+      &copy; {year} Nexcare Innovate. All rights reserved.
+    </footer>
 
     </div>
 
