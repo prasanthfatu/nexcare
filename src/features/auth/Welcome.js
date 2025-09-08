@@ -5,11 +5,16 @@ import healthcare from '../../img/health-care.png'
 import patientedit from '../../img/patient-edit.jpg'
 import professionalteam from '../../img/Health professional team.png'
 import healthcareblue from '../../img/healthcare-blue.png'
+import healthcareblue2 from '../../img/healthcare-blue2.png'
+import img1 from '../../img/protect.jpg'
+import img2 from '../../img/protect2.jpg'
+import img3 from '../../img/protect3.jpg'
+import img4 from '../../img/protect4.jpg'
 import support from '../../img/support.png'
 import healthtest from '../../img/health-test.png'
 import healthsupport from '../../img/health-support.png'
 import healthdigital from '../../img/health-digital.png'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import useAuth from '../../hooks/useAuth'
 import AIassistant from '../../components/AIassistant'
 
@@ -17,12 +22,38 @@ const Welcome = () => {
 
     const [isVisible, setIsVisible] = useState(false)
     const [aiOpen, setAiOpen] = useState(false)
+    const [footSlideIndex, setFootSlideIndex] = useState(0)
+    const [currentIndex, setCurrentIndex] = useState(0)
 
     const {dark} = useAuth()
 
     const scrollRef = useRef()
+    const slideRef = useRef(null)
     const year = new Date().getFullYear()
+    const imageSlide = [healthcareblue, healthcareblue2]
+    const images = [img1, img2, img3, img4]
 
+    const goNext = useCallback(() => {
+        const isLast = footSlideIndex === imageSlide.length - 1
+        const result = isLast ? 0 : footSlideIndex + 1
+        setFootSlideIndex(result)
+    }, [footSlideIndex, imageSlide.length])
+
+    const resetCurrrentIndex = () => {
+            if(slideRef.current){
+                clearTimeout(slideRef.current)
+            }
+    }
+
+    useEffect(() => {
+            if(images.length === 0) return
+            resetCurrrentIndex()
+            slideRef.current = setTimeout(() => {
+                setCurrentIndex(prev => (prev + 1) % images.length)
+            }, 3000)
+            return () => resetCurrrentIndex()
+    }, [currentIndex, images.length])
+    
     useEffect(() => {
         const handleScroll = () => {
             const show = window.scrollY > 500
@@ -39,6 +70,14 @@ const Welcome = () => {
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [isVisible])
+
+    useEffect(() => {
+        if(imageSlide.length === 0) return
+        const id = setTimeout(() => {
+            goNext()
+        }, 5000)
+        return () => clearTimeout(id)
+    }, [goNext, imageSlide.length])
 
     const handlescrollToTop = () => {
         window.scrollTo({
@@ -159,6 +198,46 @@ const Welcome = () => {
                     <p>|</p>
                 </div>
 
+                <div style={{width: '100%', height: '600px', position: 'relative', overflow: 'hidden'}}>
+                    <div 
+                        
+                        style={{width: '100%', height: '600px', whiteSpace: 'nowrap', transform: `translateX(-${currentIndex * 100}%)`,transition: 'transform 0.7s ease'}}>
+                        {
+                            images.map((src, i) => (
+                                <img 
+                                    key={i}
+                                    src={src}
+                                    alt={`slide-${i}`}
+                                    style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                                />
+                            ))
+                        }
+                    </div>
+
+                    <div style={{position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px'}}>
+                        {
+                            images.map((_, i) => (
+                                <button 
+                                    key={i}
+                                    onClick={() => setCurrentIndex(i)}
+                                    style={{width: '12px', height: '12px', borderRadius: '50%', backgroundColor: currentIndex === i ? '#0D0D0D' : 'white', border: '1px solid black'}}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+
+                <div className='dot-line'>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                    <p>|</p>
+                </div>
+
                 <div className='test-info-more'>
                     <p style={{color: dark ? 'silver' : '#363535', cursor: 'default'}}>Our service is designed to be convenient, accurate, and confidential, ensuring that your health information is secure and accessible only to you. NexCare is committed to providing exceptional customer service and support throughout the entire process. Whether you need a routine check-up or specific health screenings, we are here to help you every step of the way.</p>
                 </div>
@@ -166,7 +245,7 @@ const Welcome = () => {
                 <div className="welcome-content" style={{border: dark ? "0.01px solid #333333" : '0.01px solid #ccc', marginTop: '10px'}}>
                     <h1 style={{color: dark ? 'white' : 'black'}}>Your health<br />
                     <span>our priority.</span></h1>
-                    <img src={healthcareblue} alt="Healthcare" loading='lazy' />
+                    <img src={`${imageSlide[footSlideIndex]}`} alt="Healthcare" loading='lazy' style={{transition: 'all 0.3s ease'}} />
                 </div>
 
                 <div className='foot-info' style={{border: dark ? "0.01px solid #333333" : '0.01px solid #ccc', marginTop: '10px'}}>

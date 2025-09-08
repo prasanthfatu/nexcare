@@ -22,7 +22,7 @@ const Public = () => {
 
     const docRef = useRef()
     const pageRef = useRef()
-    const scrollRef = useRef(null)
+    const slideRef = useRef(null)
     const [aiOpen, setAiOpen] = useState(false)
     
     const [openbar, setOpenbar] = useState(false)
@@ -36,15 +36,15 @@ const Public = () => {
     const { setAuth, user, dark, setDark } = useAuth()
 
     const resetCurrrentIndex = () => {
-        if(scrollRef.current){
-            clearTimeout(scrollRef.current)
+        if(slideRef.current){
+            clearTimeout(slideRef.current)
         }
     }
 
     useEffect(() => {
         if(images.length === 0) return
         resetCurrrentIndex()
-        scrollRef.current = setTimeout(() => {
+        slideRef.current = setTimeout(() => {
             setCurrentIndex(prev => (prev + 1) % images.length)
         }, 3000)
         return () => resetCurrrentIndex()
@@ -403,33 +403,21 @@ const Public = () => {
                 </div>
 
                 <div style={{width: '100%', height: '600px', position: 'relative', overflow: 'hidden'}}>
-                    <div className=''>
-                        <div style={{width: '100%', height: '600px', whiteSpace: 'nowrap', transform: `translateX(-${currentIndex * 100}%)`, transition: 'transform 0.7s ease'}}>
-                            {
-                                images.map((src, i) => (
-                                    <img 
-                                        key={i}
-                                        src={src}
-                                        alt={`slide-${i}`}
-                                        style={{width: '100%', height: '100%', objectFit: 'cover'}}
-                                    />
-                                ))
-                            }
-                        </div>
-
-                        <div style={{width: '100%', height: '400px', whiteSpace: 'nowrap', transform: `translateX(-${currentIndex * 100}%)`, transition: 'transform 0.7s ease'}}>
-                            {
-                                images.map((src, i) => (
-                                    <img 
-                                        key={i}
-                                        src={src}
-                                        alt={`slide-${i}`}
-                                        style={{width: '100%', height: '100%', objectFit: 'cover'}}
-                                    />
-                                ))
-                            }
-                        </div>
+                    <div 
+                        
+                        style={{width: '100%', height: '600px', whiteSpace: 'nowrap', transform: `translateX(-${currentIndex * 100}%)`,transition: 'transform 0.7s ease'}}>
+                        {
+                            images.map((src, i) => (
+                                <img 
+                                    key={i}
+                                    src={src}
+                                    alt={`slide-${i}`}
+                                    style={{width: '100%', height: '100%', objectFit: 'cover'}}
+                                />
+                            ))
+                        }
                     </div>
+
                     <div style={{position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '8px'}}>
                         {
                             images.map((_, i) => (
